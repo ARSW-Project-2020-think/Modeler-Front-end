@@ -23,7 +23,7 @@ var apiclient = (function () {
             promise.then(function(data){
                 callback(email,password,data.token);
             },function(data){
-                alert("Error en credenciales"+data);
+                alert("Error en credenciales");
             });
 
         }
