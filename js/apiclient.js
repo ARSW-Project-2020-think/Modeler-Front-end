@@ -14,9 +14,9 @@ var apiclient = (function () {
                 //location.href = "index.html";
             });
         },login:function(email,password,callback){
-            var json = {username:email};
+            var json = {username:email,password:password};
             console.log(JSON.stringify(json));
-            var promise = $.get({
+            var promise = $.post({
                 url:"https://class-modeler.herokuapp.com/user/login",
                 data: JSON.stringify(json),contentType: "application/json"
             });

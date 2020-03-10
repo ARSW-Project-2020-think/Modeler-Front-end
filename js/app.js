@@ -16,6 +16,10 @@ var app = (function () {
         },login:function(email,password,event){
             event.preventDefault();
             apiclient.login(email,password,createSession);
+        },validate:function(){
+            if(sessionStorage.getItem("token")!=null){
+                location.href = "mainPage.html";
+            }
         }
     }
 
