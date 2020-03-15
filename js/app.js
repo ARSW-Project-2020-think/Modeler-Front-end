@@ -3,10 +3,10 @@ var app = (function () {
         sessionStorage.setItem("email", email);
         sessionStorage.setItem("password", password);
         sessionStorage.setItem("token", token);
-        location.href = "mainPage.html";
+        location.href = "index.html";
     }
     return {
-        registrarse: function(user, email, password,event) {
+        registrarse: function(user, email, password, event) {
             event.preventDefault();
             //console.log("Primero");
             //alert("HOLA1");
@@ -14,11 +14,13 @@ var app = (function () {
             apiclient.registrarse(newUsuario);
             //alert("HOLA2");
         },login:function(email,password,event){
-            event.preventDefault();
+            if (event != null) {
+                event.preventDefault();
+            }
             apiclient.login(email,password,createSession);
         },validate:function(){
             if(sessionStorage.getItem("token")!=null){
-                location.href = "mainPage.html";
+                location.href = "index.html";
             }
         }
     }
