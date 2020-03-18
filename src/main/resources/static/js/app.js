@@ -40,6 +40,9 @@ var app = (function () {
             console.log("obtuvo user");
             apiclient.getToken(sessionStorage.getItem("email"),sessionStorage.getItem("password"),apiclient.Projects,updateProjects);
             console.log("obtuvo pr");
+        },logout:function(){
+        	sessionStorage.clear();
+        	location.href = "login.html";
         }
     }
 
