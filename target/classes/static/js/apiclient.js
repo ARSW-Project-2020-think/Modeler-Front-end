@@ -49,7 +49,7 @@ var apiclient = (function () {
             console.log("obtiene proyectos");
             console.log("username "+userSelect);
             var prom = $.get({
-                url:"https://class-modeler.herokuapp.com/"+user+"/project",
+                url:"https://class-modeler.herokuapp.com/projectapi/"+user+"/project",
                 headers:{"Authorization":token}
             });
             prom.then(function(data){

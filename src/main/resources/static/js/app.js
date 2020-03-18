@@ -5,6 +5,10 @@ var app = (function () {
         sessionStorage.setItem("token",token);
         apiclient.userData(token,saveUsername);
     }
+    var setToken = function(email,password,token){
+    	sessionStorage.setItem("token",token);
+    	console.log("actualizo token: "+token);
+    }
     var saveUsername= function(err,user){
     	if(err!=null){
     		return;
@@ -55,9 +59,9 @@ var app = (function () {
             console.log("obtuvo pr");
             //Actualiza cada media hora el token
             window.setInterval(function(){
-            	app.login(sessionStorage.getItem("email"),sessionStorage("password"));
-            	console.log("actualizo token");
-            },1000*60*30);
+            	//app.login(sessionStorage.getItem("email"),sessionStorage.getItem("password"));
+            	apiclient.login(sessionStorage.getItem("email"),sessionStorage.getItem("password"),setToken);
+            },1000*60*10);
         },logout:function(){
         	sessionStorage.clear();
         	location.href = "login.html";
