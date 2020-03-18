@@ -53,12 +53,25 @@ var apiclient = (function () {
                 headers:{"Authorization":token}
             });
             prom.then(function(data){
+            	console.log("ini data");
+            	console.log(data);
                 callback(null,data);
             },function(err){
                 callback(err,null);
             });
+        },registrarPryecto:function(token,username,nombreProyecto,publico){
+        	var json = {"nombre":nombreProyecto,"publico":publico};
+        	var promesa = $.post({
+        		url:"https://class-modeler.herokuapp.com/projectapi/"+username+"/project",
+        		headers:{"Authorization":token},
+        		data:JSON.stringify(json),
+        		contentType:"application/json"
+        	});
+        	promesa.then(function(){
+        		alert("success");
+        	},function(err){
+        		console.log(err);
+        	});
         }
     }
-
-
 })();

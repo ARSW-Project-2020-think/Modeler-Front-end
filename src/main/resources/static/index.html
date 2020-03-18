@@ -1,20 +1,39 @@
 <html>
-<head> <title></title>
+<head> 
+	<title>Modeler</title>
 	<meta charset="UTF-8">
-	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous"></link>
-	<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet"></link>
-	<link REL=StyleSheet HREF="style.css" TYPE="text/css"></link>
-	<script src="https://code.jquery.com/jquery-3.4.1.js" type="text/javascript"></script>
-	<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
-	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
+	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="stylesheet" type="text/css" href="bar.css"></link>
-	<script src="bar.js"></script>
-	
+<!--===============================================================================================-->
+	<link rel="icon" type="image/png" href="images/icons/proyecto.ico"/>
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="vendor/bootstrap/css/bootstrap.min.css">
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="fonts/font-awesome-4.7.0/css/font-awesome.min.css">
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="fonts/iconic/css/material-design-iconic-font.min.css">
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="vendor/animate/animate.css">
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="vendor/css-hamburgers/hamburgers.min.css">
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="vendor/animsition/css/animsition.min.css">
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="vendor/select2/select2.min.css">
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="vendor/daterangepicker/daterangepicker.css">
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="css/util.css">
+	<link rel="stylesheet" type="text/css" href="css/principal.css">
+	<link rel="stylesheet" type="text/css" href="css/estilos.css">
+<!--===============================================================================================-->
+	<script src="vendor/jquery/jquery-3.2.1.min.js"></script>
+	<script type="text/javascript" src="bar.js"></script>
 	<script src="js/app.js"></script>
 	<script src="js/apiclient.js"></script>
 
 </head>
-<body style="background-color:#9BD4ED" onload="app.loadPage()">
+<body class="container-contact100" onload="app.loadPage()">
 	<div class="page-wrapper chiller-theme toggled">
 		<a id="show-sidebar" class="btn btn-sm btn-dark" href="#">
 		  <i class="fas fa-bars"></i>
@@ -22,17 +41,15 @@
 		<nav id="sidebar" class="sidebar-wrapper">
 		  <div class="sidebar-content">
 			<div class="sidebar-brand">
-			  <a href="#">Modeler</a>
-			  <div id="close-sidebar">
-				<i class="fas fa-times"></i>
-			  </div>
+			  <a href="index.html">Modeler</a>
 			</div>
 			<div class="sidebar-header">
 			  <div class="user-info">
-				<span class="user-name" id="uservar">
+				<span class="user-name" style="font-size:30px;" id="uservar">
 				</span>
 				<span class="user-status">
 				  <i class="fa fa-circle"></i>
+				  <span id="email"></span>
 				</span>
 			  </div>
 			</div>
@@ -56,20 +73,26 @@
 				  <span>General</span>
 				</li>
 				<li class="sidebar-dropdown">
-				  <a href="#">
+				  <a href="index.html">
 					<i class="fa fa-tachometer-alt"></i>
 					<span>Mis proyectos</span>
 				  </a>
 				</li>
 				<li class="sidebar-dropdown">
+				  <a href="RegistrarProyecto.html">
+					<i class="fa fa-tachometer-alt"></i>
+					<span>Registrar Proyecto</span>
+				  </a>
+				</li>
+				<li class="sidebar-dropdown">
 				  <a href="#">
-					<i class="fa fa-shopping-cart"></i>
+					<i class="fa fa-tachometer-alt"></i>
 					<span>Compartidos</span>
 				  </a>
 				</li>
 				<li class="sidebar-dropdown" onclick="app.logout()">
 				  <a href="#">
-					<i class="fa fa-shopping-cart"></i>
+					<i class="fa fa-tachometer-alt"></i>
 					<span>Cerrar sesion</span>
 				  </a>
 				</li>
@@ -77,26 +100,9 @@
 			</div>
 			<!-- sidebar-menu  -->
 		  </div>
-		  <!-- sidebar-content  -->
-		  <div class="sidebar-footer">
-			<a href="#">
-			  <i class="fa fa-bell"></i>
-			  <span class="badge badge-pill badge-warning notification">3</span>
-			</a>
-			<a href="#">
-			  <i class="fa fa-envelope"></i>
-			  <span class="badge badge-pill badge-success notification">7</span>
-			</a>
-			<a href="#">
-			  <i class="fa fa-cog"></i>
-			  <span class="badge-sonar"></span>
-			</a>
-			<a href="#">
-			  <i class="fa fa-power-off"></i>
-			</a>
-		  </div>
 		</nav>
-		<main class="page-content" id="cont">
+		<main style="margin:0px; padding:0px;">
+			<div class="page-content" id="cont" style="height:100%;"></div>
   		</main>
 </body>
 </html>

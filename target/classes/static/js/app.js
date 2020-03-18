@@ -18,7 +18,8 @@ var app = (function () {
     }
     var updateView = function(error,user){
         if(error!=null) return;
-        $("#uservar").text(user.username);
+        $("#uservar").text("Usuario: "+user.username);
+        $("#email").text("Correo: "+user.correo);
     };
     var updateProjects = function(error,data){
         if(error!=null){
@@ -65,6 +66,19 @@ var app = (function () {
         },logout:function(){
         	sessionStorage.clear();
         	location.href = "login.html";
+        },redirectValidation(){
+        	if(sessionStorage.getItem("email")==null){
+                location.href = "login.html";
+                return ;
+            }
+        	apiclient.userData(sessionStorage.getItem("token"),updateView);
+        },registrarProyecto(nombre,publico){
+        	console.log(nombre,publico);
+        	if(publico=="on"){
+        		apiclient.registrarPryecto(sessionStorage.getItem("token"),sessionStorage.getItem("username"),nombre,true);
+        	}else{
+        		apiclient.registrarPryecto(sessionStorage.getItem("token"),sessionStorage.getItem("username"),nombre,false);
+        	}
         }
     }
 
