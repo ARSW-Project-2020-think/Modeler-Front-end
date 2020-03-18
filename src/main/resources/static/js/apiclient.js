@@ -23,22 +23,11 @@ var apiclient = (function () {
             });
             promise.then(function(data){
                 callback(email,password,data.token);
+                
             },function(data){
                 alert("Error, correo electrónico o contraseña inválidos.");
             });
 
-        },
-        getToken:function(email,password,fun,calback){
-            var json = {username:email,password:password};
-            var promise = $.post({
-                url:"https://class-modeler.herokuapp.com/user/login",
-                data: JSON.stringify(json),contentType: "application/json"
-            });
-            promise.then(function(data){
-                fun(data.token,calback);
-            },function(){
-
-            });
         },
         userData:function(token,calback){
             console.log(token);
@@ -56,11 +45,11 @@ var apiclient = (function () {
             },function(err){
                 calback(err,null);
             });
-        },Projects:function(token,callback){
+        },Projects:function(token,user,callback){
             console.log("obtiene proyectos");
             console.log("username "+userSelect);
             var prom = $.get({
-                url:"https://class-modeler.herokuapp.com/"+userSelect.username+"/project",
+                url:"https://class-modeler.herokuapp.com/"+user+"/project",
                 headers:{"Authorization":token}
             });
             prom.then(function(data){
