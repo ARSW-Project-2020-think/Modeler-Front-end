@@ -32,7 +32,7 @@ var app = (function () {
             if(sessionStorage.getItem("email")!=null){
                 location.href = "index.html";
             }
-        },loadPage(){
+        },loadPage:function(){
             if(sessionStorage.getItem("email")==null){
                 location.href = "login.html";
             }
