@@ -3,19 +3,20 @@ var app = (function () {
         sessionStorage.setItem("email", email);
         sessionStorage.setItem("password", password);
         sessionStorage.setItem("token",token);
+        console.log("creo session");
         apiclient.userData(token,saveUsername);
-    }
+    };
     var setToken = function(email,password,token){
     	sessionStorage.setItem("token",token);
     	console.log("actualizo token: "+token);
-    }
+    };
     var saveUsername= function(err,user){
     	if(err!=null){
     		return;
     	}
     	sessionStorage.setItem("username",user.username);
     	location.href = "index.html";
-    }
+    };
     var updateView = function(error,user){
         if(error!=null) return;
         $("#uservar").text("Usuario: "+user.username);
@@ -29,8 +30,42 @@ var app = (function () {
         console.log(data);
         if(data.length==0){
         	$("#cont").html("<h1>No tienes actualemnete proyectos, crea uno nuevo</h1>");
+        }else{
+        	var cont = $("<div class='container'></div>");
+        	var contador =1;
+        	var row = null;
+        	data.forEach(function(proyecto){
+        		if(contador==1){
+        			row = $("<div class='row'></div>");
+        		}
+        		var div = $("<div class='col'></div>");
+        		div.append("<div class='card text-white bg-dark mb-3' style='width: 18rem;'>"+
+        					"<div class='card-body'>"+
+        					"<h5 class='card-title'>"+proyecto.nombre+"</h5>"+
+        					"<p class='card-text' style='color:white;'>Publico: "+proyecto.publico+"</p>"+
+        					"<a href='#' class='btn btn-primary'>Ver</a>"+
+    			"</div>"+
+  				"</div>");
+        		row.append(div);
+        		
+        		if(contador==3){
+        			contador=0;
+        			cont.append(row);
+        		}
+        		contador+=1;
+        	});
+        	var ent = (contador!=1);
+        	while(contador!=1 && contador!=3){
+        		row.append("<div class='col'></div>");
+        		contador+=1;
+        	}
+        	if(ent){
+        		cont.append(row);
+        	}
+        	$("#cont").append(cont);
+        	
         }
-    }
+    };
     return {
         registrarse: function(user, email, password, event) {
             event.preventDefault();

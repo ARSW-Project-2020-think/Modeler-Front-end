@@ -21,6 +21,7 @@ var apiclient = (function () {
                 url:"https://class-modeler.herokuapp.com/user/login",
                 data: JSON.stringify(json),contentType: "application/json"
             });
+            
             promise.then(function(data){
                 callback(email,password,data.token);
                 
@@ -29,21 +30,20 @@ var apiclient = (function () {
             });
 
         },
-        userData:function(token,calback){
+        userData:function(token,callback){
+        	console.log("userdata");
             console.log(token);
             var promise = $.ajax({
                 type:"GET",
-                headers:{"Authorization":token},
                 url:"https://class-modeler.herokuapp.com/user/data",
-                contentType:"application/json"
+                headers:{"Authorization":token}
             });
-            console.log(promise);
             promise.then(function(data){
-                console.log(data);
-                userSelect=data;
-                calback(null,data);
+            	console.log(data);
+                callback(null,data);
             },function(err){
-                calback(err,null);
+            	console.log("userData err"+err);
+                callback(err,null);
             });
         },Projects:function(token,user,callback){
             console.log("obtiene proyectos");
