@@ -55,7 +55,7 @@ var app = (function () {
         		contador+=1;
         	});
         	var ent = (contador!=1);
-        	while(contador!=1 && contador!=3){
+        	while(contador!=1 && contador!=4){
         		row.append("<div class='col'></div>");
         		contador+=1;
         	}
@@ -114,6 +114,17 @@ var app = (function () {
         	}else{
         		apiclient.registrarPryecto(sessionStorage.getItem("token"),sessionStorage.getItem("username"),nombre,false);
         	}
+        },draw:function(event){
+        	console.log(event);
+        	var canv = $("#dib");
+        	var clase = $("<div style='width:200px; height:50px; background:black'></div>");
+        	clase.css("position","absolute");
+        	clase.css("left",event.pageX+"px");
+        	clase.css("top",event.pageY+"px");
+        	clase.draggable({containment:"parent"});
+        	console.log(event.clientX);
+        	console.log(event.clientY);
+        	canv.append(clase);
         }
     }
 
