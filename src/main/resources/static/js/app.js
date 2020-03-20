@@ -66,6 +66,13 @@ var app = (function () {
         	
         }
     };
+    var redirProyecto = function(err){
+    	if(err!=null){
+    		alert("No se pudo registrar");
+    	}else{
+    		location.href = "modelo.html";
+    	}
+    }
     return {
         registrarse: function(user, email, password, event) {
             event.preventDefault();
@@ -110,9 +117,9 @@ var app = (function () {
         },registrarProyecto(nombre,publico){
         	console.log(nombre,publico);
         	if(publico=="on"){
-        		apiclient.registrarPryecto(sessionStorage.getItem("token"),sessionStorage.getItem("username"),nombre,true);
+        		apiclient.registrarPryecto(sessionStorage.getItem("token"),sessionStorage.getItem("username"),nombre,true,redirProyecto);
         	}else{
-        		apiclient.registrarPryecto(sessionStorage.getItem("token"),sessionStorage.getItem("username"),nombre,false);
+        		apiclient.registrarPryecto(sessionStorage.getItem("token"),sessionStorage.getItem("username"),nombre,false,redirProyecto);
         	}
         },draw:function(event){
         	console.log(event);
@@ -122,6 +129,9 @@ var app = (function () {
         	clase.css("left",event.pageX+"px");
         	clase.css("top",event.pageY+"px");
         	clase.draggable({containment:"parent"});
+        	clase.click(function(ev){
+        		ev.stopPropagation();
+        	});
         	console.log(event.clientX);
         	console.log(event.clientY);
         	canv.append(clase);

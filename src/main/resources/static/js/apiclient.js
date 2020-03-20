@@ -59,7 +59,7 @@ var apiclient = (function () {
             },function(err){
                 callback(err,null);
             });
-        },registrarPryecto:function(token,username,nombreProyecto,publico){
+        },registrarPryecto:function(token,username,nombreProyecto,publico,callback){
         	var json = {"nombre":nombreProyecto,"publico":publico};
         	var promesa = $.post({
         		url:"https://class-modeler.herokuapp.com/projectapi/"+username+"/project",
@@ -68,9 +68,9 @@ var apiclient = (function () {
         		contentType:"application/json"
         	});
         	promesa.then(function(){
-        		alert("success");
+        		callback(null);
         	},function(err){
-        		console.log(err);
+        		callback(err);
         	});
         }
     }
