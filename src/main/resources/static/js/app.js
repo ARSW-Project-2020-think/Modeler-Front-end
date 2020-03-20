@@ -38,6 +38,7 @@ var app = (function () {
         		if(contador==1){
         			row = $("<div class='row'></div>");
         		}
+        		console.log(contador);
         		var div = $("<div class='col'></div>");
         		div.append("<div class='card text-white bg-dark mb-3' style='width: 18rem;'>"+
         					"<div class='card-body'>"+
@@ -57,6 +58,7 @@ var app = (function () {
         	var ent = (contador!=1);
         	while(contador!=1 && contador!=4){
         		row.append("<div class='col'></div>");
+        		console.log(contador);
         		contador+=1;
         	}
         	if(ent){
@@ -114,7 +116,8 @@ var app = (function () {
                 return ;
             }
         	apiclient.userData(sessionStorage.getItem("token"),updateView);
-        },registrarProyecto(nombre,publico){
+        },registrarProyecto(nombre){
+        	var publico = $("input[id='publico']:checked").val();
         	console.log(nombre,publico);
         	if(publico=="on"){
         		apiclient.registrarPryecto(sessionStorage.getItem("token"),sessionStorage.getItem("username"),nombre,true,redirProyecto);
