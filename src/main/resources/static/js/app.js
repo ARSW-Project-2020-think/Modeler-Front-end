@@ -126,17 +126,28 @@ var app = (function () {
         	}
         },draw:function(event){
         	console.log(event);
+        	event.stopPropagation();
         	var canv = $("#dib");
-        	var clase = $("<div style='width:200px; height:50px; background:black'></div>");
+        	var clase = $("<div style='width:200px; height:50px; background:black; margin:0px; padding:0px;'></div>");
         	clase.css("position","absolute");
-        	clase.css("left",event.pageX+"px");
+        	clase.css("left",(event.pageX)+"px");
         	clase.css("top",event.pageY+"px");
-        	clase.draggable({containment:"parent"});
+        	console.log("X: "+event.pageX);
+        	console.log("Y: "+event.pageY);
+        	clase.draggable({containment:"parent",
+        		drag:function(drev){
+        			//Send to Socket
+        			var y = $(this).css("top");
+        			var x = $(this).css("left");
+        			console.log("X: "+x);
+        			console.log("Y: "+y);
+        			}
+        	});
         	clase.click(function(ev){
         		ev.stopPropagation();
         	});
-        	console.log(event.clientX);
-        	console.log(event.clientY);
+        	console.log(event.pageX);
+        	console.log(event.pageY);
         	canv.append(clase);
         }
     }
