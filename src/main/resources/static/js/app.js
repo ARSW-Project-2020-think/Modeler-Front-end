@@ -44,7 +44,7 @@ var app = (function () {
         					"<div class='card-body'>"+
         					"<h5 class='card-title'>"+proyecto.nombre+"</h5>"+
         					"<p class='card-text' style='color:white;'>Publico: "+proyecto.publico+"</p>"+
-        					"<a href='#' class='btn btn-primary'>Ver</a>"+
+        					"<a href='version.html' class='btn btn-primary'>Ver</a>"+
     			"</div>"+
   				"</div>");
         		row.append(div);
