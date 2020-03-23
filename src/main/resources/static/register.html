@@ -26,6 +26,8 @@
 	<link rel="stylesheet" type="text/css" href="css/util.css">
 	<link rel="stylesheet" type="text/css" href="css/main.css">	
 <!--===============================================================================================-->
+	<script src="https://code.jquery.com/jquery-1.9.1.min.js"></script>
+	<script src="js/validar.js"></script>
 	<script src="js/apiclient.js"></script>
 	<script src="js/app.js"></script>
 
@@ -41,7 +43,7 @@
 					</span>
 					<br><br>
 
-					<div class="wrap-input100">
+					<div class="wrap-input100 validate-input" data-validate="Este campo es obligatorio">
 						<input id = "idUsuario" class="input100" type="text" name="user">
 						<span class="focus-input100" data-placeholder="Usuario"></span>
 					</div>
@@ -54,24 +56,27 @@
 					<div class="wrap-input100 validate-input" data-validate="Ingresa Contraseña">
 						<span class="btn-show-pass">
 							<i class="zmdi zmdi-eye"></i>
-						</span>
+						</span>	
 						<input id = "idPassword" class="input100" type="password" name="pass">
 						<span class="focus-input100" data-placeholder="Contraseña"></span>
+						<div id = "idConfirmacion"> </div>
 					</div>					
 
 					<div class="wrap-input100 validate-input" data-validate="Ingresa Contraseña">
 						<span class="btn-show-pass">
 							<i class="zmdi zmdi-eye"></i>
 						</span>
+						
 						<input id = "idPassword2" class="input100" type="password" name="pass">
 						<span class="focus-input100" data-placeholder="Confirmar contraseña"></span>
+						<div id = "idConfirmacion2"> </div>	
 					</div>
 
 
 					<div class="container-login100-form-btn">
 						<div class="wrap-login100-form-btn">
 							<div class="login100-form-bgbtn"></div>
-							<button class="login100-form-btn" onclick="app.registrarse($('#idUsuario').val(), $('#idEmail').val(), $('#idPassword').val(), event)">
+							<button class="login100-form-btn" onclick="validar.registrarse($('#idUsuario').val(), $('#idEmail').val(), $('#idPassword').val(), event)">
 								Registrarse
 							</button>
 						</div>
