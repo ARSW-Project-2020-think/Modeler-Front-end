@@ -122,6 +122,15 @@ var app = (function () {
     	}
     	console.log("añade");
     	$("#models").append(cont);
+    };
+    var redirectModel = function(error,usuario,proyecto,version,nombre){
+    	if(error!=null){
+    		alert("No se pudo registrar");
+    		return ;
+    	}
+    	location.href = "modelo.html?usuario="+usuario+"&&proyecto="+proyecto+"&&version="+version+"&&modelo="+nombre;
+    	
+    	
     }
     return {
         registrarse: function(user, email, password, event) {
