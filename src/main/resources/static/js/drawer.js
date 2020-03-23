@@ -32,6 +32,29 @@ var draw = (function(){
 			return;
 		}
 		console.log(data);
+		var canv = $("#dib");
+		data.forEach(function(rectangulo){
+			var clase = $("<div style='width:"+rectangulo.ancho+"px; height:"+rectangulo.alto+"px; background:black; margin:0px; color:white; text-align:center; padding:0px;'></div>");
+			clase.css("position","relative");
+			clase.text(rectangulo.nombre);
+			clase.css("left",(rectangulo.x-11)+"px");
+	    	clase.css("top",rectangulo.y-(50*clases.length)+"px");
+	    	clase.click(function(ev){
+	    		ev.stopPropagation();
+	    	});
+	    	clase.draggable({containment:"parent",
+	    		drag:function(drev){
+	    			//Send to Socket
+	    			var y = $(this).css("top");
+	    			var x = $(this).css("left");
+	    			console.log("X: "+x);
+	    			console.log("Y: "+y);
+	    			}
+	    	});
+	    	clases.push(rectangulo);
+	    	canv.append(clase);
+			
+		});
 	}
 	return {
 		draw:function(event){
