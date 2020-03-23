@@ -68,9 +68,55 @@ var apiclient = (function () {
         		contentType:"application/json"
         	});
         	promesa.then(function(){
-        		callback(null);
+        		callback(null,nombreProyecto);
         	},function(err){
-        		callback(err);
+        		callback(err,null);
+        	});
+        },getModels:function(usuario,proyecto,version,token,callback){
+        	var promise = $.get({
+        		url:"https://class-modeler.herokuapp.com/projectapi/"+usuario+"/project/"+proyecto+"/version/"+version+"/modelo",
+        		headers:{"Authorization":token}
+        	});
+        	promise.then(function(data){
+        		callback(null,data);
+        	},function(error){
+        		callback(error,null);
+        	});
+        },registrarModelo:function(usuario,proyecto,version,nombre,tipo,token,callback){
+        	var obj = {"nombre":nombre,"tipo":tipo};
+        	var promise = $.post({
+        		url:"https://class-modeler.herokuapp.com/projectapi/"+usuario+"/project/"+proyecto+"/version/"+version+"/modelo",
+        		data:JSON.stringify(obj),
+        		contentType:"application/json",
+        		headers:{"Authorization":token}
+        	});
+        	promise.then(function(){
+        		callback(null,usuario,proyecto,version,nombre);
+        	},function(err){
+        		callback(err,null,null,null,null);
+        	})
+        },registrarRectangulo:function(usuario,proyecto,version,modelo,token,rectangulo,callback){
+        	var promise = $.post({
+        		url:"https://class-modeler.herokuapp.com/projectapi/"+usuario+"/project/"+proyecto+"/version/"+version+"/modelo/"+modelo+"/rectangle",
+        		data:JSON.stringify(rectangulo),
+        		headers:{"Authorization":token},
+        		contentType:"application/json"
+        	});
+        	promise.then(function(){
+        		callback(null,rectangulo);
+        	},function(err){
+        		console.log(err);
+        		callback(err,null);
+        	});
+        },getRectangulos(usuario,proyecto,version,modelo,token,callback){
+        	var promise = $.get({
+        		url:"https://class-modeler.herokuapp.com/projectapi/"+usuario+"/project/"+proyecto+"/version/"+version+"/modelo/"+modelo,
+        		headers:{"Authorization":token},
+        	});
+        	promise.then(function(data){
+        		callback(null,data.rectangulos);
+        	},function(err){
+        		callback(err,null);
         	});
         }
     }

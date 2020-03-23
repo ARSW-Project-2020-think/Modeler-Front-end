@@ -31,7 +31,7 @@
 	<script type="text/javascript" src="js/apiclient.js"></script>
 	<script type="text/javascript" src="js/app.js"></script>
 </head>
-<body style="background: -webkit-linear-gradient(left, rgba(0,168,255,0.5), rgba(185,0,255,0.5));" >
+<body onload="app.redirectValidation()" style="background: -webkit-linear-gradient(left, rgba(0,168,255,0.5), rgba(185,0,255,0.5));" >
 
 	<div class="page-wrapper chiller-theme toggled">
 		<a id="show-sidebar" class="btn btn-sm btn-dark" href="#">
@@ -74,13 +74,13 @@
 						<li class="sidebar-dropdown">
 							<a href="version.html">
 								<i class="fa fa-tachometer-alt"></i>
-								<span>Mis Diagramas</span>
+								<span>Mis Proyectos</span>
 							</a>
 						</li>
 						<li class="sidebar-dropdown">
 							<a href="RegistrarProyecto.html">
 								<i class="fa fa-tachometer-alt"></i>
-								<span>Registrar Diagrama</span>
+								<span>Registrar Proyecto</span>
 							</a>
 						</li>
 						<li class="sidebar-dropdown" onclick="app.logout()">
@@ -105,7 +105,7 @@
 					</span>
 
 						<div class="wrap-input100 validate-input" data-validate="Ingresa un nombre para el diagrama">
-							<input class="input100" type="text" name="name" id="nproyecto" placeholder="Nombre Diagrama">
+							<input class="input100" type="text" name="name" id="ndiagrama" placeholder="Nombre Diagrama">
 
 						</div>
 
@@ -121,8 +121,26 @@
 							</div>
 						</form>
 					</div>
+					<script type="text/javascript">
+						function registrar(){
+							var url = new URL(document.URL);
+							var params = url.searchParams;
+							var usuario = params.get("usuario");
+							var proyecto = params.get("proyecto");
+							var version = params.get("version");
+							var nombre = $("#ndiagrama").val();
+							var tipo = null;
+							var clases = $("input[id='clases']:checked").val();
+							if(clases=="on"){
+								tipo="clases";
+							}else{
+								tipo="uso";
+							}
+							app.registrarModelo(usuario,proyecto,version,nombre,tipo);
+						}
+					</script>
 					<div class="container-contact100-form-btn">
-						<button class="contact100-form-btn" onclick="alert('El diagrama fue creado')">
+						<button class="contact100-form-btn" onclick="registrar()">
 							Registrar Diagrama
 						</button>
 					</div>

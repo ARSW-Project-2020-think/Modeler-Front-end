@@ -44,7 +44,7 @@ var app = (function () {
         					"<div class='card-body'>"+
         					"<h5 class='card-title'>"+proyecto.nombre+"</h5>"+
         					"<p class='card-text' style='color:white;'>Publico: "+proyecto.publico+"</p>"+
-        					"<a href='version.html' class='btn btn-primary'>Ver</a>"+
+        					"<a href='version.html?usuario="+sessionStorage.getItem("username")+"&&version="+1+"&&proyecto="+proyecto.nombre+"' class='btn btn-primary'>Ver</a>"+
     			"</div>"+
   				"</div>");
         		row.append(div);
@@ -68,12 +68,60 @@ var app = (function () {
         	
         }
     };
-    var redirProyecto = function(err){
+    var redirProyecto = function(err,nombre){
     	if(err!=null){
     		alert("No se pudo registrar");
     	}else{
-    		location.href = "modelo.html";
+    		location.href = "version.html?version=1&&usuario="+sessionStorage.getItem("username")+"&&proyecto="+nombre;
     	}
+    };
+    var showModels = function(error,data){
+    	if(error!=null){
+    		return;
+    	}
+    	if(data.length==0){
+    		$("#models").html("<h1>No tienes diagramas crea uno nuevo para iniciar.</h1>");
+    		return;
+    	}
+    	console.log(data);
+    	var cont = $("<div class='container'></div>");
+    	var contador =1;
+    	var row = null;
+    	data.forEach(function(modelo){
+    		if(contador==1){
+    			row = $("<div class='row'></div>");
+    		}
+    		var url = new URL(document.URL);
+    		var param = url.searchParams;
+    		console.log(contador);
+    		var div = $("<div class='col'></div>");
+    		div.append("<div class='card text-white bg-dark mb-3' style='width: 18rem;'>"+
+    					"<div class='card-body'>"+
+    					"<h5 class='card-title'>"+modelo.nombre+"</h5>"+
+    					"<p class='card-text' style='color:white;'>Publico: "+modelo.tipo+"</p>"+
+    					"<a href='modelo.html?usuario="+sessionStorage.getItem("username")+"&&version="+param.get("version")+"&&proyecto="+param.get("proyecto")+"&&modelo="+modelo.nombre+"' class='btn btn-primary'>Ver</a>"+
+			"</div>"+
+				"</div>");
+    		row.append(div);
+    		
+    		if(contador==3){
+    			contador=0;
+    			cont.append(row);
+    		}
+    		contador+=1;
+    		console.log("foreach");
+    	});
+    	var ent = (contador!=1);
+    	while(contador!=1 && contador!=4){
+    		row.append("<div class='col'></div>");
+    		console.log(contador);
+    		contador+=1;
+    	}
+    	if(ent){
+    		cont.append(row);
+    	}
+    	console.log("añade");
+    	$("#models").append(cont);
     }
     return {
         registrarse: function(user, email, password, event) {
@@ -110,46 +158,31 @@ var app = (function () {
         },logout:function(){
         	sessionStorage.clear();
         	location.href = "login.html";
-        },redirectValidation(){
+        },redirectValidation:function(){
         	if(sessionStorage.getItem("email")==null){
                 location.href = "login.html";
                 return ;
             }
         	apiclient.userData(sessionStorage.getItem("token"),updateView);
-        },registrarProyecto(nombre){
+        },loadModel:function(usuario,proyecto,version){
+        	apiclient.getModels(usuario,proyecto,version,sessionStorage.getItem("token"),showModels);
+        }
+        ,registrarProyecto(nombre){
         	var publico = $("input[id='publico']:checked").val();
         	console.log(nombre,publico);
+        	if(nombre==null || nombre==""){
+        		alert("El nombre no puede ser vacio");
+        		return;
+        	}
         	if(publico=="on"){
         		apiclient.registrarPryecto(sessionStorage.getItem("token"),sessionStorage.getItem("username"),nombre,true,redirProyecto);
         	}else{
         		apiclient.registrarPryecto(sessionStorage.getItem("token"),sessionStorage.getItem("username"),nombre,false,redirProyecto);
         	}
-        },draw:function(event){
-        	console.log(event);
-        	event.stopPropagation();
-        	var canv = $("#dib");
-        	var clase = $("<div style='width:200px; height:50px; background:black; margin:0px; padding:0px;'></div>");
-        	clase.css("position","absolute");
-        	clase.css("left",(event.pageX)+"px");
-        	clase.css("top",event.pageY+"px");
-        	console.log("X: "+event.pageX);
-        	console.log("Y: "+event.pageY);
-        	clase.draggable({containment:"parent",
-        		drag:function(drev){
-        			//Send to Socket
-        			var y = $(this).css("top");
-        			var x = $(this).css("left");
-        			console.log("X: "+x);
-        			console.log("Y: "+y);
-        			}
-        	});
-        	clase.click(function(ev){
-        		ev.stopPropagation();
-        	});
-        	console.log(event.pageX);
-        	console.log(event.pageY);
-        	canv.append(clase);
+        },registrarModelo:function(usuario,proyecto,version,nombre,tipo){
+        	apiclient.registrarModelo(usuario,proyecto,version,nombre,tipo,sessionStorage.getItem("token"),redirectModel);
         }
+        
     }
 
 
