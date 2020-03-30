@@ -25,12 +25,12 @@
 			var url = new URL(document.URL);
 			var params = url.searchParams;
 			app.redirectValidation();
-			app.loadModel(sessionStorage.getItem("username"),params.get("proyecto"),params.get("version"));
+			app.loadModel(params.get("usuario"),params.get("proyecto"),params.get("version"));
 		}
 		function reg(){
 			var url = new URL(document.URL);
 			var params = url.searchParams;
-			location.href="RegistrarDiagrama.html?usuario="+sessionStorage.getItem("username")+"&&proyecto="+params.get("proyecto")+"&&version="+params.get("version");
+			location.href="RegistrarDiagrama.html?usuario="+params.get("usuario")+"&&proyecto="+params.get("proyecto")+"&&version="+params.get("version");
 		}
 	</script>
 </head>

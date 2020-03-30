@@ -71,12 +71,12 @@ var draw = (function(){
         	var rectangulo = {"x":x,"y":y,"ancho":200,"alto":50,"nombre":val};
         	var url = new URL(document.URL);
         	var params = url.searchParams;
-        	apiclient.registrarRectangulo(sessionStorage.getItem("username"),params.get("proyecto"),params.get("version"),params.get("modelo"),sessionStorage.getItem("token"),rectangulo,createRectangle);
+        	apiclient.registrarRectangulo(params.get("usuario"),params.get("proyecto"),params.get("version"),params.get("modelo"),sessionStorage.getItem("token"),rectangulo,createRectangle);
         	$("#clasen").val("");
         },getRectangulos(){
         	var url = new URL(document.URL);
         	var params = url.searchParams;
-        	apiclient.getRectangulos(sessionStorage.getItem("username"),params.get("proyecto"),params.get("version"),params.get("modelo"),sessionStorage.getItem("token"),drawClases);
+        	apiclient.getRectangulos(params.get("usuario"),params.get("proyecto"),params.get("version"),params.get("modelo"),sessionStorage.getItem("token"),drawClases);
         }
 	};
 })();

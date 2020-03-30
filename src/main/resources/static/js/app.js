@@ -29,7 +29,7 @@ var app = (function () {
         } 
         console.log(data);
         if(data.length==0){
-        	$("#cont").html("<h1>No tienes actualemnete proyectos, crea uno nuevo</h1>");
+        	$("#cont").html("<h1>Actualmente No hay proyectos que mostrar</h1>");
         }else{
         	var cont = $("<div class='container'></div>");
         	var contador =1;
@@ -44,7 +44,7 @@ var app = (function () {
         					"<div class='card-body'>"+
         					"<h5 class='card-title'>"+proyecto.nombre+"</h5>"+
         					"<p class='card-text' style='color:white;'>Publico: "+proyecto.publico+"</p>"+
-        					"<a href='version.html?usuario="+sessionStorage.getItem("username")+"&&version="+1+"&&proyecto="+proyecto.nombre+"' class='btn btn-primary'>Ver</a>"+
+        					"<a href='version.html?usuario="+proyecto.autor.username+"&&version="+1+"&&proyecto="+proyecto.nombre+"' class='btn btn-primary'>Ver</a>"+
         					"<a href='compartir.html?proyecto="+proyecto.nombre+"' class='btn btn-primary'>Compartir</a>"+
     			"</div>"+
   				"</div>");
@@ -99,7 +99,7 @@ var app = (function () {
     					"<div class='card-body'>"+
     					"<h5 class='card-title'>"+modelo.nombre+"</h5>"+
     					"<p class='card-text' style='color:white;'>Publico: "+modelo.tipo+"</p>"+
-    					"<a href='modelo.html?usuario="+proyecto.autor.username+"&&version="+param.get("version")+"&&proyecto="+param.get("proyecto")+"&&modelo="+modelo.nombre+"' class='btn btn-primary'>Ver</a>"+
+    					"<a href='modelo.html?usuario="+param.get("usuario")+"&&version="+param.get("version")+"&&proyecto="+param.get("proyecto")+"&&modelo="+modelo.nombre+"' class='btn btn-primary'>Ver</a>"+
 			"</div>"+
 				"</div>");
     		row.append(div);
