@@ -31,9 +31,16 @@
 	<script type="text/javascript" src="bar.js"></script>
 	<script src="js/app.js"></script>
 	<script src="js/apiclient.js"></script>
-
+	<script type="text/javascript">
+	function loadPage(){
+		app.redirectValidation();
+		var username = sessionStorage.getItem("username");
+		app.loadProyectosCompartidos(username);
+	}
+	
+	</script>
 </head>
-<body class="container-contact100" onload="app.loadPage()">
+<body class="container-contact100" onload="loadPage()">
 	<div class="page-wrapper chiller-theme toggled">
 		<a id="show-sidebar" class="btn btn-sm btn-dark" href="#">
 		  <i class="fas fa-bars"></i>
@@ -106,5 +113,3 @@
   		</main>
 </body>
 </html>
-
-

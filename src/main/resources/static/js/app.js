@@ -45,10 +45,10 @@ var app = (function () {
         					"<h5 class='card-title'>"+proyecto.nombre+"</h5>"+
         					"<p class='card-text' style='color:white;'>Publico: "+proyecto.publico+"</p>"+
         					"<a href='version.html?usuario="+sessionStorage.getItem("username")+"&&version="+1+"&&proyecto="+proyecto.nombre+"' class='btn btn-primary'>Ver</a>"+
+        					"<a href='compartir.html?proyecto="+proyecto.nombre+"' class='btn btn-primary'>Compartir</a>"+
     			"</div>"+
   				"</div>");
         		row.append(div);
-        		
         		if(contador==3){
         			contador=0;
         			cont.append(row);
@@ -99,7 +99,7 @@ var app = (function () {
     					"<div class='card-body'>"+
     					"<h5 class='card-title'>"+modelo.nombre+"</h5>"+
     					"<p class='card-text' style='color:white;'>Publico: "+modelo.tipo+"</p>"+
-    					"<a href='modelo.html?usuario="+sessionStorage.getItem("username")+"&&version="+param.get("version")+"&&proyecto="+param.get("proyecto")+"&&modelo="+modelo.nombre+"' class='btn btn-primary'>Ver</a>"+
+    					"<a href='modelo.html?usuario="+proyecto.autor.username+"&&version="+param.get("version")+"&&proyecto="+param.get("proyecto")+"&&modelo="+modelo.nombre+"' class='btn btn-primary'>Ver</a>"+
 			"</div>"+
 				"</div>");
     		row.append(div);
@@ -129,8 +129,13 @@ var app = (function () {
     		return ;
     	}
     	location.href = "modelo.html?usuario="+usuario+"&&proyecto="+proyecto+"&&version="+version+"&&modelo="+nombre;
-    	
-    	
+    };
+    var colaborator=function(err){
+    	if(err!=null){
+    		alert("No fue posible añadir dicho colaborador");
+    		return ;
+    	}
+    	alert("Fue añadido satisfactoriamente dicho colaborador");
     }
     return {
         registrarse: function(user, email, password, event) {
@@ -190,6 +195,10 @@ var app = (function () {
         	}
         },registrarModelo:function(usuario,proyecto,version,nombre,tipo){
         	apiclient.registrarModelo(usuario,proyecto,version,nombre,tipo,sessionStorage.getItem("token"),redirectModel);
+        },addColaborador:function(username,colaborador,proyecto){
+        	apiclient.addColaborador(username,colaborador,proyecto,sessionStorage.getItem("token"),colaborator);
+        },loadProyectosCompartidos:function(username){
+        	apiclient.loadProyectosCompartidos(username,sessionStorage.getItem("token"),updateProjects);
         }
         
     }

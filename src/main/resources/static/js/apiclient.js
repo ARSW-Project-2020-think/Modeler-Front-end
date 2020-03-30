@@ -118,6 +118,28 @@ var apiclient = (function () {
         	},function(err){
         		callback(err,null);
         	});
+        },addColaborador:function(username,colaborador,proyecto,token,callback){
+        	var promise = $.ajax({
+        		type:"PUT",
+        		url:"https://class-modeler.herokuapp.com/projectapi/"+username+"/share/"+colaborador+"/project/"+proyecto,
+        		headers:{"Authorization":token}
+        	});
+        	console.log("url: "+"https://class-modeler.herokuapp.com/projectapi/"+username+"/share/"+colaborador+"/project/"+proyecto);
+        	promise.then(function(){
+        		callback(null);
+        	},function(err){
+        		callback(err);
+        	});
+        },loadProyectosCompartidos:function(user,token,callback){
+        	var promise = $.get({
+        		url:"http://localhost:8080/projectapi/"+user+"/projectshared",
+        		headers:{"Authorization":token}
+        	});
+        	promise.then(function(data){
+        		callback(null,data);
+        	},function(err){
+        		callback(err,null);
+        	})
         }
     }
 })();
