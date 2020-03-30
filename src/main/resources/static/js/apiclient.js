@@ -132,7 +132,7 @@ var apiclient = (function () {
         	});
         },loadProyectosCompartidos:function(user,token,callback){
         	var promise = $.get({
-        		url:"http://localhost:8080/projectapi/"+user+"/projectshared",
+        		url:"https://class-modeler.herokuapp.com/projectapi/"+user+"/projectshared",
         		headers:{"Authorization":token}
         	});
         	promise.then(function(data){
