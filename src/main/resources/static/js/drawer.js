@@ -1,5 +1,8 @@
 var draw = (function(){
 	var clases = [];
+	var stompClient = null;
+	var idModelo = null; 
+	var url = "https://class-modeler.herokuapp.com";
 	var createRectangle = function(error,rectangulo){
 		if(error!=null){
 			alert("No fue posible registrar la nueva clase");
@@ -33,7 +36,8 @@ var draw = (function(){
 		}
 		console.log(data);
 		var canv = $("#dib");
-		data.forEach(function(rectangulo){
+		loadSocket(data.id);
+		data.rectangulos.forEach(function(rectangulo){
 			var clase = $("<div style='width:"+rectangulo.ancho+"px; height:"+rectangulo.alto+"px; background:black; margin:0px; color:white; text-align:center; padding:0px;'></div>");
 			clase.css("position","relative");
 			clase.text(rectangulo.nombre);
@@ -55,7 +59,21 @@ var draw = (function(){
 	    	canv.append(clase);
 			
 		});
-	}
+	};
+	var loadSocket = function(id){
+		idModelo = id;
+		console.log(idModelo);
+		console.log(url+'/modeler');
+		var socket = new SockJS(url+'/modeler');
+        stompClient = Stomp.over(socket);
+        stompClient.connect({}, function (frame) {
+            console.log('Connected: ' + frame);
+            stompClient.subscribe('/shape/rectangulo/modelo.'+id, function (eventbody) {
+            	alert("recibio algo");
+            	drawClases(null,{rectangulos:[JSON.parse(eventbody.body)]});
+            });
+        });
+	};
 	return {
 		draw:function(event){
         	console.log(event);
@@ -71,7 +89,9 @@ var draw = (function(){
         	var rectangulo = {"x":x,"y":y,"ancho":200,"alto":50,"nombre":val};
         	var url = new URL(document.URL);
         	var params = url.searchParams;
-        	apiclient.registrarRectangulo(params.get("usuario"),params.get("proyecto"),params.get("version"),params.get("modelo"),sessionStorage.getItem("token"),rectangulo,createRectangle);
+        	console.log
+        	stompClient.send("/shape/rectangulo/modelo."+idModelo,{},JSON.stringify(rectangulo));
+        	//apiclient.registrarRectangulo(params.get("usuario"),params.get("proyecto"),params.get("version"),params.get("modelo"),sessionStorage.getItem("token"),rectangulo,createRectangle);
         	$("#clasen").val("");
         },getRectangulos(){
         	var url = new URL(document.URL);

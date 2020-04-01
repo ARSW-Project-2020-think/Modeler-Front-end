@@ -114,7 +114,7 @@ var apiclient = (function () {
         		headers:{"Authorization":token},
         	});
         	promise.then(function(data){
-        		callback(null,data.rectangulos);
+        		callback(null,data);
         	},function(err){
         		callback(err,null);
         	});
