@@ -64,12 +64,11 @@ var draw = (function(){
 	var loadSocket = function(id){
 		idModelo = id;
 		console.log(idModelo);
-		console.log(url+'/modeler');
 		var socket = new SockJS(url+'/modeler');
         stompClient = Stomp.over(socket);
         stompClient.connect({}, function (frame) {
             console.log('Connected: ' + frame);
-            stompClient.subscribe('/shape/rectangulo/modelo.'+idModelo, function (eventbody) {
+            stompClient.subscribe('/shape/newrectangle.'+idModelo, function (eventbody) {
             	alert("recibio algo");
             	drawClases(null,{rectangulos:[JSON.parse(eventbody.body)]});
             });
@@ -91,7 +90,7 @@ var draw = (function(){
         	var url = new URL(document.URL);
         	var params = url.searchParams;
         	console.log
-        	stompClient.send("/figure/rectangulo/modelo."+idModelo,{},JSON.stringify(rectangulo));
+        	stompClient.send("/app/newrectangle."+idModelo,{},JSON.stringify(rectangulo));
         	//apiclient.registrarRectangulo(params.get("usuario"),params.get("proyecto"),params.get("version"),params.get("modelo"),sessionStorage.getItem("token"),rectangulo,createRectangle);
         	$("#clasen").val("");
         },getRectangulos(){
