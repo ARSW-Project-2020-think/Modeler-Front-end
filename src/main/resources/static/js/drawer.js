@@ -69,7 +69,7 @@ var draw = (function(){
         stompClient = Stomp.over(socket);
         stompClient.connect({}, function (frame) {
             console.log('Connected: ' + frame);
-            stompClient.subscribe('/shape/rectangulo/modelo.'+id, function (eventbody) {
+            stompClient.subscribe('/shape/rectangulo/modelo.'+idModelo, function (eventbody) {
             	alert("recibio algo");
             	drawClases(null,{rectangulos:[JSON.parse(eventbody.body)]});
             });
@@ -91,7 +91,7 @@ var draw = (function(){
         	var url = new URL(document.URL);
         	var params = url.searchParams;
         	console.log
-        	stompClient.send("/shape/rectangulo/modelo."+idModelo,{},JSON.stringify(rectangulo));
+        	stompClient.send("/figure/rectangulo/modelo."+idModelo,{},JSON.stringify(rectangulo));
         	//apiclient.registrarRectangulo(params.get("usuario"),params.get("proyecto"),params.get("version"),params.get("modelo"),sessionStorage.getItem("token"),rectangulo,createRectangle);
         	$("#clasen").val("");
         },getRectangulos(){
