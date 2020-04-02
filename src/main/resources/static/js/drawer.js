@@ -37,7 +37,9 @@ var draw = (function(){
 		console.log(data);
 		var canv = $("#dib");
 		console.log(data.id);
-		loadSocket(data.id);
+		if(stompClient==null){
+			loadSocket(data.id);
+		}
 		data.rectangulos.forEach(function(rectangulo){
 			var clase = $("<div style='width:"+rectangulo.ancho+"px; height:"+rectangulo.alto+"px; background:black; margin:0px; color:white; text-align:center; padding:0px;'></div>");
 			clase.css("position","relative");
