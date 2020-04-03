@@ -56,7 +56,7 @@ var draw = (function(){
         stompClient.connect({}, function (frame) {
             console.log('Connected: ' + frame);
             stompClient.subscribe('/shape/newrectangle.'+idModelo, function (eventbody) {
-            	alert("recibio algo");
+            	//alert("recibio algo");
             	drawClases(null,{rectangulos:[JSON.parse(eventbody.body)]});
             });
             stompClient.subscribe('/shape/updaterectangle.'+idModelo, function (eventbody) {
