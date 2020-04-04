@@ -17,7 +17,7 @@ var draw = (function(){
 			loadSocket(data.id);
 		}
 		data.rectangulos.forEach(function(rectangulo){
-			var clase = $("<div style='width:"+rectangulo.ancho+"px; height:"+rectangulo.alto+"px; background:black; margin:0px; color:white; text-align:center; padding:0px;' id='"+clases.length+"'></div>");
+			var clase = $("<div style=' width:"+rectangulo.ancho+"px; height:"+rectangulo.alto+"px; background:black; margin:0px; color:white; text-align:center; padding:0px;' id='"+clases.length+"'></div>");
 			clase.css("position","relative");
 			clase.text(rectangulo.nombre);
 			clase.css("left",(rectangulo.x-11)+"px");
@@ -45,8 +45,41 @@ var draw = (function(){
 	    	clases.push(rectangulo);
 	    	cont.push(clase);
 	    	canv.append(clase);
-			
 		});
+		//var line = createLine(0,0,200,5);
+		//canv.append(line);
+		//line = createLine(0,0,100,100);
+		//canv.append(line);
+		//line = createLine(0,0,1000,112);
+		//canv.append(line);
+		//line = createLine(0,0,2000,112);
+		//canv.append(line);
+	};
+	var createLineElement =function(x, y, length, angle) {
+	    var line = $("<div></div>");
+	    line.css("border","1px solid blue");
+	    line.css("width",length + 'px');
+	    line.css("height",'0px');
+	    line.css("position",'relative');
+	    line.css("transform","rotate(" + angle + "rad)");
+	    line.css("top",y+(-50*clases.length)+"px");
+	    line.css("left",(x-11)+"px");
+	    return line;
+	};
+
+	var createLine =function(x1, y1, x2, y2) {
+	    var a = x1 - x2,
+	        b = y1 - y2,
+	        c = Math.sqrt(a * a + b * b);
+
+	    var sx = (x1 + x2) / 2,
+	        sy = (y1 + y2) / 2;
+
+	    var x = sx - c / 2,
+	        y = sy;
+
+	    var alpha = Math.PI - Math.atan2(-b, a);
+	    return createLineElement(x, y, c, alpha);
 	};
 	var loadSocket = function(id){
 		idModelo = id;
