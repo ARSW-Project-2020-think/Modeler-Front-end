@@ -145,6 +145,13 @@ var draw = (function(){
             	obj.attr("id","line"+linea.id);
             	$("#dib").append(obj);
             });
+            stompClient.subscribe('/shape/updateline.'+idModelo, function (eventbody) {
+            	var linea = JSON.parse(eventbody.body);
+            	$("#line"+linea.id).remove();
+            	var obj = createLine(linea.x1,linea.y1,linea.x2,linea.y2);
+            	obj.attr("id","line"+linea.id);
+            	$("#dib").append(obj);
+            });
         });
 	};
 	var updateRectangle = function(rect){
