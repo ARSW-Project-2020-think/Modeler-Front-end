@@ -20,14 +20,6 @@ var draw = (function(){
 		if(stompClient==null){
 			loadSocket(data.id);
 		}
-		data.lineas.forEach(function(linea){
-			console.log(linea);
-			lines.push(linea);
-        	console.log("recibio linea");
-        	var obj = createLine(linea.x1,linea.y1,linea.x2,linea.y2);
-        	obj.attr("id","line"+linea.id);
-        	canv.append(obj);
-		});
 		data.rectangulos.forEach(function(rectangulo){
 			var clase = $("<div style='z-index:9000; width:"+rectangulo.ancho+"px; height:"+rectangulo.alto+"px; background:black; margin:0px; color:white; text-align:center; padding:0px;' id='"+clases.length+"'></div>");
 			clase.css("position","relative");
@@ -128,6 +120,7 @@ var draw = (function(){
             console.log('Connected: ' + frame);
             stompClient.subscribe('/shape/newrectangle.'+idModelo, function (eventbody) {
             	//alert("recibio algo");
+            	console.log(JSON.parse(eventbody.body));
             	drawClases(null,{rectangulos:[JSON.parse(eventbody.body)]});
             });
             stompClient.subscribe('/shape/updaterectangle.'+idModelo, function (eventbody) {
