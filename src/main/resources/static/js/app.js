@@ -57,11 +57,13 @@ var app = (function () {
         	});
         	var ent = (contador!=1);
         	while(contador!=1 && contador!=4){
+        		console.log("row added");
         		row.append("<div class='col'></div>");
         		console.log(contador);
         		contador+=1;
         	}
         	if(ent){
+        		console.log("entro");
         		cont.append(row);
         	}
         	$("#cont").append(cont);

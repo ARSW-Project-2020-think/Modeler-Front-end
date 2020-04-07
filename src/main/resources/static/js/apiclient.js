@@ -1,9 +1,10 @@
 var apiclient = (function () {
     var userSelect = null;
+    var urlapi = "https://class-modeler.herokuapp.com";
     return {
         registrarse: function(newUsuario) {
             //alert("ENTRO REGISTRER");
-            var register = $.post({url:"https://class-modeler.herokuapp.com/user",
+            var register = $.post({url:urlapi+"/user",
                     data: JSON.stringify(newUsuario), contentType: "application/JSON"});
             register.then (function(){
                 //alert("correct ");
@@ -18,7 +19,7 @@ var apiclient = (function () {
             var json = {username:email,password:password};
             //console.log(JSON.stringify(json));
             var promise = $.post({
-                url:"https://class-modeler.herokuapp.com/user/login",
+                url:urlapi+"/user/login",
                 data: JSON.stringify(json),contentType: "application/json"
             });
             
@@ -35,7 +36,7 @@ var apiclient = (function () {
             console.log(token);
             var promise = $.ajax({
                 type:"GET",
-                url:"https://class-modeler.herokuapp.com/user/data",
+                url:urlapi+"/user/data",
                 headers:{"Authorization":token}
             });
             promise.then(function(data){
@@ -49,7 +50,7 @@ var apiclient = (function () {
             console.log("obtiene proyectos");
             console.log("username "+userSelect);
             var prom = $.get({
-                url:"https://class-modeler.herokuapp.com/projectapi/"+user+"/project",
+                url:urlapi+"/projectapi/"+user+"/project",
                 headers:{"Authorization":token}
             });
             prom.then(function(data){
@@ -62,7 +63,7 @@ var apiclient = (function () {
         },registrarPryecto:function(token,username,nombreProyecto,publico,callback){
         	var json = {"nombre":nombreProyecto,"publico":publico};
         	var promesa = $.post({
-        		url:"https://class-modeler.herokuapp.com/projectapi/"+username+"/project",
+        		url:urlapi+"/projectapi/"+username+"/project",
         		headers:{"Authorization":token},
         		data:JSON.stringify(json),
         		contentType:"application/json"
@@ -74,7 +75,7 @@ var apiclient = (function () {
         	});
         },getModels:function(usuario,proyecto,version,token,callback){
         	var promise = $.get({
-        		url:"https://class-modeler.herokuapp.com/projectapi/"+usuario+"/project/"+proyecto+"/version/"+version+"/modelo",
+        		url:urlapi+"/projectapi/"+usuario+"/project/"+proyecto+"/version/"+version+"/modelo",
         		headers:{"Authorization":token}
         	});
         	promise.then(function(data){
@@ -85,7 +86,7 @@ var apiclient = (function () {
         },registrarModelo:function(usuario,proyecto,version,nombre,tipo,token,callback){
         	var obj = {"nombre":nombre,"tipo":tipo};
         	var promise = $.post({
-        		url:"https://class-modeler.herokuapp.com/projectapi/"+usuario+"/project/"+proyecto+"/version/"+version+"/modelo",
+        		url:urlapi+"/projectapi/"+usuario+"/project/"+proyecto+"/version/"+version+"/modelo",
         		data:JSON.stringify(obj),
         		contentType:"application/json",
         		headers:{"Authorization":token}
@@ -97,7 +98,7 @@ var apiclient = (function () {
         	})
         },registrarRectangulo:function(usuario,proyecto,version,modelo,token,rectangulo,callback){
         	var promise = $.post({
-        		url:"https://class-modeler.herokuapp.com/projectapi/"+usuario+"/project/"+proyecto+"/version/"+version+"/modelo/"+modelo+"/rectangle",
+        		url:urlapi+"/projectapi/"+usuario+"/project/"+proyecto+"/version/"+version+"/modelo/"+modelo+"/rectangle",
         		data:JSON.stringify(rectangulo),
         		headers:{"Authorization":token},
         		contentType:"application/json"
@@ -110,7 +111,7 @@ var apiclient = (function () {
         	});
         },getRectangulos(usuario,proyecto,version,modelo,token,callback){
         	var promise = $.get({
-        		url:"https://class-modeler.herokuapp.com/projectapi/"+usuario+"/project/"+proyecto+"/version/"+version+"/modelo/"+modelo,
+        		url:urlapi+"/projectapi/"+usuario+"/project/"+proyecto+"/version/"+version+"/modelo/"+modelo,
         		headers:{"Authorization":token},
         	});
         	promise.then(function(data){
@@ -121,7 +122,7 @@ var apiclient = (function () {
         },addColaborador:function(username,colaborador,proyecto,token,callback){
         	var promise = $.ajax({
         		type:"PUT",
-        		url:"https://class-modeler.herokuapp.com/projectapi/"+username+"/share/"+colaborador+"/project/"+proyecto,
+        		url:urlapi+"/projectapi/"+username+"/share/"+colaborador+"/project/"+proyecto,
         		headers:{"Authorization":token}
         	});
         	console.log("url: "+"https://class-modeler.herokuapp.com/projectapi/"+username+"/share/"+colaborador+"/project/"+proyecto);
@@ -132,7 +133,7 @@ var apiclient = (function () {
         	});
         },loadProyectosCompartidos:function(user,token,callback){
         	var promise = $.get({
-        		url:"https://class-modeler.herokuapp.com/projectapi/"+user+"/projectshared",
+        		url:urlapi+"/projectapi/"+user+"/projectshared",
         		headers:{"Authorization":token}
         	});
         	promise.then(function(data){
