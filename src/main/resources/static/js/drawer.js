@@ -8,7 +8,17 @@ var draw = (function(){
 	var selected = null;
 	var origin = null;
 	var toaddline = false;
-	var url = "https://class-modeler.herokuapp.com";
+	//var url = "https://class-modeler.herokuapp.com";
+	var url = "http://localhost:4444";
+
+	var cambiarLinea = function() {
+		if (toaddline) {
+			$("#idLinea").text("Cancelar");
+		} else {
+			$("#idLinea").text("Linea");
+		}
+	}
+
 	var drawClases = function(err,data){
 		if(err!=null){
 			console.log("No se han podido cargar las clases, revise su conexion o contactese con el administrador");
@@ -46,6 +56,7 @@ var draw = (function(){
 		    			var x = parseInt($(this).css("left").substring(0,$(this).css("left").length-2))+11;
 		    			rectangulo.x = x;
 		    			rectangulo.y = y;
+		    			rectangulo.relaciones = [];
 		    			stompClient.send('/app/updaterectangle.'+idModelo,{},JSON.stringify(rectangulo));
 	    			}
 	    	});
@@ -70,10 +81,13 @@ var draw = (function(){
 	var createLineIntoClases = function(id1,id2){
 		var r1 = getRectangleById(id1);
 		var r2 = getRectangleById(id2);
+		var li = [r1,r2];
 		console.log(r1);
 		console.log(r2);
-		var l = {"x1":parseInt(r1.x+(r1.ancho/2)),"y1":parseInt(r1.y+(r1.alto/2)),"x2":parseInt(r2.x+(r2.ancho/2)),"y2":parseInt(r2.y+(r2.alto/2)),"nombre1":$("#attr1").val(),"nombre2":$("#attr2").val()};
-		stompClient.send('/app/newline.'+idModelo,{},JSON.stringify(l));
+		//var l = {"x1":parseInt(r1.x+(r1.ancho/2)),"y1":parseInt(r1.y+(r1.alto/2)),"x2":parseInt(r2.x+(r2.ancho/2)),"y2":parseInt(r2.y+(r2.alto/2)),"nombre1":$("#attr1").val(),"nombre2":$("#attr2").val()};
+		stompClient.send('/app/newrelation.'+idModelo,{},JSON.stringify([{"id":r1.id},{"id":r2.id}]));		
+		toaddline = !toaddline;
+		cambiarLinea();
 	}
 	var getRectangleById= function(id){
 		for(var i=0;i<clases.length;i++){
@@ -183,7 +197,8 @@ var draw = (function(){
         	var params = url.searchParams;
         	apiclient.getRectangulos(params.get("usuario"),params.get("proyecto"),params.get("version"),params.get("modelo"),sessionStorage.getItem("token"),drawClases);
         },setAddLine:function(){
-        	toaddline=!toaddline;
+			toaddline=!toaddline;
+			cambiarLinea();
         }
 	};
 })();
