@@ -8,9 +8,7 @@ var draw = (function(){
 	var selected = null;
 	var origin = null;
 	var toaddline = false;
-	//var url = "https://class-modeler.herokuapp.com";
-	var url = "http://localhost:4444";
-
+	var url = "https://class-modeler.herokuapp.com";
 	var cambiarLinea = function() {
 		if (toaddline) {
 			$("#idLinea").text("Cancelar");
