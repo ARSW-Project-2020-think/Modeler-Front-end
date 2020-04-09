@@ -7,15 +7,23 @@ var draw = (function(){
 	var idModelo = null;
 	var selected = null;
 	var origin = null;
+	var originDeleteRelation = null;
 	var toaddline = false;
 	var canv = $("#dib");
 	var url = "https://class-modeler.herokuapp.com";
 	var lineas = 0;
-	var cambiarLinea = function() {
+	var flagDeleteRelation = null;
+	var cambiarBotones = function() {
 		if (toaddline) {
 			$("#idLinea").text("Cancelar");
 		} else {
-			$("#idLinea").text("Linea");
+			$("#idLinea").text("Nueva Relación");
+		}
+
+		if (flagDeleteRelation) {
+			$("#idBorrar").text("Cancelar");
+		} else {
+			$("#idBorrar").text("Borrar Relación");
 		}
 	}
 
@@ -44,10 +52,19 @@ var draw = (function(){
 	    			var id2 = getClaseByName($(this).text()).id;
 	    			console.log("Points: "+origin+" "+id2);
 	    			createLineIntoClases(origin,id2);
-	    			origin=null;
-	    			toaddline=false;
-	    			cambiarLinea();
-	    		}
+	    			origin = null;
+	    			toaddline = false;
+	    			cambiarBotones();
+				}
+				if(flagDeleteRelation && originDeleteRelation==null){
+					originDeleteRelation = getClaseByName($(this).text()).id;
+	    		}else if(flagDeleteRelation){
+					var id2 = getClaseByName($(this).text()).id;
+	    			deleteRelationIntoClases(originDeleteRelation, id2);
+	    			originDeleteRelation = null;
+	    			flagDeleteRelation = false;
+	    			cambiarBotones();
+				}					
 	    	});
 	    	clase.draggable({containment:"parent",
 	    		drag:function(drev){
@@ -87,18 +104,23 @@ var draw = (function(){
 		return null;
 	};
 
+	var deleteLines = function() {
+		for (var i = 0; i < lines.length; i++) {
+			lines[i].remove();
+		}
+		lines = [];
+		lineas = 0;
+	}
+
 	var dibujarRelaciones = function() {
 		lineas = 0;
+		deleteLines();
 		for (var i = 0; i < clases.length; i++) {
 			for (var j = 0; j < clases[i].relaciones.length; j++) {
-				var existe = $("#line" + clases[i].id + "-" + clases[i].relaciones[j].id);
-				existe.remove();
 				pintarRelacionEntreClases(clases[i], clases[i].relaciones[j]);
-				lineas+=1;
-
+				lineas += 1;
 			}
 		}
-		
 	};
 
 	var createLineIntoClases = function(id1,id2){
@@ -110,7 +132,18 @@ var draw = (function(){
 		//var l = {"x1":parseInt(r1.x+(r1.ancho/2)),"y1":parseInt(r1.y+(r1.alto/2)),"x2":parseInt(r2.x+(r2.ancho/2)),"y2":parseInt(r2.y+(r2.alto/2)),"nombre1":$("#attr1").val(),"nombre2":$("#attr2").val()};
 		stompClient.send('/app/newrelation.'+idModelo,{},JSON.stringify([{"id":r1.id},{"id":r2.id}]));		
 		toaddline = !toaddline;
-		cambiarLinea();
+		cambiarBotones();
+	}
+
+	var deleteRelationIntoClases = function(id1, id2) {
+		lineas -= 1;
+		var r1 = getRectangleById(id1);
+		var r2 = getRectangleById(id2);
+		console.log(r1);
+		console.log(r2);
+		stompClient.send('/app/deleteRelation.'+idModelo,{},JSON.stringify([{"id": r1.id}, {"id": r2.id}]));		
+		flagDeleteRelation = !flagDeleteRelation;
+		cambiarBotones();
 	}
 
 	var pintarRelacionEntreClases = function (r1, r2) {
@@ -127,8 +160,7 @@ var draw = (function(){
 		var line = createLine(r1.x+(r1.ancho/2), r1.y+(r1.alto/2), r2.x+(r2.ancho/2), r2.y+(r2.alto/2));		
 		line.attr("id","line"+ r1.id + "-" + r2.id);
 		canv.append(line);
-		//alert("LLEGO FINAL!");
-		//lines.push(line);
+		lines.push(line);
 	}
 
 	var getRectangleById= function(id){
@@ -190,14 +222,21 @@ var draw = (function(){
 				var r2 = JSON.parse(eventbody.body)[1];
 				updateCollectionRectangle(r1);
 				updateCollectionRectangle(r2);
-				//alert("recibio rectangulos");
-            	//console.log("recibio rectangulos");
 				pintarRelacionEntreClases(r1, r2);
+			});
+			
+			stompClient.subscribe('/shape/deleteRelation.'+idModelo, function (eventbody) {
+            	var r1 = JSON.parse(eventbody.body)[0];
+				var r2 = JSON.parse(eventbody.body)[1];
+				console.log(r1);
+				updateCollectionRectangle(r1);
+				updateCollectionRectangle(r2);
+				dibujarRelaciones();
             });
         });
 	};
 	
-	var updateCollectionRectangle=function(rect){
+	var updateCollectionRectangle = function(rect){
 		for(var i=0;i<clases.length;i++){
 			if(clases[i].id==rect.id){
 				clases[i] = rect;
@@ -247,9 +286,13 @@ var draw = (function(){
         		origin=null;
         	}
 			toaddline=!toaddline;
-			cambiarLinea();
-        }, borrar: function(id) {
-			$("#" + id).remove();
+			cambiarBotones();
+        }, borrarRelacion: function(id) {
+			if (flagDeleteRelation) {
+				originDeleteRelation = null;
+			}
+			flagDeleteRelation = !flagDeleteRelation;
+			cambiarBotones();
 		}
 	};
 })();
