@@ -8,6 +8,7 @@ var draw = (function(){
 	var selected = null;
 	var origin = null;
 	var toaddline = false;
+	var canv = $("#dib");
 	var url = "https://class-modeler.herokuapp.com";
 	var cambiarLinea = function() {
 		if (toaddline) {
@@ -67,19 +68,36 @@ var draw = (function(){
 	    	cont.push(clase);
 	    	canv.append(clase);
 		});
-		var line = createLine(0,0,200,5);
-		//canv.append(line);
-		//line = createLine(0,0,700,100);
-		//canv.append(line);
-		//line = createLine(0,0,1000,112);
-		//canv.append(line);
-		//line = createLine(0,0,2000,112);
-		//canv.append(line);
+		dibujarRelaciones();
 	};
+
+	var dibujarRelaciones = function() {
+		for (var i = 0; i < clases.length; i++) {
+			for (var j = 0; j < clases[i].relaciones.length; j++) {
+				var existe = $("#line" + clases[i].id + "-" + clases[i].relaciones[j].id);
+				var id = "#line" + clases[i].id + "-" + clases[i].relaciones[j].id;	
+				console.log("\n \n \n ----------------------------------- ID ID ID ID  ----------------------------------------------- \n \n \n");					
+				console.log(id);
+				console.log("\n \n \n ----------------------------------- ID ID ID ID  ----------------------------------------------- \n \n \n");					
+				console.log(existe);	
+				existe.remove();
+				/*
+				/*console.log("\n \n \n ----------------------------------- COORDENADAS I  ----------------------------------------------- \n \n \n");
+				console.log(clases[i].x + " " + clases[i].y);				
+				console.log("\n \n \n ----------------------------------- COORDENADAS I  ----------------------------------------------- \n \n \n");					
+				console.log("\n \n \n ----------------------------------- COORDENADAS J  ----------------------------------------------- \n \n \n");					
+				console.log(clases[i].relaciones[j].x + " " + clases[i].relaciones[j].y);
+				console.log("\n \n \n ----------------------------------- COORDENADAS J  ----------------------------------------------- \n \n \n");*/
+				pintarRelacionEntreClases(clases[i], clases[i].relaciones[j]);
+
+			}
+		}
+		
+	};
+
 	var createLineIntoClases = function(id1,id2){
 		var r1 = getRectangleById(id1);
 		var r2 = getRectangleById(id2);
-		var li = [r1,r2];
 		console.log(r1);
 		console.log(r2);
 		//var l = {"x1":parseInt(r1.x+(r1.ancho/2)),"y1":parseInt(r1.y+(r1.alto/2)),"x2":parseInt(r2.x+(r2.ancho/2)),"y2":parseInt(r2.y+(r2.alto/2)),"nombre1":$("#attr1").val(),"nombre2":$("#attr2").val()};
@@ -87,6 +105,17 @@ var draw = (function(){
 		toaddline = !toaddline;
 		cambiarLinea();
 	}
+
+	var pintarRelacionEntreClases = function (r1, r2) {
+		//var l = {"x1":parseInt(r1.x+(r1.ancho/2)),"y1":parseInt(r1.y+(r1.alto/2)),"x2":parseInt(r2.x+(r2.ancho/2)),"y2":parseInt(r2.y+(r2.alto/2)),"nombre1":$("#attr1").val(),"nombre2":$("#attr2").val()};
+		canv = $("#dib");
+		var line = createLine(r1.x+(r1.ancho/2), r1.y+(r1.alto/2), r2.x+(r2.ancho/2), r2.y+(r2.alto/2));		
+		line.attr("id","line"+ r1.id + "-" + r2.id);
+		canv.append(line);
+		//alert("LLEGO FINAL!");
+		//lines.push(line);
+	}
+
 	var getRectangleById= function(id){
 		for(var i=0;i<clases.length;i++){
 			console.log("Clase "+i);
@@ -140,15 +169,15 @@ var draw = (function(){
             	if(selected!=null && selected.id==rect.id){
             		return;
             	};
-            	updateRectangle(rect);
+				updateRectangle(rect);
+				console.log("\n \n \n ----------------------------------- MUEVO MUEVO MUEVO ----------------------------------------------- \n \n \n");
             });
-            stompClient.subscribe('/shape/newline.'+idModelo, function (eventbody) {
-            	var linea = JSON.parse(eventbody.body);
-            	lines.push(linea);
-            	console.log("recibio linea");
-            	var obj = createLine(linea.x1,linea.y1,linea.x2,linea.y2);
-            	obj.attr("id","line"+linea.id);
-            	$("#dib").append(obj);
+            stompClient.subscribe('/shape/newrelation.'+idModelo, function (eventbody) {
+            	var r1 = JSON.parse(eventbody.body)[0];
+				var r2 = JSON.parse(eventbody.body)[1];
+				alert("recibio rectangulos");
+            	console.log("recibio rectangulos");
+				pintarRelacionEntreClases(r1, r2);
             });
             stompClient.subscribe('/shape/updateline.'+idModelo, function (eventbody) {
             	var linea = JSON.parse(eventbody.body);
@@ -160,9 +189,22 @@ var draw = (function(){
         });
 	};
 	var updateRectangle = function(rect){
+
+		for (var i = 0; i < clases.length; i++) {
+			if(clases[i].id==rect.id){
+				console.log("\n \n \n ----------------------------------- ANTES  ----------------------------------------------- \n \n \n");
+				console.log(clases[i].x + " " + clases[i].y);				
+				console.log("\n \n \n ----------------------------------- ANTES  ----------------------------------------------- \n \n \n");					
+			}
+		}
+
 		console.log(rect);
     	for(var i=0;i<cont.length;i++){
-    		if(clases[i].id==rect.id && clases[i].x != rect.x && clases[i].y != rect.y){
+    		if(clases[i].id == rect.id && clases[i].x != rect.x && clases[i].y != rect.y){
+				console.log("\n \n \n ----------------------------------- MEDIO ----------------------------------------------- \n \n \n");
+				console.log(clases[i].x + " " +  rect.x);				
+				console.log(clases[i].y + " " +  rect.y);
+				console.log("\n \n \n ----------------------------------- MEDIO  ----------------------------------------------- \n \n \n");					
     			clases[i].x = rect.x;
     			clases[i].y = rect.y;
     			cont[i].css("left", (clases[i].x-11)+"px");
@@ -170,7 +212,16 @@ var draw = (function(){
     			console.log("update location");
     			console.log(cont[i]);
     		}
-    	}
+		}
+
+		for (var i = 0; i < clases.length; i++) {
+			if(clases[i].id==rect.id){
+				console.log("\n \n \n ----------------------------------- DESPUES ----------------------------------------------- \n \n \n");
+				console.log(clases[i].x + " " + clases[i].y);				
+				console.log("\n \n \n ----------------------------------- DESPUES  ----------------------------------------------- \n \n \n");					
+			}
+		}
+		dibujarRelaciones();
 	};
 	return {
 		draw:function(event){
@@ -197,6 +248,8 @@ var draw = (function(){
         },setAddLine:function(){
 			toaddline=!toaddline;
 			cambiarLinea();
-        }
+        }, borrar: function(id) {
+			$("#" + id).remove();
+		}
 	};
 })();
