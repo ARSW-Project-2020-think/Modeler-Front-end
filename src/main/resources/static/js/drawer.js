@@ -35,7 +35,7 @@ var draw = (function(){
 			clase.css("position","relative");
 			clase.text(rectangulo.nombre);
 			clase.css("left",(rectangulo.x-11)+"px");
-	    	clase.css("top",rectangulo.y-(50*clases.length)-2*lineas+"px");
+	    	clase.css("top",rectangulo.y-(50*clases.length)+"px");
 	    	clase.click(function(ev){
 	    		ev.stopPropagation();
 	    		if(toaddline && origin==null){
@@ -68,8 +68,12 @@ var draw = (function(){
 	    		  }
 	    		});
 	    	clases.push(rectangulo);
+	    	if(cont.length==0){
+	    		canv.append(clase);
+	    	}else{
+	    		cont[cont.length-1].after(clase);
+	    	}
 	    	cont.push(clase);
-	    	canv.append(clase);
 		});
 		dibujarRelaciones();
 	};
