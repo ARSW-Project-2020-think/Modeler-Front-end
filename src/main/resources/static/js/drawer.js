@@ -12,7 +12,8 @@ var draw = (function(){
 	var canv = $("#dib");
 	var url = "https://class-modeler.herokuapp.com";
 	var lineas = 0;
-	var flagDeleteRelation = null;
+	var flagDeleteRelation = false;
+	var flagCrearClase = false;
 	var cambiarBotones = function() {
 		if (toaddline) {
 			$("#idLinea").text("Cancelar");
@@ -25,6 +26,15 @@ var draw = (function(){
 		} else {
 			$("#idBorrar").text("Borrar Relación");
 		}
+
+		if (flagCrearClase) {
+			$("#idCrearClase").text("Cancelar");
+			$("#idClase").css("display", "inline-block");
+		} else {
+			$("#idCrearClase").text("Crear Clase");
+			$("#idClase").css("display", "none");
+		}
+
 	}
 
 	var drawClases = function(err,data){
@@ -260,14 +270,16 @@ var draw = (function(){
 		dibujarRelaciones();
 	};
 	return {
-		draw:function(event){
+		draw: function(event){
+			if (!flagCrearClase) return;
+
         	console.log(event);
-        	event.stopPropagation();
-        	var val = $("#clasen").val();
-        	if(val==null || val==""){
-        		alert("Debes dar nombre a una clase para crearla");
-        		return;
-        	}
+			event.stopPropagation();					
+			var val = $("#idClase").val();
+			if(val==null || val==""){
+				alert("Debes dar nombre a una clase para crearla");
+				return;
+			}
         	var x = (event.pageX-275+11);
         	var y = event.pageY;
         	var rectangulo = {"x":x,"y":y,"ancho":200,"alto":50,"nombre":val};
@@ -276,22 +288,28 @@ var draw = (function(){
         	console.log
         	stompClient.send("/app/newrectangle."+idModelo,{},JSON.stringify(rectangulo));
         	//apiclient.registrarRectangulo(params.get("usuario"),params.get("proyecto"),params.get("version"),params.get("modelo"),sessionStorage.getItem("token"),rectangulo,createRectangle);
-        	$("#clasen").val("");
-        },getRectangulos(){
+			$("#idClase").val("");
+			flagCrearClase = false;
+	    	cambiarBotones();
+        }, getRectangulos(){
         	var url = new URL(document.URL);
         	var params = url.searchParams;
         	apiclient.getRectangulos(params.get("usuario"),params.get("proyecto"),params.get("version"),params.get("modelo"),sessionStorage.getItem("token"),drawClases);
-        },setAddLine:function(){
+        }, setAddLine:function(){
         	if(toaddline){
         		origin=null;
-        	}
-			toaddline=!toaddline;
+			}
+			
+			toaddline = !toaddline;
 			cambiarBotones();
         }, borrarRelacion: function(id) {
 			if (flagDeleteRelation) {
 				originDeleteRelation = null;
 			}
 			flagDeleteRelation = !flagDeleteRelation;
+			cambiarBotones();
+		}, crearClase: function() {
+			flagCrearClase = !flagCrearClase;
 			cambiarBotones();
 		}
 	};

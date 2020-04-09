@@ -127,7 +127,7 @@ var apiclient = (function () {
         	});
         	console.log("url: "+"https://class-modeler.herokuapp.com/projectapi/"+username+"/share/"+colaborador+"/project/"+proyecto);
         	promise.then(function(){
-        		callback(null);
+        		callback(null, colaborador);
         	},function(err){
         		callback(err);
         	});
@@ -141,6 +141,22 @@ var apiclient = (function () {
         	},function(err){
         		callback(err,null);
         	})
-        }
+        }, loadColaboradores: function(user, proyecto, token, callback) {
+			console.log(" \n Usuario \n");
+			console.log(user);
+			console.log(" \n Usuario \n");
+			console.log(" \n proyecto \n");
+			console.log(proyecto);
+			console.log(" \n proyecto \n");
+			var promise = $.get({
+        		url:urlapi+"/projectapi/"+user+"/colaborators/project/"+proyecto,
+        		headers:{"Authorization":token}
+        	});
+        	promise.then(function(data){
+        		callback(null, data);
+        	},function(err){
+        		callback(err, null);
+        	})
+		}
     }
 })();

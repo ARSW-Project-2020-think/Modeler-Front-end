@@ -21,7 +21,30 @@ var app = (function () {
         if(error!=null) return;
         $("#uservar").text("Usuario: "+user.username);
         $("#email").text("Correo: "+user.correo);
-    };
+	};
+	
+	var mostrarColaboradores = function(error, data) {
+		data.push({username: sessionStorage.getItem("username")});
+		if(error!=null){
+            console.log(error);
+            return ;
+		} 
+		var string = "<table class='table table-borderless'>" +
+						"<thead>" +
+							"<tr>" + 
+							"<th scope='col'> Nombre</th>" +
+							"</tr>" +
+						"</thead> <tbody id = 'idTBody'>";
+
+		data.forEach(function(colaborador){
+			string += "<tr>" +
+						"<td>" + colaborador.username + "</td>" +
+					   "</tr>";
+		}); 
+			 
+		string += "</tbody> </table>";
+		$("#idColaboradores").html(string);
+	}
     var updateProjects = function(error,data){
         if(error!=null){
             console.log(error);
@@ -132,12 +155,14 @@ var app = (function () {
     	}
     	location.href = "modelo.html?usuario="+usuario+"&&proyecto="+proyecto+"&&version="+version+"&&modelo="+nombre;
     };
-    var colaborator=function(err){
+    var colaborator=function(err, colaborador){
     	if(err!=null){
     		alert("No fue posible añadir dicho colaborador");
     		return ;
-    	}
-    	alert("Fue añadido satisfactoriamente dicho colaborador");
+		}
+		$("#idTBody").append($("<tr>" +
+								"<td>" + colaborador + "</td>" +
+							"</tr>"));
     }
     return {
         registrarse: function(user, email, password, event) {
@@ -195,13 +220,15 @@ var app = (function () {
         	}else{
         		apiclient.registrarPryecto(sessionStorage.getItem("token"),sessionStorage.getItem("username"),nombre,false,redirProyecto);
         	}
-        },registrarModelo:function(usuario,proyecto,version,nombre,tipo){
+        }, registrarModelo:function(usuario,proyecto,version,nombre,tipo){
         	apiclient.registrarModelo(usuario,proyecto,version,nombre,tipo,sessionStorage.getItem("token"),redirectModel);
-        },addColaborador:function(username,colaborador,proyecto){
-        	apiclient.addColaborador(username,colaborador,proyecto,sessionStorage.getItem("token"),colaborator);
-        },loadProyectosCompartidos:function(username){
+        }, addColaborador:function(username,colaborador,proyecto){
+			apiclient.addColaborador(username,colaborador,proyecto,sessionStorage.getItem("token"),colaborator);
+        }, loadProyectosCompartidos:function(username){
         	apiclient.loadProyectosCompartidos(username,sessionStorage.getItem("token"),updateProjects);
-        }
+        }, loadColaboradores: function(username, proyecto) {
+			apiclient.loadColaboradores(username, proyecto, sessionStorage.getItem("token"), mostrarColaboradores);
+		}
         
     }
 
