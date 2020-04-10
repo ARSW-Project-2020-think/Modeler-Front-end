@@ -17,22 +17,41 @@ var draw = (function(){
 	var cambiarBotones = function() {
 		if (toaddline) {
 			$("#idLinea").text("Cancelar");
+
+			$("#idDivCrearClase").css("display", "none");
+			$("#idDivBorrar").css("display", "none");
+								
 		} else {
 			$("#idLinea").text("Nueva Relación");
+
+			$("#idDivCrearClase").css("display", "inline-block");
+			$("#idDivBorrar").css("display", "inline-block");
 		}
 
 		if (flagDeleteRelation) {
-			$("#idBorrar").text("Cancelar");
+			$("#idBorrar").text("Cancelar"); 
+
+			$("#idDivLinea").css("display", "none");
+			$("#idCrearClase").css("display", "none");
 		} else {
 			$("#idBorrar").text("Borrar Relación");
+
+			$("#idCrearClase").css("display", "inline-block");
+			$("#idDivLinea").css("display", "inline-block");
 		}
 
 		if (flagCrearClase) {
 			$("#idCrearClase").text("Cancelar");
 			$("#idClase").css("display", "inline-block");
+
+			$("#idLinea").css("display", "none");
+			$("#idBorrar").css("display", "none");
 		} else {
 			$("#idCrearClase").text("Crear Clase");
 			$("#idClase").css("display", "none");
+
+			$("#idLinea").css("display", "inline-block");
+			$("#idBorrar").css("display", "inline-block");
 		}
 
 	}
@@ -296,6 +315,7 @@ var draw = (function(){
         	var params = url.searchParams;
         	apiclient.getRectangulos(params.get("usuario"),params.get("proyecto"),params.get("version"),params.get("modelo"),sessionStorage.getItem("token"),drawClases);
         }, setAddLine:function(){
+			
         	if(toaddline){
         		origin=null;
 			}
