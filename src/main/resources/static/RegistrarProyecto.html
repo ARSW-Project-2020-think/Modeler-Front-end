@@ -27,6 +27,7 @@
 	<link rel="stylesheet" type="text/css" href="css/util.css">
 	<link rel="stylesheet" type="text/css" href="css/principal.css">
 	<link rel="stylesheet" type="text/css" href="css/estilos.css">
+	<script src="vendor/jquery/jquery-3.2.1.min.js"></script>
 <!--===============================================================================================-->
 	<script type="text/javascript" src="js/apiclient.js"></script>
 	<script type="text/javascript" src="js/app.js"></script>
@@ -117,6 +118,11 @@
 					<input class="input100" type="text" name="name" id="nproyecto" placeholder="Nombre Proyecto">
 					
 				</div>
+				<script>
+				 $("#nproyecto").on("input",function(){
+					 $(this).val($(this).val().toUpperCase().replace(" ","-"));
+				 });
+				</script>
 
 			</form>
 			<div class="wrap">
@@ -142,7 +148,6 @@
 
 
 <!--===============================================================================================-->
-	<script src="vendor/jquery/jquery-3.2.1.min.js"></script>
 
 <!--===============================================================================================-->
 <script src="js/principal.js"></script>

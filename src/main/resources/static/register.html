@@ -47,7 +47,20 @@
 						<input id = "idUsuario" class="input100" type="text" name="user">
 						<span class="focus-input100" data-placeholder="Usuario"></span>
 					</div>
-
+					<div id="disponibilidad">
+					</div>
+					<script>
+					$("#idUsuario").on("input",function(){
+						$(this).val($(this).val().toUpperCase().replace(" ","-"));
+						var val = $(this).val();
+						if(val!="" && val[0]!="-" && val[val.length-1]!="-"){
+							app.validarDisponibilidad($(this).val());
+						}else{
+							$("#disponibilidad").html("<span>Estado: </span><span style='Color: red;'>Ocupado</span>");
+						}
+					});
+					</script>
+					<br></br>
 					<div class="wrap-input100 validate-input" data-validate = "Correo Electrónico invalido, ejemplo a@b.c">
 						<input id = "idEmail" class="input100" type="text" name="email">
 						<span class="focus-input100" data-placeholder="Correo"></span>

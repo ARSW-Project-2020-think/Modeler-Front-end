@@ -157,6 +157,15 @@ var apiclient = (function () {
         	},function(err){
         		callback(err, null);
         	})
+		},validarDisponibilidad:function(user,callback){
+			var promise = $.get({
+				url:urlapi+"/user/"+user+"/disp"
+			});
+			promise.then(function(data){
+				callback(null,data);
+			},function(err){
+				callback(err,null);
+			});
 		}
     }
 })();

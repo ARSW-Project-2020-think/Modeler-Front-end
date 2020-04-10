@@ -123,6 +123,11 @@
 							<input class="input100" type="text" name="name" id="nuser" placeholder="Username Colaborador">
 
 						</div>
+						<script>
+							$("#nuser").on("input",function(){
+								$(this).val($(this).val().toUpperCase().replace(" ","-"));
+							});
+						</script>
 
 					</form>
 					<script type="text/javascript">

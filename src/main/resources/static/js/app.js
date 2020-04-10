@@ -63,14 +63,24 @@ var app = (function () {
         		}
         		console.log(contador);
         		var div = $("<div class='col'></div>");
-        		div.append("<div class='card text-white bg-dark mb-3' style='width: 18rem;'>"+
+        		var str = "<div class='card text-white bg-dark mb-3' style='width: 18rem;'>"+
         					"<div class='card-body'>"+
-        					"<h5 class='card-title'>"+proyecto.nombre+"</h5>"+
-        					"<p class='card-text' style='color:white;'>Publico: "+proyecto.publico+"</p>"+
-        					"<a href='version.html?usuario="+proyecto.autor.username+"&&version="+1+"&&proyecto="+proyecto.nombre+"' class='btn btn-primary'>Ver</a>"+
-        					"<a href='compartir.html?proyecto="+proyecto.nombre+"' class='btn btn-primary'>Compartir</a>"+
-    			"</div>"+
-  				"</div>");
+        					"<h5 class='card-title'>"+proyecto.nombre+"</h5>";
+        					if(proyecto.publico){
+        						str+="<p class='card-text' style='color:white;'>Publico</p>";
+        					}else{
+        						str+="<p class='card-text' style='color:white;'>Privado</p>";
+        					}
+        					if(proyecto.autor.username!=sessionStorage.getItem("username")){
+        						str+="<p class='card-text' style='color:white;'>Autor: "+proyecto.autor.username+"</p>";
+        					}
+        					str+="<a href='version.html?usuario="+proyecto.autor.username+"&&version="+1+"&&proyecto="+proyecto.nombre+"' class='btn btn-primary'>Ver</a>";
+        					if(proyecto.autor.username==sessionStorage.getItem("username")){
+        						str+="<a href='compartir.html?proyecto="+proyecto.nombre+"' class='btn btn-primary'>Compartir</a>";
+        					}
+    			str+="</div>"+
+  				"</div>"
+    			div.append($(str));
         		row.append(div);
         		if(contador==3){
         			contador=0;
@@ -123,7 +133,7 @@ var app = (function () {
     		div.append("<div class='card text-white bg-dark mb-3' style='width: 18rem;'>"+
     					"<div class='card-body'>"+
     					"<h5 class='card-title'>"+modelo.nombre+"</h5>"+
-    					"<p class='card-text' style='color:white;'>Publico: "+modelo.tipo+"</p>"+
+    					"<p class='card-text' style='color:white;'>Tipo de diagrama: "+modelo.tipo+"</p>"+
     					"<a href='modelo.html?usuario="+param.get("usuario")+"&&version="+param.get("version")+"&&proyecto="+param.get("proyecto")+"&&modelo="+modelo.nombre+"' class='btn btn-primary'>Ver</a>"+
 			"</div>"+
 				"</div>");
@@ -163,7 +173,15 @@ var app = (function () {
 		$("#idTBody").append($("<tr>" +
 								"<td>" + colaborador + "</td>" +
 							"</tr>"));
-    }
+    };
+    updateDisponibilidad = function(err,data){
+    	var c = $("#disponibilidad");
+    	if(data){
+    		c.html("<span>Estado: </span><span style='color:green;'>Disponible</span>");
+    	}else{
+    		c.html("<span>Estado: </span><span style='Color: red;'>Ocupado</span>");
+    	}
+    };
     return {
         registrarse: function(user, email, password, event) {
             event.preventDefault();
@@ -228,6 +246,8 @@ var app = (function () {
         	apiclient.loadProyectosCompartidos(username,sessionStorage.getItem("token"),updateProjects);
         }, loadColaboradores: function(username, proyecto) {
 			apiclient.loadColaboradores(username, proyecto, sessionStorage.getItem("token"), mostrarColaboradores);
+		},validarDisponibilidad:function(username){
+			apiclient.validarDisponibilidad(username,updateDisponibilidad);
 		}
         
     }
