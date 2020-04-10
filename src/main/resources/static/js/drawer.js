@@ -291,12 +291,16 @@ var draw = (function(){
 	return {
 		draw: function(event){
 			if (!flagCrearClase) return;
-
         	console.log(event);
 			event.stopPropagation();					
 			var val = $("#idClase").val();
 			if(val==null || val==""){
 				alert("Debes dar nombre a una clase para crearla");
+				return;
+			}
+			if(getClaseByName(val)!=null){
+				$("#idClase").val("");
+				alert("Ya existe una clase con este nombre");
 				return;
 			}
         	var x = (event.pageX-275+11);
