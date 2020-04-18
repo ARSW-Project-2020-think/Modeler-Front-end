@@ -10,8 +10,8 @@ var draw = (function(){
 	var originDeleteRelation = null;
 	var toaddline = false;
 	var canv = $("#dib");
-	var url = "https://class-modeler.herokuapp.com";
-	//var url = "http://localhost:4444";
+	//var url = "https://class-modeler.herokuapp.com";
+	var url = "http://localhost:4444";
 	var lineas = 0;
 	var flagDeleteRelation = false;
 	var flagCrearClase = false;
@@ -107,7 +107,7 @@ var draw = (function(){
 		    			rectangulo.y = y;
 		    			rectangulo.relaciones = [];
 		    			rectangulo["@type"]="Rectangulo";
-		    			stompClient.send('/app/updaterectangle.'+idModelo,{},JSON.stringify(rectangulo));
+		    			stompClient.send('/app/updatecomponent.'+idModelo,{},JSON.stringify(rectangulo));
 	    			}
 	    	});
 	    	clase.mouseup(function() {
@@ -244,7 +244,7 @@ var draw = (function(){
             	//console.log(JSON.parse(eventbody.body));
             	drawClases(null,{rectangulos:[JSON.parse(eventbody.body)]});
             });
-            stompClient.subscribe('/shape/updaterectangle.'+idModelo, function (eventbody) {
+            stompClient.subscribe('/shape/updatecomponent.'+idModelo, function (eventbody) {
             	var rect = JSON.parse(eventbody.body);
 				updateRectangle(rect);
             });
