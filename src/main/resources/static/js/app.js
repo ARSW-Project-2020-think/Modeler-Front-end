@@ -130,13 +130,18 @@ var app = (function () {
     		var param = url.searchParams;
     		console.log(contador);
     		var div = $("<div class='col'></div>");
-    		div.append("<div class='card text-white bg-dark mb-3' style='width: 18rem;'>"+
+    		var mod = "<div class='card text-white bg-dark mb-3' style='width: 18rem;'>"+
     					"<div class='card-body'>"+
     					"<h5 class='card-title'>"+modelo.nombre+"</h5>"+
-    					"<p class='card-text' style='color:white;'>Tipo de diagrama: "+modelo.tipo+"</p>"+
-    					"<a href='modelo.html?usuario="+param.get("usuario")+"&&version="+param.get("version")+"&&proyecto="+param.get("proyecto")+"&&modelo="+modelo.nombre+"' class='btn btn-primary'>Ver</a>"+
-			"</div>"+
-				"</div>");
+    					"<p class='card-text' style='color:white;'>Tipo de diagrama: "+modelo.tipo+"</p>";
+    					if(modelo.tipo=="clases"){
+    						mod+="<a href='modelo.html?usuario="+param.get("usuario")+"&&version="+param.get("version")+"&&proyecto="+param.get("proyecto")+"&&modelo="+modelo.nombre+"' class='btn btn-primary'>Ver</a>";
+    					}else{
+    						mod+="<a href='uso.html?usuario="+param.get("usuario")+"&&version="+param.get("version")+"&&proyecto="+param.get("proyecto")+"&&modelo="+modelo.nombre+"' class='btn btn-primary'>Ver</a>";
+    					}
+			mod+="</div>"+
+				"</div>";
+    		div.append($(mod));
     		row.append(div);
     		
     		if(contador==3){

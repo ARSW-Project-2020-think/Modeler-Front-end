@@ -10,8 +10,8 @@ var draw = (function(){
 	var originDeleteRelation = null;
 	var toaddline = false;
 	var canv = $("#dib");
-	//var url = "https://class-modeler.herokuapp.com";
-	var url = "http://localhost:4444";
+	var url = "https://class-modeler.herokuapp.com";
+	//var url = "http://localhost:4444";
 	var lineas = 0;
 	var flagDeleteRelation = false;
 	var flagCrearClase = false;
@@ -315,10 +315,10 @@ var draw = (function(){
 			$("#idClase").val("");
 			flagCrearClase = false;
 	    	cambiarBotones();
-        }, getRectangulos(){
+        }, getRectangulos:function(){
         	var url = new URL(document.URL);
         	var params = url.searchParams;
-        	apiclient.getRectangulos(params.get("usuario"),params.get("proyecto"),params.get("version"),params.get("modelo"),sessionStorage.getItem("token"),drawClases);
+        	apiclient.getComponentes(params.get("usuario"),params.get("proyecto"),params.get("version"),params.get("modelo"),sessionStorage.getItem("token"),drawClases);
         }, setAddLine:function(){
 			
         	if(toaddline){

@@ -109,7 +109,7 @@ var apiclient = (function () {
         		console.log(err);
         		callback(err,null);
         	});
-        },getRectangulos(usuario,proyecto,version,modelo,token,callback){
+        },getComponentes:function(usuario,proyecto,version,modelo,token,callback){
         	var promise = $.get({
         		url:urlapi+"/projectapi/"+usuario+"/project/"+proyecto+"/version/"+version+"/modelo/"+modelo,
         		headers:{"Authorization":token},
