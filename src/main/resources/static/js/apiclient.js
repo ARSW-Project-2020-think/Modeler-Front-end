@@ -92,7 +92,7 @@ var apiclient = (function () {
         		headers:{"Authorization":token}
         	});
         	promise.then(function(){
-        		callback(null,usuario,proyecto,version,nombre);
+        		callback(null,usuario,proyecto,version,nombre,tipo);
         	},function(err){
         		callback(err,null,null,null,null);
         	})

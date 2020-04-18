@@ -163,12 +163,16 @@ var app = (function () {
     	console.log("añade");
     	$("#models").append(cont);
     };
-    var redirectModel = function(error,usuario,proyecto,version,nombre){
+    var redirectModel = function(error,usuario,proyecto,version,nombre,tipo){
     	if(error!=null){
     		alert("No se pudo registrar");
     		return ;
     	}
-    	location.href = "modelo.html?usuario="+usuario+"&&proyecto="+proyecto+"&&version="+version+"&&modelo="+nombre;
+    	if(tipo!="uso"){
+    		location.href = "modelo.html?usuario="+usuario+"&&proyecto="+proyecto+"&&version="+version+"&&modelo="+nombre;
+    	}else{
+    		location.href = "uso.html?usuario="+usuario+"&&proyecto="+proyecto+"&&version="+version+"&&modelo="+nombre;
+    	}
     };
     var colaborator=function(err, colaborador){
     	if(err!=null){
