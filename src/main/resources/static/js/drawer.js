@@ -68,7 +68,7 @@ var draw = (function(){
 		if(stompClient==null){
 			loadSocket(data.id);
 		}
-		data.rectangulos.forEach(function(rectangulo){
+		data.componentes.forEach(function(rectangulo){
 			var clase = $("<div style='z-index:9000; width:"+rectangulo.ancho+"px; height:"+rectangulo.alto+"px; background:black; margin:0px; color:white; text-align:center; padding:0px;' id='"+clases.length+"'></div>");
 			clase.css("position","relative");
 			clase.text(rectangulo.nombre);
@@ -242,7 +242,7 @@ var draw = (function(){
             stompClient.subscribe('/shape/newcomponent.'+idModelo, function (eventbody) {
             	//alert("recibio algo");
             	//console.log(JSON.parse(eventbody.body));
-            	drawClases(null,{rectangulos:[JSON.parse(eventbody.body)]});
+            	drawClases(null,{componentes:[JSON.parse(eventbody.body)]});
             });
             stompClient.subscribe('/shape/updatecomponent.'+idModelo, function (eventbody) {
             	var rect = JSON.parse(eventbody.body);

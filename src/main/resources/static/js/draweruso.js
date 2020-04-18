@@ -2,7 +2,8 @@ var drawer = (function(){
 	var idModelo = null;
 	var stompClient = null;
 	var ovalos = [];
-	var url = "https://class-modeler.herokuapp.com";
+	//var url = "https://class-modeler.herokuapp.com";
+	var url = "http://localhost:4444";
 	var drawComponentes = function(err,data){
 		if(err!=null){
 			alert("Hubo un error");
