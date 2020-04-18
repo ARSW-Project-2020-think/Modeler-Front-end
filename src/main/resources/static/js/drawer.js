@@ -10,7 +10,8 @@ var draw = (function(){
 	var originDeleteRelation = null;
 	var toaddline = false;
 	var canv = $("#dib");
-	var url = "https://class-modeler.herokuapp.com";
+	//var url = "https://class-modeler.herokuapp.com";
+	var url = "http://localhost:4444";
 	var lineas = 0;
 	var flagDeleteRelation = false;
 	var flagCrearClase = false;
@@ -105,6 +106,7 @@ var draw = (function(){
 		    			rectangulo.x = x;
 		    			rectangulo.y = y;
 		    			rectangulo.relaciones = [];
+		    			rectangulo["@type"]="Rectangulo";
 		    			stompClient.send('/app/updaterectangle.'+idModelo,{},JSON.stringify(rectangulo));
 	    			}
 	    	});
@@ -159,7 +161,7 @@ var draw = (function(){
 		console.log(r1);
 		console.log(r2);
 		//var l = {"x1":parseInt(r1.x+(r1.ancho/2)),"y1":parseInt(r1.y+(r1.alto/2)),"x2":parseInt(r2.x+(r2.ancho/2)),"y2":parseInt(r2.y+(r2.alto/2)),"nombre1":$("#attr1").val(),"nombre2":$("#attr2").val()};
-		stompClient.send('/app/newrelation.'+idModelo,{},JSON.stringify([{"id":r1.id},{"id":r2.id}]));		
+		stompClient.send('/app/newrelation.'+idModelo,{},JSON.stringify([{"@type":"Rectangulo","id":r1.id},{"@type":"Rectangulo","id":r2.id}]));		
 		toaddline = !toaddline;
 		cambiarBotones();
 	}
@@ -170,7 +172,7 @@ var draw = (function(){
 		var r2 = getRectangleById(id2);
 		console.log(r1);
 		console.log(r2);
-		stompClient.send('/app/deleteRelation.'+idModelo,{},JSON.stringify([{"id": r1.id}, {"id": r2.id}]));		
+		stompClient.send('/app/deleteRelation.'+idModelo,{},JSON.stringify([{"@type":"Rectangulo","id": r1.id}, {"@type":"Rectangulo","id": r2.id}]));		
 		flagDeleteRelation = !flagDeleteRelation;
 		cambiarBotones();
 	}
@@ -305,7 +307,7 @@ var draw = (function(){
 			}
         	var x = (event.pageX-275+11);
         	var y = event.pageY;
-        	var rectangulo = {"x":x,"y":y,"ancho":200,"alto":50,"nombre":val};
+        	var rectangulo = {"@type":"Rectangulo","x":x,"y":y,"ancho":200,"alto":50,"nombre":val};
         	var url = new URL(document.URL);
         	var params = url.searchParams;
         	console.log
