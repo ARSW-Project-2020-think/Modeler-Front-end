@@ -10,8 +10,8 @@ var draw = (function(){
 	var originDeleteRelation = null;
 	var toaddline = false;
 	var canv = $("#dib");
-	var url = "https://class-modeler.herokuapp.com";
-	//var url = "http://localhost:4444";
+	//var url = "https://class-modeler.herokuapp.com";
+	var url = "http://localhost:4444";
 	var lineas = 0;
 	var flagDeleteRelation = false;
 	var flagCrearClase = false;
@@ -239,7 +239,7 @@ var draw = (function(){
         stompClient = Stomp.over(socket);
         stompClient.connect({}, function (frame) {
             console.log('Connected: ' + frame);
-            stompClient.subscribe('/shape/newrectangle.'+idModelo, function (eventbody) {
+            stompClient.subscribe('/shape/newcomponent.'+idModelo, function (eventbody) {
             	//alert("recibio algo");
             	//console.log(JSON.parse(eventbody.body));
             	drawClases(null,{rectangulos:[JSON.parse(eventbody.body)]});
@@ -310,8 +310,7 @@ var draw = (function(){
         	var rectangulo = {"@type":"Rectangulo","x":x,"y":y,"ancho":200,"alto":50,"nombre":val};
         	var url = new URL(document.URL);
         	var params = url.searchParams;
-        	console.log
-        	stompClient.send("/app/newrectangle."+idModelo,{},JSON.stringify(rectangulo));
+        	stompClient.send("/app/newcomponent."+idModelo,{},JSON.stringify(rectangulo));
         	//apiclient.registrarRectangulo(params.get("usuario"),params.get("proyecto"),params.get("version"),params.get("modelo"),sessionStorage.getItem("token"),rectangulo,createRectangle);
 			$("#idClase").val("");
 			flagCrearClase = false;
