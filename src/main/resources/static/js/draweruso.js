@@ -6,8 +6,38 @@ var drawer = (function(){
 	var usuario = [];
 	var usuarioShape = [];
 	var selectTedComponent = null;
+	var flagCrearActor = false;
+	var flagCrearCaso = false;
 	var url = "https://class-modeler.herokuapp.com";
 	//var url = "http://localhost:4444";
+
+	var cambiarBotones = function() {
+		if (flagCrearActor) {
+			$("#idCrearActor").text("Cancelar");
+			$("#nactor").css("display", "inline-block");
+
+			$("#idCrearCaso").css("display", "none");
+		} else {
+			$("#idCrearActor").text("Crear Actor");
+			$("#nactor").css("display", "none");
+			
+			$("#idCrearCaso").css("display", "inline-block");
+		}
+
+		if (flagCrearCaso) {
+			$("#idCrearCaso").text("Cancelar");
+			$("#novalo").css("display", "inline-block");
+
+			$("#idCrearActor").css("display", "none");
+		} else {
+			$("#idCrearCaso").text("Crear Caso");
+			$("#novalo").css("display", "none");
+			
+			$("#idCrearActor").css("display", "inline-block");
+		}
+	}
+
+
 	var orderByType = function(data){
 		console.log("Organiza");
 		var li = [];
@@ -155,35 +185,64 @@ var drawer = (function(){
 		});
 		return arr1;
 	}
-	return{
-		draw:function(event){
-			console.log(event);
-			var type=null;
-			var text = null;
-			var ancho = 0;
-			var alto = 0;
-			if($("#novalo").val()!=""){
-				type="Ovalo";
-				text = $("#novalo").val();
-				ancho = 300;
-				alto = 50;
-			}else{
-				type="Actor";
-				text = $("#nactor").val();
-				ancho = 50;
-				alto = 200;
+
+	var validarYDibujar = function(event) {
+		if (!flagCrearActor && !flagCrearCaso) return;
+		console.log(event);
+		event.stopPropagation();
+		var text = null;
+		var type=null;
+		var ancho = 0;
+		var alto = 0;
+		if (flagCrearActor) {
+			text = $("#nactor").val();
+			if(text == null || text == ""){
+				alert("Debes dar nombre al actor para crearlo");
+				return;
 			}
-			console.log(text);
-			var x = (event.pageX-275+11);
-        	var y = event.pageY;
-			var com = {"@type":type,"nombre":text,"x":x,"y":y,"ancho":ancho,"alto":alto};
+			type="Actor";
+			ancho = 50;
+			alto = 200;
+		} else if (flagCrearCaso) {
+			text = $("#novalo").val();
+			if(text == null || text == ""){
+				alert("Debes escribir la historia del caso de uso para poder crearlo");
+				return;
+			}
+			type="Ovalo";
+			ancho = 300;
+			alto = 50;
+		}
+		console.log(text);
+		var x = (event.pageX-275+11);
+		var y = event.pageY;
+		var com = {"@type":type,"nombre":text,"x":x,"y":y,"ancho":ancho,"alto":alto};		
+		console.log("\n --------------------------------------JSON QUE GENERA ------------------------------------- \n");
+		console.log(com);
+		console.log("\n --------------------------------------JSON QUE GENERA ------------------------------------- \n");
+		return com;	
+	}
+	return{
+		draw:function(event){			
+			var com = validarYDibujar(event);
+			if (com == null || com == "") return;			
 			stompClient.send("/app/newcomponent."+idModelo,{},JSON.stringify(com));
 			$("#novalo").val("");
+			$("#nactor").val("");
+			flagCrearActor = false;
+			flagCrearCaso = false;
+	    	cambiarBotones();			
 		},
 		getComponents:function(){
 			var url = new URL(document.URL);
         	var params = url.searchParams;
         	apiclient.getComponentes(params.get("usuario"),params.get("proyecto"),params.get("version"),params.get("modelo"),sessionStorage.getItem("token"),drawComponentes);
+		}, crearActor: function() {
+			flagCrearActor = !flagCrearActor;
+			cambiarBotones();
+		}, crearCaso: function() {
+			flagCrearCaso = !flagCrearCaso;
+			cambiarBotones();
 		}
 	}
 })();
