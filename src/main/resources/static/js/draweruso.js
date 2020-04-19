@@ -110,7 +110,7 @@ var drawer = (function(){
 		shape.draggable({containment:"parent",
     		drag:function(drev){
     				selectTedComponent = actor.id;
-	    			var y = parseInt($(this).css("top").substring(0,$(this).css("top").length-2))+50*ovalos.length+200*parseInt($(this).attr(id));
+	    			var y = parseInt($(this).css("top").substring(0,$(this).css("top").length-2))+50*ovalos.length+200*parseInt($(this).attr("id"));
 	    			var x = parseInt($(this).css("left").substring(0,$(this).css("left").length-2))+11;
 	    			actor.x = x;
 	    			actor.y = y;
