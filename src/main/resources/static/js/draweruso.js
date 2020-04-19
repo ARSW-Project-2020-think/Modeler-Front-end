@@ -101,7 +101,7 @@ var drawer = (function(){
 		
 	};
 	var drawActor = function(actor){
-		var shape = $("<div style='width:"+actor.ancho+"; height:"+actor.alto+"; text-align:center'></div>");
+		var shape = $("<div style='width:"+actor.ancho+"; height:"+actor.alto+"; text-align:center' id='"+usuario.length+"'></div>");
 		shape.css("background-image","url('cases/user.png')");
 		shape.html("<img src='cases/user.png' style='width:100%; height:80%;'><div style='text-align:center;'>"+actor.nombre+"</div>")
 		shape.css("position","relative");
@@ -110,7 +110,7 @@ var drawer = (function(){
 		shape.draggable({containment:"parent",
     		drag:function(drev){
     				selectTedComponent = actor.id;
-	    			var y = parseInt($(this).css("top").substring(0,$(this).css("top").length-2))+50*ovalos.length+200*(usuario.length-1);
+	    			var y = parseInt($(this).css("top").substring(0,$(this).css("top").length-2))+50*ovalos.length+200*parseInt($(this).attr(id));
 	    			var x = parseInt($(this).css("left").substring(0,$(this).css("left").length-2))+11;
 	    			actor.x = x;
 	    			actor.y = y;
