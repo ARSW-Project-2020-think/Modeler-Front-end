@@ -36,21 +36,6 @@ var drawer = (function(){
 			$("#idCrearActor").css("display", "inline-block");
 		}
 	}
-
-
-	var orderByType = function(data){
-		console.log("Organiza");
-		var li = [];
-		["Ovalo","Actor"].forEach(function(tipo){
-			for(var i=0;i<data.length;i++){
-				if(data[i]["@type"]==tipo){
-					li.push(data[i]);
-				}
-			}
-		});
-		console.log(li);
-		return li;
-	}
 	var drawComponentes = function(err,data){
 		if(err!=null){
 			alert("Hubo un error");
@@ -61,8 +46,36 @@ var drawer = (function(){
 		}
 		//console.log("data");
 		console.log(data);
-		drawComponentesn(orderByType(data.componentes));
-		//validateLocations();
+		drawComponentesn(data.componentes);
+		validateLocationsOvalos();
+		validateLocationsActor();
+	};
+	validateLocationsOvalos = function(){
+		for(var i=0;i<ovalos.length;i++){
+			var y = ovalos[i].y-50*parseInt(ovalosShape[i].attr("id"));
+			var x = ovalos[i].x-11;
+			if(y+"px"!=ovalosShape[i].css("top")){
+				ovalosShape[i].css("top",y+"px");
+			}
+			if(x+"px"!=ovalosShape[i].css("left")){
+				ovalosShape[i].css("left",x+"px");
+			}
+		}
+	};
+	var validateLocationsActor = function(){
+		for(var i=0;i<usuario.length;i++){
+			var y = usuario[i].y-50*ovalos.length-200*parseInt(usuarioShape[i].attr("id"));
+			var x = usuario[i].x-11;
+			if(y+"px"!=usuarioShape[i].css("top")){
+				console.log("update actor y");
+				usuarioShape[i].css("top",y+"px");
+				console.log("update actor x");
+			}
+			if(x+"px"!=usuarioShape[i].css("left")){
+				
+				usuarioShape[i].css("left",x+"px");
+			}
+		}
 	};
 	var drawComponentesn = function(componentes){
 		componentes.forEach(function(componente){
@@ -95,7 +108,13 @@ var drawer = (function(){
 	    			stompClient.send('/app/updatecomponent.'+idModelo,{},JSON.stringify(ovalo));
     			}
     	});
-		$("#dib").append(shape);
+		if(ovalosShape.length==0 && usuarioShape.length==0){
+			$("#dib").append(shape);
+		}else if(ovalosShape.length>0){
+			ovalosShape[ovalosShape.length-1].after(shape);
+		}else{
+			usuarioShape[usuarioShape.length-1].before(shape);
+		}
 		ovalos.push(ovalo);
 		ovalosShape.push(shape);
 		
@@ -123,16 +142,6 @@ var drawer = (function(){
 		usuario.push(actor);
 		usuarioShape.push(shape);
 	};
-	var removeGraphicsComponents = function(){
-		for(var i=0;i<ovalosShape.length;i++){
-			ovalosShape[i].remove();
-		}
-		for(var i=0;i<usuarioShape.length;i++){
-			usuarioShape[i].remove();
-		}
-		ovalosShape = [];
-		usuarioShape = [];
-	};
 	var updateShape=function(cm){
 		for(var i=0;i<ovalos.length;i++){
 			if(cm.id == ovalos[i].id){
@@ -158,34 +167,19 @@ var drawer = (function(){
             	}else{
             		usuario.push(c);
             	}
-            	removeGraphicsComponents();
-            	var dat = joinArrays(ovalos,usuario)
-            	ovalos = [];
-            	usuario = []; 
-            	
-            	drawComponentes(null,{componentes:dat});
+            	drawComponentes(null,{componentes:[c]});
             });
             stompClient.subscribe('/shape/updatecomponent.'+idModelo, function (eventbody) {
             	var comp = JSON.parse(eventbody.body);
+            	updateShape(JSON.parse(eventbody.body));
             	if(comp.id == selectTedComponent){
             		return;
             	}
-            	updateShape(JSON.parse(eventbody.body));
-            	var dat = joinArrays(ovalos,usuario);
-            	ovalos = [];
-            	usuario = []; 
-            	removeGraphicsComponents();
-            	drawComponentes(null,{componentes:dat});
+            	validateLocationsOvalos();
+            	validateLocationsActor();
             });
         });
 	}
-	var joinArrays=function(arr1,arr2){
-		arr2.forEach(function(dat){
-			arr1.push(dat);
-		});
-		return arr1;
-	}
-
 	var validarYDibujar = function(event) {
 		if (!flagCrearActor && !flagCrearCaso) return;
 		console.log(event);
@@ -243,6 +237,8 @@ var drawer = (function(){
 		}, crearCaso: function() {
 			flagCrearCaso = !flagCrearCaso;
 			cambiarBotones();
+		},crearRelacion:function(){
+			
 		}
 	}
 })();
