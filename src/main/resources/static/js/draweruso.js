@@ -5,6 +5,9 @@ var drawer = (function(){
 	var ovalosShape = [];
 	var usuario = [];
 	var usuarioShape = [];
+	var lineShape = [];
+	var origin = null;
+	var flagRelacion = false;
 	var selectTedComponent = null;
 	var flagCrearActor = false;
 	var flagCrearCaso = false;
@@ -17,11 +20,13 @@ var drawer = (function(){
 			$("#nactor").css("display", "inline-block");
 
 			$("#idCrearCaso").css("display", "none");
+			$("#idDivCrearRelacion").css("display", "none");
 		} else {
 			$("#idCrearActor").text("Crear Actor");
 			$("#nactor").css("display", "none");
 			
 			$("#idCrearCaso").css("display", "inline-block");
+			$("#idDivCrearRelacion").css("display", "inline-block");
 		}
 
 		if (flagCrearCaso) {
@@ -29,12 +34,28 @@ var drawer = (function(){
 			$("#novalo").css("display", "inline-block");
 
 			$("#idCrearActor").css("display", "none");
+			$("#idDivCrearRelacion").css("display", "none");
 		} else {
 			$("#idCrearCaso").text("Crear Caso");
 			$("#novalo").css("display", "none");
-			
 			$("#idCrearActor").css("display", "inline-block");
+			$("#idDivCrearRelacion").css("display", "inline-block");
 		}
+		
+		if (flagRelacion) {
+			$("#idCrearRelacion").text("Cancelar");
+			$("#novalo").css("display", "none");
+			$("#idDivCrearCaso").css("display","none");
+			$("#idCrearActor").css("display", "none");
+			//$("#idDivCrearRelacion").css("display", "none");
+		} else {
+			$("#idCrearRelacion").text("Crear Relacion");
+			//$("#novalo").css("display", "none");
+			$("#idCrearActor").css("display", "inline-block");
+			$("#idDivCrearRelacion").css("display", "inline-block");
+			$("#idDivCrearCaso").css("display","inline-block");
+		}
+		
 	}
 	var drawComponentes = function(err,data){
 		if(err!=null){
@@ -47,12 +68,15 @@ var drawer = (function(){
 		//console.log("data");
 		console.log(data);
 		drawComponentesn(data.componentes);
+		console.log("Validando localizacion");
 		validateLocationsOvalos();
 		validateLocationsActor();
+		console.log("Validando lineas");
+		linesComponentes();
 	};
 	validateLocationsOvalos = function(){
-		for(var i=0;i<ovalos.length;i++){
-			var y = ovalos[i].y-50*parseInt(ovalosShape[i].attr("id"));
+		for(var i=0;i<ovalosShape.length;i++){
+			var y = ovalos[i].y-50*i;
 			var x = ovalos[i].x-11;
 			if(y+"px"!=ovalosShape[i].css("top")){
 				ovalosShape[i].css("top",y+"px");
@@ -63,13 +87,11 @@ var drawer = (function(){
 		}
 	};
 	var validateLocationsActor = function(){
-		for(var i=0;i<usuario.length;i++){
-			var y = usuario[i].y-50*ovalos.length-200*parseInt(usuarioShape[i].attr("id"));
+		for(var i=0;i<usuarioShape.length;i++){
+			var y = usuario[i].y-50*ovalosShape.length-200*i;
 			var x = usuario[i].x-11;
 			if(y+"px"!=usuarioShape[i].css("top")){
-				console.log("update actor y");
 				usuarioShape[i].css("top",y+"px");
-				console.log("update actor x");
 			}
 			if(x+"px"!=usuarioShape[i].css("left")){
 				
@@ -93,9 +115,21 @@ var drawer = (function(){
 		shape.css("position","relative");
 		shape.css("border-color","black");
 		shape.css("border-style","solid");
-		shape.css("top",(ovalo.y-50*(ovalos.length))+"px");
-		shape.css("left",(ovalo.x-11)+"px");
+		//shape.css("top",(ovalo.y-50*(ovalos.length))+"px");
+		//shape.css("left",(ovalo.x-11)+"px");
 		shape.css("border-radius","50%");
+		shape.click(function(ev){
+			ev.stopPropagation();
+			ovalo["@type"]="Ovalo";
+			if(flagRelacion && origin==null){
+				origin = ovalo;
+			}else if(flagRelacion){
+				var li = [origin,ovalo];
+				stompClient.send('/app/newrelation.'+idModelo,{},JSON.stringify(li));
+				flagRelacion=false;
+				cambiarBotones();
+			}
+		});
 		shape.draggable({containment:"parent",
     		drag:function(drev){
     				selectTedComponent = ovalo.id;
@@ -110,10 +144,13 @@ var drawer = (function(){
     	});
 		if(ovalosShape.length==0 && usuarioShape.length==0){
 			$("#dib").append(shape);
+			console.log("1");
 		}else if(ovalosShape.length>0){
 			ovalosShape[ovalosShape.length-1].after(shape);
+			console.log("2");
 		}else{
-			usuarioShape[usuarioShape.length-1].before(shape);
+			usuarioShape[0].before(shape);
+			console.log("3");
 		}
 		ovalos.push(ovalo);
 		ovalosShape.push(shape);
@@ -126,6 +163,18 @@ var drawer = (function(){
 		shape.css("position","relative");
 		shape.css("top",(actor.y-50*(ovalos.length)-200*usuario.length)+"px");
 		shape.css("left",(actor.x-11)+"px");
+		shape.click(function(ev){
+			ev.stopPropagation();
+			actor["@type"]="Actor";
+			if(flagRelacion && origin==null){
+				origin = actor;
+			}else if(flagRelacion){
+				var li = [origin,actor];
+				stompClient.send('/app/newrelation.'+idModelo,{},JSON.stringify(li));
+				flagRelacion=false;
+				cambiarBotones();
+			}
+		});
 		shape.draggable({containment:"parent",
     		drag:function(drev){
     				selectTedComponent = actor.id;
@@ -179,7 +228,7 @@ var drawer = (function(){
             	validateLocationsActor();
             });
         });
-	}
+	};
 	var validarYDibujar = function(event) {
 		if (!flagCrearActor && !flagCrearCaso) return;
 		console.log(event);
@@ -215,7 +264,81 @@ var drawer = (function(){
 		console.log(com);
 		console.log("\n --------------------------------------JSON QUE GENERA ------------------------------------- \n");
 		return com;	
-	}
+	};
+	
+	
+	var createLineElement =function(x, y, length, angle) {
+	    var line = $("<div></div>");
+	    line.css("border","1px solid blue");
+	    line.css("width",length + 'px');
+	    line.css("height",'0px');
+	    line.css("position",'relative');
+	    line.css("transform","rotate(" + angle + "rad)");
+	    console.log("Linea #:" +lineas);
+	    line.css("top",y+(-50*ovalos.length-200*usuario.length-2*lineas)+"px");
+	    line.css("left",(x-11)+"px");
+	    line.attr("class","linea");
+	    return line;
+	};
+	
+	var getComponenteById=function(id){
+		for(var i=0;i<usuario.length;i++){
+			if(usuario[i].id == id){
+				return usuario[i];
+			}
+		}
+		for(var i=0;i<ovalos.length;i++){
+			if(ovalos[i].id == id){
+				return ovalos[i];
+			}
+		}
+		
+	};
+
+	var createLine =function(x1, y1, x2, y2) {
+	    var a = x1 - x2,
+	        b = y1 - y2,
+	        c = Math.sqrt(a * a + b * b);
+
+	    var sx = (x1 + x2) / 2,
+	        sy = (y1 + y2) / 2;
+
+	    var x = sx - c / 2,
+	        y = sy;
+
+	    var alpha = Math.PI - Math.atan2(-b, a);
+	    return createLineElement(x, y, c, alpha);
+	};
+	
+	var linesComponentes=function(){
+		ovalos.forEach(function(ovalo){
+			var x1 = ovalo.x+(ovalo.ancho/2);
+			var y1	 = ovalo.y+(ovalo.alto/2);
+			ovalo.relaciones.forEach(function(rel){
+				var rel2 = getComponente(rel);
+				rel = rel2;
+				var x2 = rel.x+(rel.ancho/2);
+				var y2 = rel.y+(rel.alto/2);
+				var ln =createLine(x1,y1,x2,y2);
+				lineShape.push(ln);
+				$("#dib").append(ln);
+			});
+		});
+		usuario.forEach(function(user){
+			var x1 = user.x+(user.ancho/2);
+			var y1	 = user.y+(user.alto/2);
+			user.relaciones.forEach(function(rel){
+				var rel2 = getComponente(rel);
+				rel = rel2;
+				var x2 = rel.x+(rel.ancho/2);
+				var y2 = rel.y+(rel.alto/2);
+				var ln =createLine(x1,y1,x2,y2);
+				lineShape.push(ln);
+				$("#dib").append(ln);
+			});
+		});
+	};
+	
 	return{
 		draw:function(event){			
 			var com = validarYDibujar(event);
@@ -237,8 +360,12 @@ var drawer = (function(){
 		}, crearCaso: function() {
 			flagCrearCaso = !flagCrearCaso;
 			cambiarBotones();
-		},crearRelacion:function(){
-			
+		},setRelacion:function(){
+			if(flagRelacion){
+				origin = null;
+			}
+			flagRelacion= !flagRelacion;
+			cambiarBotones();
 		}
 	}
 })();
