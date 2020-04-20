@@ -128,6 +128,7 @@ var drawer = (function(){
 				var li = [origin,ovalo];
 				stompClient.send('/app/newrelation.'+idModelo,{},JSON.stringify(li));
 				flagRelacion=false;
+				origin=null;
 				cambiarBotones();
 			}
 		});
@@ -173,6 +174,7 @@ var drawer = (function(){
 				var li = [origin,actor];
 				stompClient.send('/app/newrelation.'+idModelo,{},JSON.stringify(li));
 				flagRelacion=false;
+				origin = null;
 				cambiarBotones();
 			}
 		});
