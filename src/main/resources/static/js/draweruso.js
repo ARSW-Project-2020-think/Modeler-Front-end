@@ -14,8 +14,8 @@ var drawer = (function(){
 	var flagDeleteRelation = false;
 	var originDeleteRelation = null;
 	var flagDeleteElemento = false;
-	//var url = "https://class-modeler.herokuapp.com";
-	var url = "http://localhost:4444";
+	var url = "https://class-modeler.herokuapp.com";
+	//var url = "http://localhost:4444";
 
 	var cambiarBotones = function() {			
 		if (flagCrearCaso) {
