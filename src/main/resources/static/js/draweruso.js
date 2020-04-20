@@ -11,52 +11,58 @@ var drawer = (function(){
 	var selectTedComponent = null;
 	var flagCrearActor = false;
 	var flagCrearCaso = false;
+	var flagDeleteRelation = false;
+	var originDeleteRelation = null;
+	var flagEliminarElemento = false;
 	var url = "https://class-modeler.herokuapp.com";
 	//var url = "http://localhost:4444";
 
-	var cambiarBotones = function() {
-
-		
+	var cambiarBotones = function() {			
 		if (flagCrearCaso) {
 			$("#idCrearCaso").text("Cancelar");
 			$("#novalo").css("display", "inline-block");
 
 			$("#idDivCrearActor").css("display", "none");
 			$("#idDivCrearRelacion").css("display", "none");
-		} else {
-			$("#idCrearCaso").text("Crear Caso");
-			$("#novalo").css("display", "none");
-
-			$("#idDivCrearActor").css("display", "inline-block");
-			$("#idDivCrearRelacion").css("display", "inline-block");
-		}
-
-		if (flagRelacion) {
+			$("#idDivBorrar").css("display", "none");
+		} else if (flagRelacion) {
 			$("#idCrearRelacion").text("Cancelar");
 
 			$("#idDivCrearCaso").css("display","none");
 			$("#idCrearActor").css("display", "none");
-		} else {
-			$("#idCrearRelacion").text("Crear Relacion");
-
-			$("#idCrearActor").css("display", "inline-block");
-			$("#idDivCrearCaso").css("display","inline-block");
-		}			
-
-		if (flagCrearActor) {
+			$("#idDivBorrar").css("display", "none");
+		} else if (flagCrearActor) {
 			$("#idCrearActor").text("Cancelar");
 			$("#nactor").css("display", "inline-block");
 
 			$("#idCrearCaso").css("display", "none");
 			$("#idCrearRelacion").css("display", "none");
-		} else {
-			$("#idCrearActor").text("Crear Actor");
-			$("#nactor").css("display", "none");
+			$("#idBorrar").css("display", "none");
+		} else if (flagDeleteRelation) {
+			$("#idBorrar").text("Cancelar");
 			
-			$("#idCrearCaso").css("display", "inline-block");
+			$("#idCrearRelacion").css("display", "none");
+			$("#idDivCrearActor").css("display", "none");			
+			$("#idDivCrearCaso").css("display", "none");
+		} else {					
+			$("#nactor").css("display", "none");
+			$("#novalo").css("display", "none");
+						
+			$("#idCrearActor").text("Crear Actor");
+			$("#idCrearCaso").text("Crear Caso");
+			$("#idCrearRelacion").text("Crear Relacion");							
+			$("#idBorrar").text("Borrar Relación");
+			
+			$("#idDivCrearActor").css("display", "inline-block");
+			$("#idDivCrearCaso").css("display", "inline-block");			
+			$("#idDivCrearRelacion").css("display", "inline-block");
+			$("#idDivBorrar").css("display", "inline-block");
+
+			$("#idCrearActor").css("display", "inline-block");
+			$("#idCrearCaso").css("display", "inline-block");			
 			$("#idCrearRelacion").css("display", "inline-block");
-		}	
-		
+			$("#idBorrar").css("display", "inline-block");
+		}			
 	}
 	var drawComponentes = function(err,data){
 		if(err!=null){
@@ -132,6 +138,16 @@ var drawer = (function(){
 				origin=null;
 				cambiarBotones();
 			}
+
+			if(flagDeleteRelation && originDeleteRelation==null){
+				originDeleteRelation = ovalo;
+			}else if(flagDeleteRelation){
+				var li = [originDeleteRelation,ovalo];
+				stompClient.send('/app/deleteRelation.'+idModelo,{},JSON.stringify(li));
+				flagDeleteRelation = false;
+				originDeleteRelation = null;
+				cambiarBotones();
+			}
 		});
 		shape.draggable({containment:"parent",
     		drag:function(drev){
@@ -178,6 +194,17 @@ var drawer = (function(){
 				origin = null;
 				cambiarBotones();
 			}
+
+			if(flagDeleteRelation && originDeleteRelation==null){
+				originDeleteRelation = actor;
+			}else if(flagDeleteRelation){
+				var li = [originDeleteRelation, actor];
+				stompClient.send('/app/deleteRelation.'+idModelo,{},JSON.stringify(li));
+				flagDeleteRelation = false;
+				originDeleteRelation = null;
+				cambiarBotones();
+			}
+
 		});
 		shape.draggable({containment:"parent",
     		drag:function(drev){
@@ -240,6 +267,13 @@ var drawer = (function(){
             	updateShape(comp[1]);
             	cleanLines();
             	linesComponentes();
+			});			
+			stompClient.subscribe('/shape/deleteRelation.'+idModelo, function (eventbody) {
+            	var comp = JSON.parse(eventbody.body);
+            	updateShape(comp[0]);
+            	updateShape(comp[1]);
+            	cleanLines();
+            	linesComponentes();
             });
         });
 	};
@@ -283,7 +317,7 @@ var drawer = (function(){
 	
 	var createLineElement =function(x, y, length, angle) {
 	    var line = $("<div></div>");
-	    line.css("border","1px solid blue");
+	    line.css("border","2px solid black");
 	    line.css("width",length + 'px');
 	    line.css("height",'0px');
 	    line.css("position",'relative');
@@ -386,6 +420,12 @@ var drawer = (function(){
 				origin = null;
 			}
 			flagRelacion= !flagRelacion;
+			cambiarBotones();
+		}, borrarRelacion: function() {
+			if(flagDeleteRelation){
+				originDeleteRelation = null;
+			}
+			flagDeleteRelation = !flagDeleteRelation;
 			cambiarBotones();
 		}
 	}
