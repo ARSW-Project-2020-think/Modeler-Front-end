@@ -15,46 +15,47 @@ var drawer = (function(){
 	//var url = "http://localhost:4444";
 
 	var cambiarBotones = function() {
+
+		
+		if (flagCrearCaso) {
+			$("#idCrearCaso").text("Cancelar");
+			$("#novalo").css("display", "inline-block");
+
+			$("#idDivCrearActor").css("display", "none");
+			$("#idDivCrearRelacion").css("display", "none");
+		} else {
+			$("#idCrearCaso").text("Crear Caso");
+			$("#novalo").css("display", "none");
+
+			$("#idDivCrearActor").css("display", "inline-block");
+			$("#idDivCrearRelacion").css("display", "inline-block");
+		}
+
+		if (flagRelacion) {
+			$("#idCrearRelacion").text("Cancelar");
+
+			$("#idDivCrearCaso").css("display","none");
+			$("#idCrearActor").css("display", "none");
+		} else {
+			$("#idCrearRelacion").text("Crear Relacion");
+
+			$("#idCrearActor").css("display", "inline-block");
+			$("#idDivCrearCaso").css("display","inline-block");
+		}			
+
 		if (flagCrearActor) {
 			$("#idCrearActor").text("Cancelar");
 			$("#nactor").css("display", "inline-block");
 
 			$("#idCrearCaso").css("display", "none");
-			$("#idDivCrearRelacion").css("display", "none");
+			$("#idCrearRelacion").css("display", "none");
 		} else {
 			$("#idCrearActor").text("Crear Actor");
 			$("#nactor").css("display", "none");
 			
 			$("#idCrearCaso").css("display", "inline-block");
-			$("#idDivCrearRelacion").css("display", "inline-block");
-		}
-
-		if (flagCrearCaso) {
-			$("#idCrearCaso").text("Cancelar");
-			$("#novalo").css("display", "inline-block");
-
-			$("#idCrearActor").css("display", "none");
-			$("#idDivCrearRelacion").css("display", "none");
-		} else {
-			$("#idCrearCaso").text("Crear Caso");
-			$("#novalo").css("display", "none");
-			$("#idCrearActor").css("display", "inline-block");
-			$("#idDivCrearRelacion").css("display", "inline-block");
-		}
-		
-		if (flagRelacion) {
-			$("#idCrearRelacion").text("Cancelar");
-			$("#novalo").css("display", "none");
-			$("#idDivCrearCaso").css("display","none");
-			$("#idCrearActor").css("display", "none");
-			//$("#idDivCrearRelacion").css("display", "none");
-		} else {
-			$("#idCrearRelacion").text("Crear Relacion");
-			//$("#novalo").css("display", "none");
-			$("#idCrearActor").css("display", "inline-block");
-			$("#idDivCrearRelacion").css("display", "inline-block");
-			$("#idDivCrearCaso").css("display","inline-block");
-		}
+			$("#idCrearRelacion").css("display", "inline-block");
+		}	
 		
 	}
 	var drawComponentes = function(err,data){
