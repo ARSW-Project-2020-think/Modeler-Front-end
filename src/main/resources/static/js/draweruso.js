@@ -65,6 +65,7 @@ var drawer = (function(){
 		if(stompClient==null){
 			loadSocket(data.id);
 		}
+		cleanLines();
 		//console.log("data");
 		console.log(data);
 		drawComponentesn(data.componentes);
@@ -110,7 +111,7 @@ var drawer = (function(){
 		});
 	};
 	var drawOvalo = function(ovalo){
-		var shape = $("<div style='width:"+ovalo.ancho+"; height:"+ovalo.alto+"; background:#F0E68C; text-align:center' id='"+ovalos.length+"'>"+ovalo.nombre+"</div>");
+		var shape = $("<div style=' z-index:9000; width:"+ovalo.ancho+"; height:"+ovalo.alto+"; background:#F0E68C; text-align:center' id='"+ovalos.length+"'>"+ovalo.nombre+"</div>");
 		shape.css("background","#F0E68C");
 		shape.css("position","relative");
 		shape.css("border-color","black");
@@ -211,21 +212,31 @@ var drawer = (function(){
             console.log('Connected: ' + frame);
             stompClient.subscribe('/shape/newcomponent.'+idModelo, function (eventbody) {
             	var c =JSON.parse(eventbody.body);
-            	if(c["@type"]=="Ovalo"){
-            		ovalos.push(c);
-            	}else{
-            		usuario.push(c);
-            	}
+            	cleanLines();
             	drawComponentes(null,{componentes:[c]});
+            	cleanLines();
+            	linesComponentes();
+            	
             });
             stompClient.subscribe('/shape/updatecomponent.'+idModelo, function (eventbody) {
             	var comp = JSON.parse(eventbody.body);
             	updateShape(JSON.parse(eventbody.body));
             	if(comp.id == selectTedComponent){
+            		cleanLines();
+            		linesComponentes();
             		return;
             	}
+            	cleanLines();
             	validateLocationsOvalos();
             	validateLocationsActor();
+            	linesComponentes();
+            });
+            stompClient.subscribe('/shape/newrelation.'+idModelo, function (eventbody) {
+            	var comp = JSON.parse(eventbody.body);
+            	updateShape(comp[0]);
+            	updateShape(comp[1]);
+            	cleanLines();
+            	linesComponentes();
             });
         });
 	};
@@ -274,8 +285,8 @@ var drawer = (function(){
 	    line.css("height",'0px');
 	    line.css("position",'relative');
 	    line.css("transform","rotate(" + angle + "rad)");
-	    console.log("Linea #:" +lineas);
-	    line.css("top",y+(-50*ovalos.length-200*usuario.length-2*lineas)+"px");
+	    //console.log("Linea #:" +lineas);
+	    line.css("top",y+(-50*ovalos.length-200*usuario.length-2*lineShape.length)+"px");
 	    line.css("left",(x-11)+"px");
 	    line.attr("class","linea");
 	    return line;
@@ -292,7 +303,7 @@ var drawer = (function(){
 				return ovalos[i];
 			}
 		}
-		
+		return null;
 	};
 
 	var createLine =function(x1, y1, x2, y2) {
@@ -315,7 +326,7 @@ var drawer = (function(){
 			var x1 = ovalo.x+(ovalo.ancho/2);
 			var y1	 = ovalo.y+(ovalo.alto/2);
 			ovalo.relaciones.forEach(function(rel){
-				var rel2 = getComponente(rel);
+				var rel2 = getComponenteById(rel.id);
 				rel = rel2;
 				var x2 = rel.x+(rel.ancho/2);
 				var y2 = rel.y+(rel.alto/2);
@@ -328,7 +339,7 @@ var drawer = (function(){
 			var x1 = user.x+(user.ancho/2);
 			var y1	 = user.y+(user.alto/2);
 			user.relaciones.forEach(function(rel){
-				var rel2 = getComponente(rel);
+				var rel2 = getComponenteById(rel.id);
 				rel = rel2;
 				var x2 = rel.x+(rel.ancho/2);
 				var y2 = rel.y+(rel.alto/2);
@@ -338,6 +349,13 @@ var drawer = (function(){
 			});
 		});
 	};
+	
+	var cleanLines = function(){
+		for(var i=0;i<lineShape.length;i++){
+			lineShape[i].remove();
+		}
+		lineShape = [];
+	}
 	
 	return{
 		draw:function(event){			
