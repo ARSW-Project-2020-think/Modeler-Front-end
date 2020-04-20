@@ -13,9 +13,9 @@ var drawer = (function(){
 	var flagCrearCaso = false;
 	var flagDeleteRelation = false;
 	var originDeleteRelation = null;
-	var flagEliminarElemento = false;
-	var url = "https://class-modeler.herokuapp.com";
-	//var url = "http://localhost:4444";
+	var flagDeleteElemento = false;
+	//var url = "https://class-modeler.herokuapp.com";
+	var url = "http://localhost:4444";
 
 	var cambiarBotones = function() {			
 		if (flagCrearCaso) {
@@ -25,12 +25,14 @@ var drawer = (function(){
 			$("#idDivCrearActor").css("display", "none");
 			$("#idDivCrearRelacion").css("display", "none");
 			$("#idDivBorrar").css("display", "none");
+			$("#idDivEliminarElemento").css("display", "none");
 		} else if (flagRelacion) {
 			$("#idCrearRelacion").text("Cancelar");
 
 			$("#idDivCrearCaso").css("display","none");
 			$("#idCrearActor").css("display", "none");
 			$("#idDivBorrar").css("display", "none");
+			$("#idDivEliminarElemento").css("display", "none");
 		} else if (flagCrearActor) {
 			$("#idCrearActor").text("Cancelar");
 			$("#nactor").css("display", "inline-block");
@@ -38,12 +40,21 @@ var drawer = (function(){
 			$("#idCrearCaso").css("display", "none");
 			$("#idCrearRelacion").css("display", "none");
 			$("#idBorrar").css("display", "none");
+			$("#idDivEliminarElemento").css("display", "none");
 		} else if (flagDeleteRelation) {
 			$("#idBorrar").text("Cancelar");
 			
 			$("#idCrearRelacion").css("display", "none");
 			$("#idDivCrearActor").css("display", "none");			
 			$("#idDivCrearCaso").css("display", "none");
+			$("#idDivEliminarElemento").css("display", "none");			
+		} else if (flagDeleteElemento) {
+			$("#idEliminarElemento").text("Cancelar");
+
+			$("#idDivCrearActor").css("display", "none");
+			$("#idDivCrearCaso").css("display", "none");		
+			$("#idCrearRelacion").css("display", "none");
+			$("#idDivBorrar").css("display", "none");
 		} else {					
 			$("#nactor").css("display", "none");
 			$("#novalo").css("display", "none");
@@ -52,16 +63,19 @@ var drawer = (function(){
 			$("#idCrearCaso").text("Crear Caso");
 			$("#idCrearRelacion").text("Crear Relacion");							
 			$("#idBorrar").text("Borrar Relación");
+			$("#idEliminarElemento").text("Eliminar Elemento");
 			
 			$("#idDivCrearActor").css("display", "inline-block");
 			$("#idDivCrearCaso").css("display", "inline-block");			
 			$("#idDivCrearRelacion").css("display", "inline-block");
 			$("#idDivBorrar").css("display", "inline-block");
+			$("#idDivEliminarElemento").css("display", "inline-block");			
 
 			$("#idCrearActor").css("display", "inline-block");
 			$("#idCrearCaso").css("display", "inline-block");			
 			$("#idCrearRelacion").css("display", "inline-block");
 			$("#idBorrar").css("display", "inline-block");
+			$("#idEliminarElemento").css("display", "inline-block");
 		}			
 	}
 	var drawComponentes = function(err,data){
@@ -82,7 +96,7 @@ var drawer = (function(){
 		console.log("Validando lineas");
 		linesComponentes();
 	};
-	validateLocationsOvalos = function(){
+	var validateLocationsOvalos = function(){
 		for(var i=0;i<ovalosShape.length;i++){
 			var y = ovalos[i].y-50*i;
 			var x = ovalos[i].x-11;
@@ -147,6 +161,12 @@ var drawer = (function(){
 				flagDeleteRelation = false;
 				originDeleteRelation = null;
 				cambiarBotones();
+			}	
+			
+			if(flagDeleteElemento) {
+				stompClient.send('/app/deleteComponent.'+idModelo,{},JSON.stringify(ovalo));
+				flagDeleteElemento = false;
+				cambiarBotones();
 			}
 		});
 		shape.draggable({containment:"parent",
@@ -202,6 +222,12 @@ var drawer = (function(){
 				stompClient.send('/app/deleteRelation.'+idModelo,{},JSON.stringify(li));
 				flagDeleteRelation = false;
 				originDeleteRelation = null;
+				cambiarBotones();
+			}
+
+			if(flagDeleteElemento) {
+				stompClient.send('/app/deleteComponent.'+idModelo,{},JSON.stringify(actor));
+				flagDeleteElemento = false;
 				cambiarBotones();
 			}
 
@@ -274,9 +300,71 @@ var drawer = (function(){
             	updateShape(comp[1]);
             	cleanLines();
             	linesComponentes();
+			});	
+
+			stompClient.subscribe('/shape/deleteComponent.'+idModelo, function (eventbody) {
+				var comp = JSON.parse(eventbody.body);
+				deleteComponent(comp);
+            	cleanLines();
+            	linesComponentes();
             });
         });
 	};
+
+	var deleteComponent = function(component) {
+		console.log("\n --------------------------------------JSON QUE GENERA ------------------------------------- \n");
+		console.log(component);
+		console.log("\n --------------------------------------JSON QUE GENERA ------------------------------------- \n");
+		if (component["@type"] =="Ovalo"){
+			deleteOvalo(component.id);
+		} else {
+			deleteActor(component.id);
+		}
+	}
+
+
+	var deleteActor = function (id) {
+		var aux = [];
+		var aux2 = [];
+		var cont = 0;
+		for (var i = 0; i < usuario.length; i++) {
+			if (usuario[i].id != id) {
+				usuarioShape[i].attr("id", cont);
+				aux.push(usuario[i]);
+				aux2.push(usuarioShape[i]);	
+				cont++;	
+			} else {
+				usuarioShape[i].remove();
+			}
+		}
+
+		usuario = aux;
+		usuarioShape = aux2;
+		validateLocationsOvalos();
+		validateLocationsActor();
+	}
+
+	var deleteOvalo = function (id) {
+		var aux = [];
+		var aux2 = [];
+		var cont = 0;
+		for (var i = 0; i < ovalos.length; i++) {
+			if (ovalos[i].id != id) {
+				ovalosShape[i].attr("id", cont);
+				aux.push(ovalos[i]);
+				aux2.push(ovalosShape[i]);	
+				cont++;	
+			} else {
+				ovalosShape[i].remove();
+			}
+		}
+
+		ovalos = aux;
+		ovalosShape = aux2;
+		validateLocationsOvalos();
+		validateLocationsActor();
+	}
+
 	var validarYDibujar = function(event) {
 		if (!flagCrearActor && !flagCrearCaso) return;
 		console.log(event);
@@ -317,7 +405,7 @@ var drawer = (function(){
 	
 	var createLineElement =function(x, y, length, angle) {
 	    var line = $("<div></div>");
-	    line.css("border","2px solid black");
+	    line.css("border","1px solid black");
 	    line.css("width",length + 'px');
 	    line.css("height",'0px');
 	    line.css("position",'relative');
@@ -364,6 +452,7 @@ var drawer = (function(){
 			var y1	 = ovalo.y+(ovalo.alto/2);
 			ovalo.relaciones.forEach(function(rel){
 				var rel2 = getComponenteById(rel.id);
+				if (rel2 == null) return;
 				rel = rel2;
 				var x2 = rel.x+(rel.ancho/2);
 				var y2 = rel.y+(rel.alto/2);
@@ -377,6 +466,7 @@ var drawer = (function(){
 			var y1	 = user.y+(user.alto/2);
 			user.relaciones.forEach(function(rel){
 				var rel2 = getComponenteById(rel.id);
+				if (rel2 == null) return;
 				rel = rel2;
 				var x2 = rel.x+(rel.ancho/2);
 				var y2 = rel.y+(rel.alto/2);
@@ -426,6 +516,9 @@ var drawer = (function(){
 				originDeleteRelation = null;
 			}
 			flagDeleteRelation = !flagDeleteRelation;
+			cambiarBotones();
+		}, eliminarElemento: function() {
+			flagDeleteElemento = !flagDeleteElemento;
 			cambiarBotones();
 		}
 	}
