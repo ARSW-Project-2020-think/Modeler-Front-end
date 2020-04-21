@@ -15,44 +15,41 @@ var draw = (function(){
 	var lineas = 0;
 	var flagDeleteRelation = false;
 	var flagCrearClase = false;
+	var flagBorrarClase = false;
 	var cambiarBotones = function() {
 		if (toaddline) {
 			$("#idLinea").text("Cancelar");
-
 			$("#idDivCrearClase").css("display", "none");
 			$("#idDivBorrar").css("display", "none");
-								
-		} else {
-			$("#idLinea").text("Nueva Relación");
-
-			$("#idDivCrearClase").css("display", "inline-block");
-			$("#idDivBorrar").css("display", "inline-block");
-		}
-
-		if (flagDeleteRelation) {
+			$("#idDivBorrarClase").css("display","none");
+		} else if (flagDeleteRelation) {
 			$("#idBorrar").text("Cancelar"); 
-
 			$("#idDivLinea").css("display", "none");
-			$("#idCrearClase").css("display", "none");
-		} else {
-			$("#idBorrar").text("Borrar Relación");
-
-			$("#idCrearClase").css("display", "inline-block");
-			$("#idDivLinea").css("display", "inline-block");
-		}
-
-		if (flagCrearClase) {
+			$("#idDivCrearClase").css("display", "none");
+			$("#idDivBorrarClase").css("display","none");
+		} else if (flagCrearClase) {
 			$("#idCrearClase").text("Cancelar");
 			$("#idClase").css("display", "inline-block");
-
-			$("#idLinea").css("display", "none");
-			$("#idBorrar").css("display", "none");
-		} else {
-			$("#idCrearClase").text("Crear Clase");
+			$("#idDivLinea").css("display", "none");
+			$("#idDivBorrar").css("display", "none");
+			$("#idDivBorrarClase").css("display","none");
+		}else if(flagBorrarClase){
+			$("#idBorrarClase").text("Cancelar");
+			$("#idDivCrearClase").css("display","none");
+			$("#idDivLinea").css("display","none");
+			$("#idDivBorrar").css("display","none");
+		} 
+		else {
+			$("#idClase").css("display", "inline-bock");
+			$("#idDivLinea").css("display", "inline-block");
+			$("#idDivBorrar").css("display", "inline-block");
+			$("#idDivCrearClase").css("display","inline-block");
+			$("#idDivBorrarClase").css("display", "inline-block");
 			$("#idClase").css("display", "none");
-
-			$("#idLinea").css("display", "inline-block");
-			$("#idBorrar").css("display", "inline-block");
+			$("#idCrearClase").text("Crear Clase");
+			$("#idLinea").text("Nueva Relacion");
+			$("#idBorrar").text("Borrar Relacion");
+			$("#idBorrarClase").text("Borrar Clase");
 		}
 
 	}
@@ -94,7 +91,12 @@ var draw = (function(){
 	    			originDeleteRelation = null;
 	    			flagDeleteRelation = false;
 	    			cambiarBotones();
-				}					
+				}
+				if(flagBorrarClase){
+					stompClient.send('/app/deleteComponent.'+idModelo,{},JSON.stringify(rectangulo));
+					flagBorrarClase = false;
+					cambiarBotones();
+				}
 	    	});
 	    	clase.draggable({containment:"parent",
 	    		drag:function(drev){
@@ -181,17 +183,19 @@ var draw = (function(){
 		console.log("------ Pintar relacion ---------");
 		var r3 = getRectangleById(r1.id);
 		var r4 = getRectangleById(r2.id);
-		r1 = r3;
-		r2 = r4;
-		console.log("------ Creando linea ---------");
-		console.log(r1);
-		console.log(r2);
-		console.log("------ linea creada ---------");
-		canv = $("#dib");
-		var line = createLine(r1.x+(r1.ancho/2), r1.y+(r1.alto/2), r2.x+(r2.ancho/2), r2.y+(r2.alto/2));		
-		line.attr("id","line"+ r1.id + "-" + r2.id);
-		canv.append(line);
-		lines.push(line);
+		if(r3!=null && r4!=null){
+			r1 = r3;
+			r2 = r4;
+			console.log("------ Creando linea ---------");
+			console.log(r1);
+			console.log(r2);
+			console.log("------ linea creada ---------");
+			canv = $("#dib");
+			var line = createLine(r1.x+(r1.ancho/2), r1.y+(r1.alto/2), r2.x+(r2.ancho/2), r2.y+(r2.alto/2));		
+			line.attr("id","line"+ r1.id + "-" + r2.id);
+			canv.append(line);
+			lines.push(line);
+		}
 	}
 
 	var getRectangleById= function(id){
@@ -264,9 +268,45 @@ var draw = (function(){
 				updateCollectionRectangle(r2);
 				dibujarRelaciones();
             });
+			'/app/deleteComponent.'
+			stompClient.subscribe('/shape/deleteComponent.'+idModelo, function (eventbody) {
+            	var r1 = JSON.parse(eventbody.body);
+				console.log(r1);
+				removeRectangle(r1);
+				dibujarRelaciones();
+            });
         });
 	};
-	
+	var removeRectangle= function(rect){
+		var li = [];
+		var shape = [];
+		var c = 0;
+		for(var i=0;i<clases.length;i++){
+			if(clases[i].id!=rect.id){
+				li.push(clases[i]);
+				cont[i].attr("id",c);
+				shape.push(cont[i]);
+				c+=1;
+			}else{
+				cont[i].remove();
+			}
+		}
+		clases = li;
+		cont = shape;
+		validLocation();
+	};
+	var validLocation = function(){
+		for(var i=0;i<cont.length;i++){
+			var x = clases[i].x-11;
+			var y = clases[i].y-50*i;
+			if(cont[i].css("top")!=y+"px"){
+				cont[i].css("top",y+"px");
+			}
+			if(cont[i].css("left")!=x+"px"){
+				cont[i].css("left",x+"px");
+			}
+		}
+		};
 	var updateCollectionRectangle = function(rect){
 		for(var i=0;i<clases.length;i++){
 			if(clases[i].id==rect.id){
@@ -335,6 +375,9 @@ var draw = (function(){
 			cambiarBotones();
 		}, crearClase: function() {
 			flagCrearClase = !flagCrearClase;
+			cambiarBotones();
+		},borrarClase:function(){
+			flagBorrarClase = !flagBorrarClase;
 			cambiarBotones();
 		}
 	};
