@@ -345,8 +345,10 @@ var draw = (function(){
 				alert("Ya existe una clase con este nombre");
 				return;
 			}
-        	var x = (event.pageX-275+11);
-        	var y = event.pageY;
+        	//var x = (event.pageX-275+11);
+			var x = event.offsetX-4;
+        	//var y = event.pageY;
+			var y = event.offsetY;
         	var rectangulo = {"@type":"Rectangulo","x":x,"y":y,"ancho":200,"alto":50,"nombre":val};
         	var url = new URL(document.URL);
         	var params = url.searchParams;

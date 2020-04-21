@@ -393,8 +393,10 @@ var drawer = (function(){
 			alto = 50;
 		}
 		console.log(text);
-		var x = (event.pageX-275+11);
-		var y = event.pageY;
+		//var x = (event.pageX-275+11);
+		var x = event.offsetX-4;
+    	//var y = event.pageY;
+		var y = event.offsetY;
 		var com = {"@type":type,"nombre":text,"x":x,"y":y,"ancho":ancho,"alto":alto};		
 		console.log("\n --------------------------------------JSON QUE GENERA ------------------------------------- \n");
 		console.log(com);
