@@ -115,8 +115,43 @@
 					<div id = "idDivLinea"><button id = "idLinea" onclick="draw.setAddLine()" class="btn btn-primary">Nueva Relación</button></div>
 					<div id = "idDivBorrar"><button id = "idBorrar" onclick="draw.borrarRelacion()" class="btn btn-primary">Borrar Relación</button></div>
 					<div id = "idDivBorrarClase"><button id = "idBorrarClase" onclick="draw.borrarClase()" class="btn btn-primary">Borrar Clase</button></div>
+					<div id="idDivEditar"><button class="btn btn-primary" id="idEditar" onclick="draw.editarClase()">Editar clase</button></div>
 				</div>
 			</div>
   		</main>
+		<!-- Modal -->
+		<div class="modal fade" id="claseModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true" style="z-index:10000000;">
+		  <div class="modal-dialog modal-dialog-centered" role="document">
+		    <div class="modal-content">
+		      <div class="modal-header">
+		        <h5 class="modal-title" id="classNameModal" style="text-align:center"></h5>
+		        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+		          <span aria-hidden="true">&times;</span>
+		        </button>
+		      </div>
+		      <div class="modal-body">
+		        <h6>Atributos:</h6>
+		        <div style="width:100%; height:100px; overflow:auto;">
+		        	<div id="attrClase" class="container"></div>
+		        </div>
+		        <div>
+		        	<input type="text" placeholder="Atributo" style="border-radius:10px; width:200px; display:inline-block">
+		        	<button class="btn btn-primary" style="display:inline-block;">Añadir Atributo</button>
+		        </div>
+		        <h6>Metodos</h6>
+		        <div style="width:100%; height:100px; overflow:auto;">
+		        	<div id="methodClase" class="container"></div>
+		        </div>
+		        <div>
+		        	<input type="text" placeholder="Metodo" style="border-radius:10px; width:200px; display:inline-block">
+		        	<button class="btn btn-primary" style="display:inline-block;">Añadir Metodo</button>
+		        </div>
+		      </div>
+		      <div class="modal-footer">
+		        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+		      </div>
+		    </div>
+		  </div>
+		</div>
 	</body>
 	</html>

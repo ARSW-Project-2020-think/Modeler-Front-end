@@ -6,6 +6,7 @@ var draw = (function(){
 	var stompClient = null;
 	var idModelo = null;
 	var selected = null;
+	var claseEdicion = null;
 	var origin = null;
 	var originDeleteRelation = null;
 	var toaddline = false;
@@ -16,28 +17,39 @@ var draw = (function(){
 	var flagDeleteRelation = false;
 	var flagCrearClase = false;
 	var flagBorrarClase = false;
+	var flagEditarClase = false;
 	var cambiarBotones = function() {
 		if (toaddline) {
 			$("#idLinea").text("Cancelar");
 			$("#idDivCrearClase").css("display", "none");
 			$("#idDivBorrar").css("display", "none");
 			$("#idDivBorrarClase").css("display","none");
+			$("#idDivEditar").css("display","none")
 		} else if (flagDeleteRelation) {
 			$("#idBorrar").text("Cancelar"); 
 			$("#idDivLinea").css("display", "none");
 			$("#idDivCrearClase").css("display", "none");
 			$("#idDivBorrarClase").css("display","none");
+			$("#idDivEditar").css("display","none")
 		} else if (flagCrearClase) {
 			$("#idCrearClase").text("Cancelar");
 			$("#idClase").css("display", "inline-block");
 			$("#idDivLinea").css("display", "none");
 			$("#idDivBorrar").css("display", "none");
 			$("#idDivBorrarClase").css("display","none");
+			$("#idDivEditar").css("display","none")
 		}else if(flagBorrarClase){
 			$("#idBorrarClase").text("Cancelar");
 			$("#idDivCrearClase").css("display","none");
 			$("#idDivLinea").css("display","none");
 			$("#idDivBorrar").css("display","none");
+			$("#idDivEditar").css("display","none")
+		}else if(flagEditarClase){
+			$("#idEditar").text("Cancelar");
+			$("#idDivCrearClase").css("display","none");
+			$("#idDivLinea").css("display","none");
+			$("#idDivBorrar").css("display","none");
+			$("#idDivBorrarClase").css("display","none")
 		} 
 		else {
 			$("#idClase").css("display", "inline-bock");
@@ -45,11 +57,14 @@ var draw = (function(){
 			$("#idDivBorrar").css("display", "inline-block");
 			$("#idDivCrearClase").css("display","inline-block");
 			$("#idDivBorrarClase").css("display", "inline-block");
+			$("#idDivEditar").css("display","inline-block")
 			$("#idClase").css("display", "none");
 			$("#idCrearClase").text("Crear Clase");
 			$("#idLinea").text("Nueva Relacion");
 			$("#idBorrar").text("Borrar Relacion");
 			$("#idBorrarClase").text("Borrar Clase");
+			$("#idEditar").text("Editar Clase");
+			
 		}
 
 	}
@@ -97,6 +112,10 @@ var draw = (function(){
 					flagBorrarClase = false;
 					cambiarBotones();
 				}
+				if(flagEditarClase){
+					claseEdicion = rectangulo;
+					showClaseData();
+				}
 	    	});
 	    	clase.draggable({containment:"parent",
 	    		drag:function(drev){
@@ -127,7 +146,49 @@ var draw = (function(){
 		});
 		dibujarRelaciones();
 	};
-	
+	var showClaseData = function(){
+		var rectangulo = getClaseByName(claseEdicion.nombre);
+		$("#claseModal").modal("show");
+		$("#classNameModal").text(rectangulo.nombre);
+		showAtributes(rectangulo);
+		showMetodos(rectangulo);
+	};
+	var showMetodos = function(rectangulo){
+		var metodos = rectangulo.metodos;
+		var mt = $("#methodClase"); 
+		if(metodos.length==0){
+			mt.html("<b>No hay metodos, añade uno nuevo para iniciar</b>");
+			return;
+		}
+	}
+	var showAtributes = function(rectangulo){
+		var atributes = rectangulo.atributos;
+		var at = $("#attrClase");
+		at.html("");
+		if(atributes.length==0){
+			at.html("<b>No hay atributos, añade uno nuevo para iniciar</b>");
+			return;
+		}
+		console.log(atributes);
+		atributes.forEach(function(atr){
+			var row = $("<div class='row'></div>");
+			var col = $("<div class='col-8'>"+atr.atributo+"</div>")
+			row.append(col);
+			col = $("<div class='col-4'></div>")
+			var button = $("<button class='btn btn-danger'>Eliminar</button>");
+			col.append(button);
+			buttonDeleteAtribute(button,atr);
+			row.append(col);
+			at.append(row);
+			row = $("<div class='row' style='heigth:3px;width:100%;'></div>");
+			at.append(row);
+		});
+	}
+	var buttonDeleteAtribute = function(button,attr){
+		button.click(function(){
+			console.log(attr);
+		});
+	}
 	var getClaseByName=function(name){
 		for(var i=0;i<clases.length;i++){
 			if(clases[i].nombre==name){
@@ -380,6 +441,12 @@ var draw = (function(){
 			cambiarBotones();
 		},borrarClase:function(){
 			flagBorrarClase = !flagBorrarClase;
+			cambiarBotones();
+		},editarClase:function(){
+			if(flagEditarClase){
+				claseEdicion=null;
+			}
+			flagEditarClase = !flagEditarClase;
 			cambiarBotones();
 		}
 	};
