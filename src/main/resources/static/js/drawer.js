@@ -152,6 +152,17 @@ var draw = (function(){
 		$("#classNameModal").text(rectangulo.nombre);
 		showAtributes(rectangulo);
 		showMetodos(rectangulo);
+		$("#natributoIn").click(function(){
+			var q = $("#natributo").val();
+			stompClient.send('/app/newAtribute.'+idModelo,{},JSON.stringify({"@type":"Rectangulo","id":rectangulo.id,atributos:[{"atributo":q}]}));
+		});
+		$("#nmetodoIn").click(function(){
+			var q = $("#nmetodo").val();
+			stompClient.send('/app/newMethod.'+idModelo,{},JSON.stringify({"@type":"Rectangulo","id":rectangulo.id,metodos:[{"metodo":q}]}));
+		});
+		$("#closeClase").click(function(){
+			claseEdicion=null;
+		});
 	};
 	var showMetodos = function(rectangulo){
 		var metodos = rectangulo.metodos;
@@ -160,6 +171,23 @@ var draw = (function(){
 			mt.html("<b>No hay metodos, añade uno nuevo para iniciar</b>");
 			return;
 		}
+		mt.html("");
+		metodos.forEach(function(met){
+			console.log("Draw metodos")
+			var row = $("<div class='row'></div>");
+			var col = $("<div class='col-8'>"+met.metodo+"</div>")
+			row.append(col);
+			col = $("<div class='col-4'></div>")
+			var button = $("<button class='btn btn-danger'>Eliminar</button>");
+			col.append(button);
+			button.click(function(){
+				stompClient.send('/app/deleteMethod.'+idModelo,{},JSON.stringify(met));
+			});
+			row.append(col);
+			mt.append(row);
+			row = $("<div class='row' style='heigth:3px;width:100%;'></div>");
+			mt.append(row);
+		});
 	}
 	var showAtributes = function(rectangulo){
 		var atributes = rectangulo.atributos;
@@ -169,24 +197,22 @@ var draw = (function(){
 			at.html("<b>No hay atributos, añade uno nuevo para iniciar</b>");
 			return;
 		}
-		console.log(atributes);
+		//console.log(atributes);
 		atributes.forEach(function(atr){
+			console.log(atr);
 			var row = $("<div class='row'></div>");
 			var col = $("<div class='col-8'>"+atr.atributo+"</div>")
 			row.append(col);
 			col = $("<div class='col-4'></div>")
 			var button = $("<button class='btn btn-danger'>Eliminar</button>");
 			col.append(button);
-			buttonDeleteAtribute(button,atr);
+			button.click(function(){
+				stompClient.send('/app/deleteAtribute.'+idModelo,{},JSON.stringify(atr));
+			});
 			row.append(col);
 			at.append(row);
 			row = $("<div class='row' style='heigth:3px;width:100%;'></div>");
 			at.append(row);
-		});
-	}
-	var buttonDeleteAtribute = function(button,attr){
-		button.click(function(){
-			console.log(attr);
 		});
 	}
 	var getClaseByName=function(name){
@@ -329,12 +355,43 @@ var draw = (function(){
 				updateCollectionRectangle(r2);
 				dibujarRelaciones();
             });
-			'/app/deleteComponent.'
 			stompClient.subscribe('/shape/deleteComponent.'+idModelo, function (eventbody) {
             	var r1 = JSON.parse(eventbody.body);
 				console.log(r1);
 				removeRectangle(r1);
 				dibujarRelaciones();
+            });
+			stompClient.subscribe('/shape/newAtribute.'+idModelo, function (eventbody) {
+            	var rect = JSON.parse(eventbody.body);
+            	updateCollectionRectangle(rect);
+            	if(claseEdicion!= null && rect.id==claseEdicion.id){
+            		showAtributes(rect);
+            	}
+            });
+			stompClient.subscribe('/shape/deleteAtribute.'+idModelo, function (eventbody) {
+            	var rect = JSON.parse(eventbody.body);
+            	console.log("Delete");
+            	console.log(rect);
+            	updateCollectionRectangle(rect);
+            	if(claseEdicion!= null && rect.id==claseEdicion.id){
+            		showAtributes(rect);
+            	}
+            });
+			stompClient.subscribe('/shape/newMethod.'+idModelo, function (eventbody) {
+            	var rect = JSON.parse(eventbody.body);
+            	console.log(rect);
+            	updateCollectionRectangle(rect);
+            	if(claseEdicion!= null && rect.id==claseEdicion.id){
+            		showMetodos(rect);
+            	}
+            });
+			stompClient.subscribe('/shape/deleteMethod.'+idModelo, function (eventbody) {
+            	var rect = JSON.parse(eventbody.body);
+            	console.log(rect);
+            	updateCollectionRectangle(rect);
+            	if(claseEdicion!= null && rect.id==claseEdicion.id){
+            		showMetodos(rect);
+            	}
             });
         });
 	};
