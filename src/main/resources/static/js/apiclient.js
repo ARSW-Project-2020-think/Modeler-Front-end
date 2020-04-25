@@ -167,6 +167,20 @@ var apiclient = (function () {
 			},function(err){
 				callback(err,null);
 			});
-		}
+		},eliminarColaborador:function(username,project,token,user,callback){
+			console.log("ppppp "+project);
+			var promise = $.ajax({
+				type:"DELETE",
+				url:urlapi+"/projectapi/"+username+"/colaborator/project/"+project,
+				headers:{"Authorization":token},
+				data:JSON.stringify(user),
+				contentType:"application/json"
+			});
+			promise.then(function(){
+				callback(null,user);
+			},function(err){
+				callback(err,null);
+			});
+		}	
     }
 })();

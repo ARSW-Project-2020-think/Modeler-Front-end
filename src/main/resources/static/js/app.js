@@ -28,22 +28,43 @@ var app = (function () {
 		if(error!=null){
             console.log(error);
             return ;
-		} 
-		var string = "<table class='table table-borderless'>" +
-						"<thead>" +
-							"<tr>" + 
-							"<th scope='col'> Nombre</th>" +
-							"</tr>" +
-						"</thead> <tbody id = 'idTBody'>";
-
+		}
+		console.log("Load colaboradores")
+		console.log("col"+ data);
+		$("#idColaboradores").html("");
+		var tab = $("<table class='table table-borderless'></table>");
+		tab.append($("<thead>" +
+					"<tr>" + 
+					"<th scope='col'> Nombre</th><th>Eliminar</th>" +
+					"</tr>" +
+					"</thead>"));
+		var tb = $("<tbody id = 'idTBody'></tbody>");
+		tab.append(tb);
+		var url = new URL(document.URL);
+		var params = url.searchParams;
+		var project = params.get("proyecto");
+		console.log("pr "+project);
 		data.forEach(function(colaborador){
-			string += "<tr>" +
-						"<td>" + colaborador.username + "</td>" +
-					   "</tr>";
+			var row = $("<tr id='u-"+colaborador.username+"'></tr>");
+			row.append($("<td>" + colaborador.username + "</td>"));
+			var col = $("<td></td>");
+			var button = $("<button class='btn btn-danger'>Eliminar Colaborador</button>");
+			col.append(button);
+			button.click(function(){
+				console.log("Click "+project);
+				apiclient.eliminarColaborador(sessionStorage.getItem("username"),project,sessionStorage.getItem("token"),colaborador,deleteColaborador);
+			});
+			row.append(col);
+			tab.append(row);
 		}); 
-			 
-		string += "</tbody> </table>";
-		$("#idColaboradores").html(string);
+		$("#idColaboradores").append(tab);
+	}
+	var deleteColaborador = function(error,user){
+		if(error!=null){
+			alert("No se pudo eliminar este colaborador");
+			return;
+		}
+		$("#u-"+user.username).remove();
 	}
     var updateProjects = function(error,data){
         if(error!=null){
@@ -179,9 +200,7 @@ var app = (function () {
     		alert("No fue posible añadir dicho colaborador");
     		return ;
 		}
-		$("#idTBody").append($("<tr>" +
-								"<td>" + colaborador + "</td>" +
-							"</tr>"));
+    	location.href = document.URL;
     };
     updateDisponibilidad = function(err,data){
     	var c = $("#disponibilidad");
