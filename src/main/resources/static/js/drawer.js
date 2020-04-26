@@ -163,6 +163,11 @@ var draw = (function(){
 		$("#closeClase").click(function(){
 			claseEdicion=null;
 		});
+		$("#bclose").click(function(){
+			console.log("entro");
+			claseEdicion=null;
+		});
+		$("#dragmodal").draggable();
 	};
 	var showMetodos = function(rectangulo){
 		var metodos = rectangulo.metodos;
