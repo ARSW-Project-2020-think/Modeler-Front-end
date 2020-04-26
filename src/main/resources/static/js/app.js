@@ -49,11 +49,13 @@ var app = (function () {
 			row.append($("<td>" + colaborador.username + "</td>"));
 			var col = $("<td></td>");
 			var button = $("<button class='btn btn-danger'>Eliminar Colaborador</button>");
-			col.append(button);
-			button.click(function(){
-				console.log("Click "+project);
-				apiclient.eliminarColaborador(sessionStorage.getItem("username"),project,sessionStorage.getItem("token"),colaborador,deleteColaborador);
-			});
+			if(colaborador.username!=sessionStorage.getItem("username")){
+				col.append(button);
+				button.click(function(){
+					console.log("Click "+project);
+					apiclient.eliminarColaborador(sessionStorage.getItem("username"),project,sessionStorage.getItem("token"),colaborador,deleteColaborador);
+				});
+			}
 			row.append(col);
 			tab.append(row);
 		}); 
