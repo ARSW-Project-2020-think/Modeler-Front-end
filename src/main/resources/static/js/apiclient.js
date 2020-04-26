@@ -1,7 +1,7 @@
 var apiclient = (function () {
 	var userSelect = null;
-	//var urlapi = "https://class-modeler.herokuapp.com";
-	var urlapi = "http://localhost:4444";
+	var urlapi = "https://class-modeler.herokuapp.com";
+	//var urlapi = "http://localhost:4444";
     return {
         registrarse: function(newUsuario) {
             //alert("ENTRO REGISTRER");
