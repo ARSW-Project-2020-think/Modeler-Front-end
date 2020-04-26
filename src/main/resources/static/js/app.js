@@ -78,6 +78,7 @@ var app = (function () {
         	$("#cont").html("<h1>Actualmente No hay proyectos que mostrar</h1>");
         }else{
         	var cont = $("<div class='container'></div>");
+        	$("#cont").append(cont);
         	var contador =1;
         	var row = null;
         	data.forEach(function(proyecto){
@@ -100,6 +101,7 @@ var app = (function () {
         					str+="<a href='version.html?usuario="+proyecto.autor.username+"&&version="+1+"&&proyecto="+proyecto.nombre+"' class='btn btn-primary'>Ver</a>";
         					if(proyecto.autor.username==sessionStorage.getItem("username")){
         						str+="<a href='compartir.html?proyecto="+proyecto.nombre+"' class='btn btn-primary'>Compartir</a>";
+        						str+="<button class='btn btn-danger' id='pr-"+proyecto.id+"'>Borrar</button>";
         					}
     			str+="</div>"+
   				"</div>"
@@ -122,9 +124,19 @@ var app = (function () {
         		console.log("entro");
         		cont.append(row);
         	}
-        	$("#cont").append(cont);
         	
         }
+        data.forEach(function(proyecto){
+        	$("#pr-"+proyecto.id).click(function(){
+        		$('#mymodal').modal("show");
+        		$("#mscont").text("Desea eliminar el proyecto "+proyecto.nombre);
+        		$("#confButton").click(function(){
+        			var user = sessionStorage.getItem("username");
+        			app.deleteProyecto(user,proyecto);
+        		});
+    		});
+        });
+        
     };
     var redirProyecto = function(err,nombre){
     	if(err!=null){
@@ -278,6 +290,8 @@ var app = (function () {
 			apiclient.loadColaboradores(username, proyecto, sessionStorage.getItem("token"), mostrarColaboradores);
 		},validarDisponibilidad:function(username){
 			apiclient.validarDisponibilidad(username,updateDisponibilidad);
+		},deleteProyecto:function(usuario,proyecto){
+			apiclient.deleteProyecto(usuario,proyecto,sessionStorage.getItem("token"));
 		}
         
     }

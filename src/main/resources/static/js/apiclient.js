@@ -1,7 +1,7 @@
 var apiclient = (function () {
 	var userSelect = null;
-	var urlapi = "https://class-modeler.herokuapp.com";
-	//var urlapi = "http://localhost:4444";
+	//var urlapi = "https://class-modeler.herokuapp.com";
+	var urlapi = "http://localhost:4444";
     return {
         registrarse: function(newUsuario) {
             //alert("ENTRO REGISTRER");
@@ -180,6 +180,19 @@ var apiclient = (function () {
 				callback(null,user);
 			},function(err){
 				callback(err,null);
+			});
+		},deleteProyecto:function(username,proyecto,token,id){
+			var prom = $.ajax({
+				"type":"DELETE",
+				"url":urlapi+"/projectapi/"+username+"/project",
+				data:JSON.stringify(proyecto),
+				headers:{"Authorization":token},
+				contentType:"application/json"
+			});
+			prom.then(function(){
+				alert("correcto");
+			},function(){
+				alert("error");
 			});
 		}	
     }
