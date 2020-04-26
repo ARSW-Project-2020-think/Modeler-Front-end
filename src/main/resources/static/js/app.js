@@ -291,7 +291,15 @@ var app = (function () {
 		},validarDisponibilidad:function(username){
 			apiclient.validarDisponibilidad(username,updateDisponibilidad);
 		},deleteProyecto:function(usuario,proyecto){
-			apiclient.deleteProyecto(usuario,proyecto,sessionStorage.getItem("token"));
+			var fun = function(err){
+				if(err!=null){
+					alert("No se pudo eliminar el proyecto");
+					return;
+				}
+				location.href= "index.html";
+				
+			}
+			apiclient.deleteProyecto(usuario,proyecto,sessionStorage.getItem("token"),fun);
 		}
         
     }

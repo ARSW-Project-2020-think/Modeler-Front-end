@@ -181,7 +181,7 @@ var apiclient = (function () {
 			},function(err){
 				callback(err,null);
 			});
-		},deleteProyecto:function(username,proyecto,token,id){
+		},deleteProyecto:function(username,proyecto,token,callback){
 			var prom = $.ajax({
 				"type":"DELETE",
 				"url":urlapi+"/projectapi/"+username+"/project",
@@ -190,9 +190,9 @@ var apiclient = (function () {
 				contentType:"application/json"
 			});
 			prom.then(function(){
-				alert("correcto");
-			},function(){
-				alert("error");
+				callback(null);
+			},function(err){
+				callback(err);
 			});
 		}	
     }
