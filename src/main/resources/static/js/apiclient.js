@@ -194,6 +194,19 @@ var apiclient = (function () {
 			},function(err){
 				callback(err);
 			});
-		}	
+		}, deleteModelo: function(username, modelo, proyecto, version, token, callback){
+			var promise = $.ajax({
+				"type":"DELETE",
+				"url":urlapi+"/projectapi/"+username+"/project/"+proyecto+"/version/"+version+"/modelo",
+				data:JSON.stringify(modelo),
+				headers:{"Authorization":token},
+				contentType:"application/json"
+			});
+			promise.then(function(){
+				callback(null);
+			}, function(err){
+				callback(err);
+			});
+		}
     }
 })();

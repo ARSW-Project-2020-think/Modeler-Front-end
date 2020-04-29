@@ -170,10 +170,12 @@ var app = (function () {
     					"<h5 class='card-title'>"+modelo.nombre+"</h5>"+
     					"<p class='card-text' style='color:white;'>Tipo de diagrama: "+modelo.tipo+"</p>";
     					if(modelo.tipo=="clases"){
-    						mod+="<a href='modelo.html?usuario="+param.get("usuario")+"&&version="+param.get("version")+"&&proyecto="+param.get("proyecto")+"&&modelo="+modelo.nombre+"' class='btn btn-primary'>Ver</a>";
+							mod+="<a href='modelo.html?usuario="+param.get("usuario")+"&&version="+param.get("version")+"&&proyecto="+param.get("proyecto")+"&&modelo="+modelo.nombre+"' class='btn btn-primary'>Ver</a>";							
     					}else{
     						mod+="<a href='uso.html?usuario="+param.get("usuario")+"&&version="+param.get("version")+"&&proyecto="+param.get("proyecto")+"&&modelo="+modelo.nombre+"' class='btn btn-primary'>Ver</a>";
-    					}
+						}
+						mod+="<button class='btn btn-danger' id ='idModelo-"+modelo.id+"'> Borrar </button>";	
+								
 			mod+="</div>"+
 				"</div>";
     		div.append($(mod));
@@ -196,7 +198,18 @@ var app = (function () {
     		cont.append(row);
     	}
     	console.log("añade");
-    	$("#models").append(cont);
+		$("#models").append(cont);
+
+		data.forEach(function(modelo){
+        	$("#idModelo-"+modelo.id).click(function(){
+				$('#mymodal').modal("show");
+				$("#mscont").text("¿Está seguro que desea eliminar el diagrama "+modelo.nombre + "?");
+				$("#confButton").click(function(){
+					var user = sessionStorage.getItem("username");
+					app.deleteModelo(user, modelo);
+				});
+			});
+        });
     };
     var redirectModel = function(error,usuario,proyecto,version,nombre,tipo){
     	if(error!=null){
@@ -272,7 +285,7 @@ var app = (function () {
         	var publico = $("input[id='publico']:checked").val();
         	console.log(nombre,publico);
         	if(nombre==null || nombre==""){
-        		alert("El nombre no puede ser vacio");
+        		alert("El nombre del proyecto no puede ser vacio!");
         		return;
         	}
         	if(publico=="on"){
@@ -281,6 +294,10 @@ var app = (function () {
         		apiclient.registrarPryecto(sessionStorage.getItem("token"),sessionStorage.getItem("username"),nombre,false,redirProyecto);
         	}
         }, registrarModelo:function(usuario,proyecto,version,nombre,tipo){
+			if(nombre==null || nombre==""){
+        		alert("El nombre del diagrama no puede ser vacio!");
+        		return;
+        	}
         	apiclient.registrarModelo(usuario,proyecto,version,nombre,tipo,sessionStorage.getItem("token"),redirectModel);
         }, addColaborador:function(username,colaborador,proyecto){
 			apiclient.addColaborador(username,colaborador,proyecto,sessionStorage.getItem("token"),colaborator);
@@ -288,24 +305,42 @@ var app = (function () {
         	apiclient.loadProyectosCompartidos(username,sessionStorage.getItem("token"),updateProjects);
         }, loadColaboradores: function(username, proyecto) {
 			apiclient.loadColaboradores(username, proyecto, sessionStorage.getItem("token"), mostrarColaboradores);
-		},validarDisponibilidad:function(username){
+		}, validarDisponibilidad:function(username){
 			apiclient.validarDisponibilidad(username,updateDisponibilidad);
-		},deleteProyecto:function(usuario,proyecto){
-			var fun = function(err){
+		}, deleteProyecto:function(usuario,proyecto){
+		   	var fun = function(err){
 				if(err!=null){
-					alert("No se pudo eliminar el proyecto");
+					alert("No se pudo eliminar el proyecto.");
 					return;
 				}
 				location.href= "index.html";
 				
 			}
-			apiclient.deleteProyecto(usuario,proyecto,sessionStorage.getItem("token"),fun);
+			apiclient.deleteProyecto(usuario,proyecto,sessionStorage.getItem("token"), fun);
+		}, deleteModelo: function(usuario, modelo) {
+			var verify = function(error) {
+				if (error != null) {
+					alert("No se pudo eliminar el modelo.");
+					return;
+				}
+				location.href= document.URL;
+			}
+			var url = new URL(document.URL);
+			var params = url.searchParams;
+			var project = params.get("proyecto");
+			var version = params.get("version");
+			apiclient.deleteModelo(usuario, modelo, project, version, sessionStorage.getItem("token"), verify);
+		}, volver: function() {
+			var url = new URL(document.URL);
+			var params = url.searchParams;
+			var proyecto = params.get("proyecto");
+			var version = params.get("version");
+			var username = params.get("usuario");
+
+			var urlHref ="version.html?usuario="+username+"&&version="+version+"&&proyecto="+proyecto;
+			location.href = urlHref;
 		}
         
     }
-
-
-
-
 
 })();
