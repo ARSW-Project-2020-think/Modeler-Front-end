@@ -1,0 +1,30 @@
+
+h1#idTitulo {
+    display: inline-block;
+    position: relative; 
+    text-align: center;
+    font-family: 'Francois One', sans-serif;
+}
+
+h1#idTitulo::after,h1::before {
+    content: '';
+    position: absolute;
+    width: 180px;
+    height: 3px;
+    background-color: currentColor;
+    top: 0.6em;
+    transform: scale(1);
+    transition: all 0.2s ease-in;
+}
+
+h1#idTitulo:hover::before, h1#idTitulo:hover::after {
+    transform: scale(0);
+}
+
+h1#idTitulo::before {
+    left: -200px;
+}
+
+h1#idTitulo::after {
+    right: -200px;
+}
