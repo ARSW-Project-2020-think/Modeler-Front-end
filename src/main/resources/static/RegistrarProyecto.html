@@ -37,122 +37,113 @@
 	
 	
 	
-	<div class="page-wrapper chiller-theme toggled">
-		<a id="show-sidebar" class="btn btn-sm btn-dark" href="#">
-		  <i class="fas fa-bars"></i>
-		</a>
-		<nav id="sidebar" class="sidebar-wrapper">
-		  <div class="sidebar-content">
+<div class="page-wrapper chiller-theme toggled">
+	<a id="show-sidebar" class="btn btn-sm btn-dark" href="#">
+		<i class="fas fa-bars"></i>
+	</a>
+	<nav id="sidebar" class="sidebar-wrapper">
+		<div class="sidebar-content">
 			<div class="sidebar-brand">
-			  <a href="#">Modeler</a>
+				<a href="index.html">Modeler</a>
 			</div>
 			<div class="sidebar-header">
-			  <div class="user-info">
-				<span class="user-name" style="font-size:30px;" id="uservar">
-				</span>
-				<span class="user-status">
-				  <i class="fa fa-circle"></i>
-				  <span id="email"></span>
-				</span>
-			  </div>
+				<div class="user-info">
+					<span class="user-name" style="font-size:30px;" id="uservar"></span>
+					<span class="user-status">
+						<i class="fa fa-circle"></i>
+						<span id="email"></span>
+					</span>
+				</div>
 			</div>
 			<!-- sidebar-header  -->
 			<div class="sidebar-search">
-			  <div>
+				<div>
 				<div class="input-group">
-				  <input type="text" class="form-control search-menu" placeholder="Search...">
-				  <div class="input-group-append">
-					<span class="input-group-text">
-					  <i class="fa fa-search" aria-hidden="true"></i>
-					</span>
-				  </div>
+					<input type="text" class="form-control search-menu" placeholder="Search...">
+					<div class="input-group-append">
+						<span class="input-group-text">
+							<i class="fa fa-search" aria-hidden="true"></i>
+						</span>
+					</div>
 				</div>
-			  </div>
+				</div>
 			</div>
 			<!-- sidebar-search  -->
 			<div class="sidebar-menu">
-			  <ul>
-				<li class="header-menu">
-				  <span>General</span>
-				</li>
-				<li class="sidebar-dropdown">
-				  <a href="index.html">
-					<i class="fa fa-tachometer-alt"></i>
-					<span>Mis proyectos</span>
-				  </a>
-				</li>
-				<li class="sidebar-dropdown">
-				  <a href="RegistrarProyecto.html">
-					<i class="fa fa-tachometer-alt"></i>
-					<span>Registrar Proyecto</span>
-				  </a>
-				</li>
-				<li class="sidebar-dropdown">
-				  <a href="#">
-					<i class="fa fa-tachometer-alt"></i>
-					<span>Compartidos</span>
-				  </a>
-				</li>
-				<li class="sidebar-dropdown" onclick="app.logout()">
-				  <a href="#">
-					<i class="fa fa-tachometer-alt"></i>
-					<span>Cerrar sesion</span>
-				  </a>
-				</li>
-			  </ul>
+				<ul>
+					<li class="header-menu">
+						<span>General</span>
+					</li>
+					<li class="sidebar-dropdown">
+						<a href="index.html">
+							<i class="fa fa-tachometer-alt"></i>
+							<span>Mis proyectos</span>
+						</a>
+					</li>
+					<li class="sidebar-dropdown">
+						<a href="RegistrarProyecto.html">
+							<i class="fa fa-tachometer-alt"></i>
+							<span>Registrar Proyecto</span>
+						</a>
+					</li>
+					<li class="sidebar-dropdown">
+						<a href="compartidos.html">
+							<i class="fa fa-tachometer-alt"></i>
+							<span>Compartidos</span>
+						</a>
+					</li>
+					<li class="sidebar-dropdown" onclick="app.logout()">
+						<a href="#">
+							<i class="fa fa-tachometer-alt"></i>
+							<span>Cerrar sesion</span>
+						</a>
+					</li>
+				</ul>
 			</div>
 			<!-- sidebar-menu  -->
-		  </div>
-		</nav>
-		<main class="page-content" id="cont" style="margin:0px; padding-top:0px; padding-left:260px;">
-			<div class="container-contact100">
-		
-
-		<div class="wrap-contact100">
-			<form class="contact100-form validate-form">
-				<span class="contact100-form-title">
-					Registrar Proyecto
-				</span>
-
-				<div class="wrap-input100 validate-input" data-validate="Ingresa un nombre para el proyecto">
-					<input class="input100" type="text" name="name" id="nproyecto" placeholder="Nombre Proyecto">
-					
-				</div>
-				<script>
-				 $("#nproyecto").on("input",function(){
-					 $(this).val($(this).val().toUpperCase().replace(" ","-"));
-				 });
-				</script>
-
-			</form>
-			<div class="wrap">
-				<form action="" class="formulario">
-					<div class="radio">
-						<span class="contact100-form-title">¿El proyecto es público o privado?</span>
-						<input type="radio" name="tipo" id="publico" >
-						<label for="publico">Público</label>
-						<input type="radio" name="tipo" id="privado">
-						<label for="privado">Privado</label>
-					</div>
-				</form>
-			</div>
-			<div class="container-contact100-form-btn">
-				<button class="contact100-form-btn" onclick="app.registrarProyecto($('#nproyecto').val())">
-					Registrar Proyecto
-				</button>
-			</div>
-
 		</div>
-	</div>
+	</nav>
+	<main class="page-content" id="cont" style="margin:0px; padding-top:0px; padding-left:260px;">
+		<div class="container-contact100">
+			<div class="wrap-contact100">
+				<form class="contact100-form validate-form">
+					<span class="contact100-form-title">
+						Registrar Proyecto
+					</span>
+
+					<div class="wrap-input100 validate-input" data-validate="Ingresa un nombre para el proyecto">
+						<input class="input100" type="text" name="name" id="nproyecto" placeholder="Nombre Proyecto">
+						
+					</div>
+					<script>
+						$("#nproyecto").on("input",function(){
+							$(this).val($(this).val().toUpperCase().replace(" ","-"));
+						});
+					</script>
+				</form>
+				<div class="wrap">
+					<form action="" class="formulario">
+						<div class="radio">
+							<span class="contact100-form-title">¿El proyecto es público o privado?</span>
+							<input type="radio" name="tipo" id="publico" >
+							<label for="publico">Público</label>
+							<input type="radio" name="tipo" id="privado">
+							<label for="privado">Privado</label>
+						</div>
+					</form>
+				</div>
+				<div class="container-contact100-form-btn">
+					<button class="contact100-form-btn" onclick="app.registrarProyecto($('#nproyecto').val())">
+						Registrar Proyecto
+					</button>
+				</div>
+			</div>
+		</div>
 	</main>
-
-
-<!--===============================================================================================-->
-
-<!--===============================================================================================-->
-<script src="js/principal.js"></script>
-
-
 </div>
+
+	<!--===============================================================================================-->
+	<script src="js/principal.js"></script>
+
 </body>
 </html>

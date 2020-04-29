@@ -1,12 +1,11 @@
-
-h1#idTitulo {
+#idTitulo {
     display: inline-block;
     position: relative; 
     text-align: center;
     font-family: 'Francois One', sans-serif;
 }
 
-h1#idTitulo::after,h1::before {
+#idTitulo::after,#idTitulo::before {
     content: '';
     position: absolute;
     width: 180px;
@@ -17,14 +16,14 @@ h1#idTitulo::after,h1::before {
     transition: all 0.2s ease-in;
 }
 
-h1#idTitulo:hover::before, h1#idTitulo:hover::after {
+#idTitulo:hover::before, #idTitulo:hover::after {
     transform: scale(0);
 }
 
-h1#idTitulo::before {
+#idTitulo::before {
     left: -200px;
 }
 
-h1#idTitulo::after {
+#idTitulo::after {
     right: -200px;
 }

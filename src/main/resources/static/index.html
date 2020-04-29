@@ -3,15 +3,18 @@
 	<title>Modeler</title>
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<link rel="stylesheet" type="text/css" href="bar.css"></link>
+	<!--===============================================================================================-->
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
 		crossorigin="anonymous">
+	<!--===============================================================================================-->
 	<link href="https://fonts.googleapis.com/css2?family=Francois+One&display=swap" rel="stylesheet">
-
-    <!--<link href="https://use.fontawesome.com/releases/v5.0.6/css/all.css" rel="stylesheet">-->
-<!--===============================================================================================-->
-
+	<!--===============================================================================================-->
 	<link rel="stylesheet" type="text/css" href="css/titulos.css">
+	<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="bar.css"></link>
+	<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="fonts/font-awesome-4.7.0/css/font-awesome.min.css">
+	<!--===============================================================================================-->
 
 	<style>
 	.bar-proy div{
@@ -33,95 +36,96 @@
 <body class="container-contact100" onload="app.loadPage()">
 	<div class="page-wrapper chiller-theme toggled">
 		<a id="show-sidebar" class="btn btn-sm btn-dark" href="#">
-		  <i class="fas fa-bars"></i>
+			<i class="fas fa-bars"></i>
 		</a>
 		<nav id="sidebar" class="sidebar-wrapper">
-		  <div class="sidebar-content">
-			<div class="sidebar-brand">
-			  <a href="index.html">Modeler</a>
-			</div>
-			<div class="sidebar-header">
-				<div class="user-info">
-				<span class="user-name" style="font-size:30px;" id="uservar">
-				</span>
-					<span class="user-status">
-				  <i class="fa fa-circle"></i>
-				  <span id="email"></span>
-				</span>
+			<div class="sidebar-content">
+				<div class="sidebar-brand">
+					<a href="index.html">Modeler</a>
 				</div>
-			</div>
-			<!-- sidebar-header  -->
-			<div class="sidebar-search">
-			  <div>
-				<div class="input-group">
-				  <input type="text" class="form-control search-menu" placeholder="Search...">
-				  <div class="input-group-append">	
-					<span class="input-group-text">
-					  <i class="fa fa-search" aria-hidden="true"></i>
-					</span>
-				  </div>
+				<div class="sidebar-header">
+					<div class="user-info">
+						<span class="user-name" style="font-size:30px;" id="uservar"></span>
+						<span class="user-status">
+							<i class="fa fa-circle"></i>
+							<span id="email"></span>
+						</span>
+					</div>
 				</div>
-			  </div>
+				<!-- sidebar-header  -->
+				<div class="sidebar-search">
+					<div>
+					<div class="input-group">
+						<input type="text" class="form-control search-menu" placeholder="Search...">
+						<div class="input-group-append">
+							<span class="input-group-text">
+								<i class="fa fa-search" aria-hidden="true"></i>
+							</span>
+						</div>
+					</div>
+					</div>
+				</div>
+				<!-- sidebar-search  -->
+				<div class="sidebar-menu">
+					<ul>
+						<li class="header-menu">
+							<span>General</span>
+						</li>
+						<li class="sidebar-dropdown">
+							<a href="index.html">
+								<i class="fa fa-tachometer-alt"></i>
+								<span>Mis proyectos</span>
+							</a>
+						</li>
+						<li class="sidebar-dropdown">
+							<a href="RegistrarProyecto.html">
+								<i class="fa fa-tachometer-alt"></i>
+								<span>Registrar Proyecto</span>
+							</a>
+						</li>
+						<li class="sidebar-dropdown">
+							<a href="compartidos.html">
+								<i class="fa fa-tachometer-alt"></i>
+								<span>Compartidos</span>
+							</a>
+						</li>
+						<li class="sidebar-dropdown" onclick="app.logout()">
+							<a href="#">
+								<i class="fa fa-tachometer-alt"></i>
+								<span>Cerrar sesion</span>
+							</a>
+						</li>
+					</ul>
+				</div>
+				<!-- sidebar-menu  -->
 			</div>
-			<!-- sidebar-search  -->
-			<div class="sidebar-menu">
-			  <ul>
-				<li class="header-menu">
-				  <span>General</span>
-				</li>
-				<li class="sidebar-dropdown">
-				  <a href="index.html">
-					<i class="fa fa-tachometer-alt"></i>
-					<span>Mis proyectos</span>
-				  </a>
-				</li>
-				<li class="sidebar-dropdown">
-				  <a href="RegistrarProyecto.html">
-					<i class="fa fa-tachometer-alt"></i>
-					<span>Registrar Proyecto</span>
-				  </a>
-				</li>
-				<li class="sidebar-dropdown">
-				  <a href="compartidos.html">
-					<i class="fa fa-tachometer-alt"></i>
-					<span>Compartidos</span>
-				  </a>
-				</li>
-				<li class="sidebar-dropdown" onclick="app.logout()">
-				  <a href="#">
-					<i class="fa fa-tachometer-alt"></i>
-					<span>Cerrar sesion</span>
-				  </a>
-				</li>
-			  </ul>
-			</div>
-			<!-- sidebar-menu  -->
-		  </div>
 		</nav>
 		<main class="page-content" style="margin:0px; top:0px; left:500px; width:100%; padding-top:0px; padding-left:260px;">
 			<div style="width:100%; text-align:center; height:20%;"> 
 				<h1 class = "lines-effect"  id = "idTitulo"> MIS PROYECTOS</h1>
 			</div>			
 			<div id="cont" class="container-contact100" style="width:100%; overflow:scroll; height:85%;"></div>
-  		</main>
-  		<div class="modal fade" id="mymodal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-		  <div class="modal-dialog" role="document">
-		    <div class="modal-content">
-		      <div class="modal-header">
-		        <h5 class="modal-title" id="exampleModalLabel">Eliminar</h5>
-		        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-		          <span aria-hidden="true">&times;</span>
-		        </button>
-		      </div>
-		      <div class="modal-body" id="mscont">
-		      </div>
-		      <div class="modal-footer">
-		        <button type="button" class="btn btn-primary" id="confButton" data-dismiss="modal">Si</button>
-		        <button type="button" class="btn btn-secondary">No </button>
-		      </div>
-		    </div>
-		  </div>
-		</div>
+  		
+			<div class="modal fade" id="mymodal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+			<div class="modal-dialog" role="document">
+				<div class="modal-content">
+				<div class="modal-header">
+					<h5 class="modal-title" id="exampleModalLabel">Eliminar</h5>
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+					<span aria-hidden="true">&times;</span>
+					</button>
+				</div>
+				<div class="modal-body" id="mscont">
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-primary" id="confButton" data-dismiss="modal">Si</button>
+					<button type="button" class="btn btn-secondary">No </button>
+				</div>
+				</div>
+			</div>
+			</div>
+		</main>
+	</div>
 </body>
 </html>
 
