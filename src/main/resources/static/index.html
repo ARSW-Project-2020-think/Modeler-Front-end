@@ -1,132 +1,68 @@
 <html>
-<head> 
-	<title>Modeler</title>
-	<meta charset="UTF-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<!--===============================================================================================-->
-	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
-		crossorigin="anonymous">
-	<!--===============================================================================================-->
-	<link href="https://fonts.googleapis.com/css2?family=Francois+One&display=swap" rel="stylesheet">
-	<!--===============================================================================================-->
-	<link rel="stylesheet" type="text/css" href="css/titulos.css">
-	<!--===============================================================================================-->
-	<link rel="stylesheet" type="text/css" href="bar.css"></link>
-	<!--===============================================================================================-->
-	<link rel="stylesheet" type="text/css" href="fonts/font-awesome-4.7.0/css/font-awesome.min.css">
-	<!--===============================================================================================-->
-
-	<style>
-	.bar-proy div{
-		display:inline;
-	}
-	.page-content{
-	background: -webkit-linear-gradient(left, rgba(0,168,255,0.5), rgba(185,0,255,0.5));
-	}
-	</style>
-	<script src="vendor/jquery/jquery-3.2.1.min.js"></script>
-	<link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
-	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
-	<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js" type="text/javascript"></script>
-	<script type="text/javascript" src="bar.js"></script>
-	<script src="js/app.js"></script>
-	<script src="js/apiclient.js"></script>
-
-</head>
-<body class="container-contact100" onload="app.loadPage()">
-	<div class="page-wrapper chiller-theme toggled">
-		<a id="show-sidebar" class="btn btn-sm btn-dark" href="#">
-			<i class="fas fa-bars"></i>
-		</a>
-		<nav id="sidebar" class="sidebar-wrapper">
-			<div class="sidebar-content">
-				<div class="sidebar-brand">
-					<a href="index.html">Modeler</a>
-				</div>
-				<div class="sidebar-header">
-					<div class="user-info">
-						<span class="user-name" style="font-size:30px;" id="uservar"></span>
-						<span class="user-status">
-							<i class="fa fa-circle"></i>
-							<span id="email"></span>
-						</span>
-					</div>
-				</div>
-				<!-- sidebar-header  -->
-				<div class="sidebar-search">
-					<div>
-					<div class="input-group">
-						<input type="text" class="form-control search-menu" placeholder="Search...">
-						<div class="input-group-append">
-							<span class="input-group-text">
-								<i class="fa fa-search" aria-hidden="true"></i>
-							</span>
-						</div>
-					</div>
-					</div>
-				</div>
-				<!-- sidebar-search  -->
-				<div class="sidebar-menu">
-					<ul>
-						<li class="header-menu">
-							<span>General</span>
-						</li>
-						<li class="sidebar-dropdown">
-							<a href="index.html">
-								<i class="fa fa-tachometer-alt"></i>
-								<span>Mis proyectos</span>
-							</a>
-						</li>
-						<li class="sidebar-dropdown">
-							<a href="RegistrarProyecto.html">
-								<i class="fa fa-tachometer-alt"></i>
-								<span>Registrar Proyecto</span>
-							</a>
-						</li>
-						<li class="sidebar-dropdown">
-							<a href="compartidos.html">
-								<i class="fa fa-tachometer-alt"></i>
-								<span>Compartidos</span>
-							</a>
-						</li>
-						<li class="sidebar-dropdown" onclick="app.logout()">
-							<a href="#">
-								<i class="fa fa-tachometer-alt"></i>
-								<span>Cerrar sesion</span>
-							</a>
-						</li>
-					</ul>
-				</div>
-				<!-- sidebar-menu  -->
-			</div>
-		</nav>
-		<main class="page-content" style="margin:0px; top:0px; left:500px; width:100%; padding-top:0px; padding-left:260px;">
-			<div style="width:100%; text-align:center; height:20%;"> 
-				<h1 class = "lines-effect"  id = "idTitulo"> MIS PROYECTOS</h1>
-			</div>			
-			<div id="cont" class="container-contact100" style="width:100%; overflow:scroll; height:85%;"></div>
-  		
-			<div class="modal fade" id="mymodal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-			<div class="modal-dialog" role="document">
-				<div class="modal-content">
-				<div class="modal-header">
-					<h5 class="modal-title" id="exampleModalLabel">Eliminar</h5>
-					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
-					<span aria-hidden="true">&times;</span>
-					</button>
-				</div>
-				<div class="modal-body" id="mscont">
-				</div>
-				<div class="modal-footer">
-					<button type="button" class="btn btn-primary" id="confButton" data-dismiss="modal">Si</button>
-					<button type="button" class="btn btn-secondary" data-dismiss="modal">No </button>
-				</div>
-				</div>
-			</div>
-			</div>
-		</main>
-	</div>
-</body>
+	<head>
+		<title>Modeler | Informacion</title>
+		<style>
+			*{
+			margin:0px;
+			padding:0px;
+			}
+			.access {
+				width:100%;
+				height:100%;
+			}
+		</style>
+		<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+  		<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+  		<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+		<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
+  		<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+	</head>
+	<body>
+		<div class="access" id="maincont">
+		</div>
+		<script type="text/javascript">
+			var cont = $("#maincont");
+			var width = cont.css("width");
+			var intwidth = parseInt(width.substring(0,width.length-2));
+			var heigth = cont.css("height");
+			var intheigth = parseInt(heigth.substring(0,heigth.length-2));
+			var circles = [];
+			var colores = ["#660FAA","#B252FD","#FD52F0","#EE408A","#4340EE","#0602F1","#02F1E6"];
+			for(var i=10;i<intheigth-39;i+=40){
+				var delta=0;
+				//if(i%2!=0) delta+=40;
+				for(var j=delta+25;j<intwidth-39;j+=40){
+					var circle = $("<div style='width:20px; height:20px; border-radius:100%; position:absolute;'></div>");
+					var r = Math.floor(Math.random() * colores.length);
+					circle.css("background",colores[r]);
+					circle.css("top",i+"px");
+					circle.css("left",j+"px");
+					cont.append(circle);
+					circles.push(circle);
+					
+				}
+			}
+			var link = $("<a href='login.html' style='z-index:1000; width:200px; heigth:10px;' class='btn btn-secondary'>Iniciar secion</a>");
+			link.css("position","absolute");
+			link.css("top",((intheigth/2)-5)+"px");
+			link.css("left",((intwidth/2)-210)+"px");
+			cont.append(link);
+			link = $("<a href='register.html' style='z-index:1000; width:200px; heigth:10px;' class='btn btn-secondary'>Registrarse</a>");
+			link.css("position","absolute");
+			link.css("top",((intheigth/2)-5)+"px");
+			link.css("left",((intwidth/2)+10)+"px");
+			var title = $("<h1 style='position:absolute; font-size:100px;'>Modeler</h1>");
+			cont.append(title);
+			title.css("top",((intheigth/2)-150)+"px");
+			title.css("left",((intwidth/2)-190)+"px");
+			cont.append(link);
+			window.setInterval(function(){
+				for(var i=0;i<circles.length;i++){
+					var r = Math.floor(Math.random() * colores.length);
+					circles[i].css("background",colores[r]);
+				}
+				
+			},1000);
+		</script>
+	</body>
 </html>
-
-

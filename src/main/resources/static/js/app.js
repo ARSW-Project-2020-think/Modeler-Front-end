@@ -15,7 +15,7 @@ var app = (function () {
     		return;
     	}
     	sessionStorage.setItem("username",user.username);
-    	location.href = "index.html";
+    	location.href = "proyectos.html";
     };
     var updateView = function(error,user){
         if(error!=null) return;
@@ -252,7 +252,7 @@ var app = (function () {
             apiclient.login(email,password,createSession);
         },validate:function(){
             if(sessionStorage.getItem("email")!=null){
-                location.href = "index.html";
+                location.href = "proyectos.html";
             }
         },loadPage:function(){
             if(sessionStorage.getItem("email")==null){
@@ -313,7 +313,7 @@ var app = (function () {
 					alert("No se pudo eliminar el proyecto.");
 					return;
 				}
-				location.href= "index.html";
+				location.href= "proyectos.html";
 				
 			}
 			apiclient.deleteProyecto(usuario,proyecto,sessionStorage.getItem("token"), fun);
