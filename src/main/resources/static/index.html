@@ -8,7 +8,17 @@
 			}
 			.access {
 				width:100%;
-				height:100%;
+				height:90%;
+			}
+			.menu{
+				width:100%;
+				height:10%;
+				background:black;
+			}
+			.menu div{
+				width:49%;
+				disply:inline-block;
+				color:white;
 			}
 		</style>
 		<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
@@ -21,13 +31,16 @@
 		<div class="access" id="maincont">
 		</div>
 		<script type="text/javascript">
+		var circles = [];
+		var colores = ["#660FAA","#B252FD","#FD52F0","#EE408A","#4340EE","#0602F1","#02F1E6"];
+			function draw(){
 			var cont = $("#maincont");
+			cont.html("");
 			var width = cont.css("width");
 			var intwidth = parseInt(width.substring(0,width.length-2));
 			var heigth = cont.css("height");
 			var intheigth = parseInt(heigth.substring(0,heigth.length-2));
-			var circles = [];
-			var colores = ["#660FAA","#B252FD","#FD52F0","#EE408A","#4340EE","#0602F1","#02F1E6"];
+			circles = [];
 			for(var i=10;i<intheigth-39;i+=40){
 				var delta=0;
 				//if(i%2!=0) delta+=40;
@@ -56,6 +69,8 @@
 			title.css("top",((intheigth/2)-150)+"px");
 			title.css("left",((intwidth/2)-190)+"px");
 			cont.append(link);
+			}
+			draw();
 			window.setInterval(function(){
 				for(var i=0;i<circles.length;i++){
 					var r = Math.floor(Math.random() * colores.length);
@@ -63,6 +78,14 @@
 				}
 				
 			},1000);
+			$( window ).resize(function(){
+				draw();
+			});
 		</script>
+		<div class="menu">
+			<div style="display:inline-block;">&nbsp&nbsp<a href="docs.html" style="color:white;">¿Que es modeler y como funciona?</a></div>
+			<div style="display:inline-block; text-align: right;">
+			Creado por: &nbsp&nbsp Johann Paez - Jeisson Sanchez - Juan Camilo Rojas &nbsp&nbsp</div>
+		</div>
 	</body>
 </html>
