@@ -32,7 +32,7 @@
 		</div>
 		<script type="text/javascript">
 		var circles = [];
-		var colores = ["#660FAA","#B252FD","#FD52F0","#EE408A","#4340EE","#0602F1","#02F1E6"];
+		var colores = ["#660FAA","#B252FD","#FD52F0","#EE408A","#4340EE","#0602F1"];
 			function draw(){
 			var cont = $("#maincont");
 			cont.html("");
@@ -43,11 +43,11 @@
 			circles = [];
 			for(var i=10;i<intheigth-39;i+=40){
 				var delta=0;
-				//if(i%2!=0) delta+=40;
-				for(var j=delta+25;j<intwidth-39;j+=40){
+				for(var j=10;j<intwidth-20;j+=40){
 					var circle = $("<div style='width:20px; height:20px; border-radius:100%; position:absolute;'></div>");
 					var r = Math.floor(Math.random() * colores.length);
 					circle.css("background",colores[r]);
+					circle.css("border","1px solid black");
 					circle.css("top",i+"px");
 					circle.css("left",j+"px");
 					cont.append(circle);
@@ -55,19 +55,19 @@
 					
 				}
 			}
-			var link = $("<a href='login.html' style='z-index:1000; width:200px; heigth:10px;' class='btn btn-secondary'>Iniciar secion</a>");
+			var link = $("<a href='login.html' style='z-index:1000; width:200px; background:black; heigth:10px;' class='btn btn-secondary'>Iniciar secion</a>");
 			link.css("position","absolute");
 			link.css("top",((intheigth/2)-5)+"px");
 			link.css("left",((intwidth/2)-210)+"px");
 			cont.append(link);
-			link = $("<a href='register.html' style='z-index:1000; width:200px; heigth:10px;' class='btn btn-secondary'>Registrarse</a>");
+			link = $("<a href='register.html' style='z-index:1000; background:black; width:200px; heigth:10px;' class='btn btn-secondary'>Registrarse</a>");
 			link.css("position","absolute");
 			link.css("top",((intheigth/2)-5)+"px");
 			link.css("left",((intwidth/2)+10)+"px");
-			var title = $("<h1 style='position:absolute; font-size:100px;'>Modeler</h1>");
+			var title = $("<h1 style='position:absolute; color:black; font-size:150px;'>Modeler</h1>");
 			cont.append(title);
-			title.css("top",((intheigth/2)-150)+"px");
-			title.css("left",((intwidth/2)-190)+"px");
+			title.css("top",((intheigth/2)-200)+"px");
+			title.css("left",((intwidth/2)-280)+"px");
 			cont.append(link);
 			}
 			draw();
@@ -77,7 +77,7 @@
 					circles[i].css("background",colores[r]);
 				}
 				
-			},1000);
+			},800);
 			$( window ).resize(function(){
 				draw();
 			});
