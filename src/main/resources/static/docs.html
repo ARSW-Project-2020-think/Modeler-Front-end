@@ -5,29 +5,138 @@
 		margin:0px;
 		padding:0px;
 		}
-		.cont{
-			text-align:left;
+		.header{
+			width:100%;
+			height:100%;
+			background:black;
+			color:white;
+		}
+		.cont div{
+			display:inline-block;
+			width:49%;
 		}
 	</style>
+	<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+	<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js" type="text/javascript"></script>
 	</head>
 	<body>
-		<div style="width:100%; height:60px; background:black; color:white; text-align:center;">
-			<h1>Modeler</h1><h5>Docs</h5>
+		<div class="header" style="font-size:50px;" id="header">
 		</div>
-		<br>
-		<center><div style="width:80%;" class='cont'>
-			<h1>¿Que es Modeler?</h1>
-			<br>
-			<div style="font-family: Arial, Helvetica, sans-serif; font-size:30px;">
-				Modeler es una herranieta diseñada para desarrolladores de software, el objetivo de esta se centra en que tu y tus amigos puedan editar
-				un diagrama de secuencia o clases al mismo tiempo, en cualquier instante, o en momentos diferentes y que tengas acceso a este para modificarlo o editarlo.
+		<script type="text/javascript">
+			var rect = []
+			var colores = [];
+			function init(){
+				var header = $("#header");
+				header.html("");
+				var title = $("<div>Modeler Docs</div>");
+				header.append(title);
+				title.css("position","absolute");
+				title.css("z-index","5000");
+				var intHeigth = parseInt(header.css("height").substring(0,header.css("height").length-2));
+				var intWidth = parseInt(header.css("width").substring(0,header.css("width").length-2));
+				rect = []
+				for(var i=0; i<intHeigth-20;i+=40){
+					for(var j=0;j<intWidth-20;j+=40){
+						var di = $("<div style='width:40px; height:40px;'></div>");
+						di.css("position","absolute");
+						di.css("top",i+"px");
+						di.css("left",j+"px");
+						di.css("background","#3B3B3B");
+						header.append(di);
+						rect.push(di);
+						colores.push("gray");
+					}
+				}
+				console.log(intHeigth);
+				title.css("top",((intHeigth/2)-50)+"px");
+				title.css("left",((intWidth/2)-150)+"px");
+				header.append(title);
+			}
+			init();
+			window.setInterval(function(){
+				var r1 = Math.floor(Math.random() * rect.length);
+				console.log("entro interval");
+				var elm1 = rect[r1];
+				//var elm2 = rect[r2];
+				if(colores[r1]=="gray"){
+					//console.log("gray");
+					elm1.css("background","black");
+					colores[r1] = "black";
+				}else{
+					//console.log("2 gray");
+					elm1.css("background","#3B3B3B");
+					colores[r1] = "gray";
+				}
+			},250);
+		</script>
+		<div style="width:100%; height:100%;" class="cont">
+			<div></div>
+			<div style="font-size:20px;">
+				<br>
+				<h1>Haz de tu proyecto la maxima expresion del trabajo en equipo.</h1>
+				<br>
+				Modeler es una herramienta diseñada para realizar trabajo colaborativo asi que podras trabajar con todos tus compañeros al mismo tiempo y asi tus proyectos sean su mejor version.
+				<br><br>
+				Olvidate de tener que estar presencialmente para crear una solucion, crea proyectos desde donde quieras, con quien quieras y cuando quieras.
+				<br><br>
 			</div>
+		</div>
+		<div style="width:100%; height:100%; background:black; color:white;" class="cont">
+			<div style="width:50%; height:100%; vertical-align:middle;">
+				<br>
+				<div style="width:80%; height:80%; background:white;" id="mod"> </div>
+			</div>
+			<div style="font-size:20px; vertical-align:top;">
+				<br>
+				<h1>Crea tus clases, actores y casos donde quieres</h1>
+				<br>
+				Para crear un elemento solo basta dar click sobre el boton que diga crear seguido del nombre del elemento.
+				<br><br>
+				Por ejemplo crear clase
+				<br><br>
+				<center><button class="btn btn-primary">Crear Clase</button></center>
+				<br>
+				Tan pronto le des click te aparecera un input para que ingreses el nombre de la clase y el paso siguiente es tan solo dar click en cualquier parte de la pantalla.
+				<br>
+				<br>
+				<b>Para mirar como la app te crea una clase haz click sobre el cuadro blanco a la izquierda y ademas puedes arrastrarla.</b>
+				
+			</div>
+		</div>
+		<script type="text/javascript">
+			var mod = $("#mod");
+			mod.click(function(e){
+				var clase = $("<div style='background:black; width:200px; height:50px; color:white; text-align:center;'>Example</div>");
+				clase.css("position","absolute");
+				console.log(e.pageX+" "+e.pageY);
+				clase.css("left",e.pageX+"px");
+				clase.click(function(ev){ev.stopPropagation();})
+				clase.css("top",e.pageY+"px");
+				clase.draggable();
+				mod.append(clase);
+			});
+		</script>
+		<div class="cont" style="width:100%; height:100%;">
+			<div>
+				<div style="background:black; color:white; width:200px; height:50px; text-align:center; top:20px; left:30px;" id="dele">Eliminar</div>
+			</div>
+			<div style="font-size:20px; vertical-align:middle;">
+			<br><h1>¿Si te equivocaste al crear un elemento?</h1>
 			<br><br>
-			<h1>Modeler te permite crear proyectos</h1>
-			<br>
-			<div style="font-family: Arial, Helvetica, sans-serif; font-size:30px;">
-			<div><img style="width:100%; height:100%;" src="img/registrar_proyectos.JPG"></div>
+			Es tan facil como tan solo precionar el boton <b>"Eliminar elemento"</b> para el caso del diagrama de casos de uso o <b>"Borrar clase"</b> para diagrama de clases.
+			<br><br><center><button class='btn btn-primary'>Eliminar Elemento</button></center>
+			<br><br> Despues de esto simplemente selecciona la clase o elemento que vas a eliminar.
+			<br><br><b>Ahora a la izquierda lo puedes probar tan solo toca la clase a eliminar</b>
 			</div>
-		</div></center>
+		</div>
+		<script>
+			$("#dele").click(function(){
+				$(this).remove()
+			});
+		</script>
+		<div style="width:100%; height:100%; background:black;">
+		
+		</div>
 	</body>
 </html>
