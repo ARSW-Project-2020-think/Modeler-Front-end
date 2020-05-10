@@ -73,8 +73,21 @@
 						<input id = "idPassword" class="input100" type="password" name="pass">
 						<span class="focus-input100" data-placeholder="Contraseña"></span>
 						<div id = "idConfirmacion"> </div>
-					</div>					
-
+					</div>
+					<div id="estatuspw"></div>
+					<script type="text/javascript">
+						var regex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[$@$!%*?&])([A-Za-z\d$@$!%*?&]|[^ ]){8,40}$/;
+						$("#idPassword").on("input",function(){
+							if(regex.test($(this).val())){
+								$("#estatuspw").text("Contraseña fuerte");
+								$("#estatuspw").css("color","green");
+							}else{
+								$("#estatuspw").text("Contraseña debil");
+								$("#estatuspw").css("color","red");
+							}
+						});
+					</script>					
+					<br>
 					<div class="wrap-input100 validate-input" data-validate="Ingresa Contraseña">
 						<span class="btn-show-pass">
 							<i class="zmdi zmdi-eye"></i>

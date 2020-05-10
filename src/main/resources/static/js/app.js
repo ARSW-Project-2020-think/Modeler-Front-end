@@ -1,4 +1,5 @@
 var app = (function () {
+	var regex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[$@$!%*?&])([A-Za-z\d$@$!%*?&]|[^ ]){8,40}$/;
     var createSession = function(email,password,token){
         sessionStorage.setItem("email", email);
         sessionStorage.setItem("password", password);
@@ -242,6 +243,10 @@ var app = (function () {
             event.preventDefault();
             //console.log("Primero");
             //alert("HOLA1");
+            if(!regex.test(password)){
+            	alert("Contraseña insegura no podra ser registrado");
+            	return;
+            }
             var newUsuario = {username:user, correo: email, password: password};
             apiclient.registrarse(newUsuario);
             //alert("HOLA2");
