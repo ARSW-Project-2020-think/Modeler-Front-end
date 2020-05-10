@@ -15,6 +15,9 @@
 			display:inline-block;
 			width:49%;
 		}
+		.cont div div{
+			display:block;
+		}
 	</style>
 	<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
 	<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js" type="text/javascript"></script>
@@ -56,7 +59,7 @@
 				header.append(title);
 			}
 			init();
-			window.setInterval(function(){
+			/*window.setInterval(function(){
 				var r1 = Math.floor(Math.random() * rect.length);
 				console.log("entro interval");
 				var elm1 = rect[r1];
@@ -70,7 +73,7 @@
 					elm1.css("background","#3B3B3B");
 					colores[r1] = "gray";
 				}
-			},250);
+			},250);*/
 		</script>
 		<div style="width:100%; height:100%;" class="cont">
 			<div style="vertical-align:top;">
@@ -87,7 +90,7 @@
 				<br>
 				<h1>Haz de tu proyecto la maxima expresion del trabajo en equipo.</h1>
 				<br>
-				Modeler es una herramienta diseñada para realizar trabajo colaborativo asi que podras trabajar con todos tus compañeros al mismo tiempo y asi tus proyectos sean su mejor version.
+				Modeler es una herramienta diseï¿½ada para realizar trabajo colaborativo asi que podras trabajar con todos tus compaï¿½eros al mismo tiempo y asi tus proyectos sean su mejor version.
 				<br><br>
 				Olvidate de tener que estar presencialmente para crear una solucion, crea proyectos desde donde quieras, con quien quieras y cuando quieras.
 				<br><br>
@@ -97,7 +100,7 @@
 		<div style="width:100%; height:100%; background:black; color:white;" class="cont">
 			<div style="width:50%; height:100%; vertical-align:middle;">
 				<br>
-				<div style="width:80%; height:80%; background:white;" id="mod"> </div>
+				<div style="width:80%; height:80%; background:white;" id="mode"> </div>
 			</div>
 			<div style="font-size:20px; vertical-align:top;">
 				<br>
@@ -117,7 +120,7 @@
 			</div>
 		</div>
 		<script type="text/javascript">
-			var mod = $("#mod");
+			var mod = $("#mode");
 			mod.click(function(e){
 				var clase = $("<div style='background:black; width:200px; height:50px; color:white; text-align:center;'>Example</div>");
 				clase.css("position","absolute");
@@ -129,12 +132,14 @@
 				mod.append(clase);
 			});
 		</script>
-		<div class="cont" style="width:100%; height:100%;">
-			<div>
-				<div style="background:black; color:white; width:200px; height:50px; text-align:center; top:20px; left:30px;" id="dele">Eliminar</div>
+		<div class="cont" style="width:100%; height:100%; margin: 0px; padding: 0px; position:relative;">
+			<div style="width:50%; height:100%; vertical-align:middle; border:1px solid black; border-radius: 10px;">
+				<div style="background:black; color:white; width:200px; height:50px; text-align:center; top:80px; left:30px; position:relative;" id="dele">Eliminar</div>
+				<div style="background:black; color:white; width:200px; height:50px; text-align:center; top:140px; left:90px; position:relative;" id="dele2">Eliminar2</div>
+				<div style="background:black; color:white; width:200px; height:50px; text-align:center; top:-90px; left:90px; position:relative;" id="dele3">Eliminar3</div>
 			</div>
 			<div style="font-size:20px; vertical-align:middle;">
-			<br><h1>¿Si te equivocaste al crear un elemento?</h1>
+			<br><h1>ï¿½Si te equivocaste al crear un elemento?</h1>
 			<br><br>
 			Es tan facil como tan solo precionar el boton <b>"Eliminar elemento"</b> para el caso del diagrama de casos de uso o <b>"Borrar clase"</b> para diagrama de clases.
 			<br><br><center><button class='btn btn-primary'>Eliminar Elemento</button></center>
@@ -143,16 +148,45 @@
 			</div>
 		</div>
 		<script>
-			$("#dele").click(function(){
-				$(this).remove()
+			var li = [$("#dele"),$("#dele2"),$("#dele3")];
+			function localize(){
+				for(var i=0;i<li.length;i++){
+					if(li[i].attr("id")=="dele"){
+						li[i].css("top",(50*i+20)+"px");
+						li[i].css("left","10px");
+					}else if(li[i].attr("id")=="dele2"){
+						li[i].css("top",(-50*i+120)+"px");
+						li[i].css("left","40px");
+					}else{
+						li[i].css("top",(-50*i+120)+"px");
+						li[i].css("left","280px");
+					}
+				}
+			}
+			localize();
+			function deleteElm(id){
+				var li2 = [];
+				for(var i=0;i<li.length;i++){
+					if(li[i].attr("id")!=id){
+						li2.push(li[i]);
+					}
+				}
+				li = li2;
+			}
+			li.forEach(function(el){
+				el.click(function(){
+					deleteElm($(this).attr("id"));
+					$(this).remove();
+					localize();
+				});
 			});
 		</script>
 		<div style="width:100%; height:100%; background:black; color:white;" class="cont">
 		<div>
 			<br>
-			<div style="background:white; width:80%; height:80%; margin:0px; paading:0px;" id="cn">
+			<div style="background:white; width:80%; height:80%; margin:0px; padding:0px;" id="cn">
 				<div style="z-index:20; background:black; color:white; width:200px; height:50px; text-align:center; position:relative; top:30px; left:10px;" id="claseA">ClaseA</div>
-				<div style="z-index:20; background:black; color:white; width:200px; height:50px; text-align:center; position:relative; top:120px; left:-190px;" id="claseB">ClaseB</div>
+				<div style="z-index:20; background:black; color:white; width:200px; height:50px; text-align:center; position:relative; top:120px; left:10px;" id="claseB">ClaseB</div>
 			</div>
 		</div>
 		<div style="font-size:20px; vertical-align:top;"> 
@@ -169,13 +203,14 @@
 			var take = null;
 			var create = false;
 			$("#claseA").click(function(){
+				console.log("Toco");
 				if(create){
 					return;
 				}
 				if(take==null){
 					take = "A";
 				}else if(take=="A"){
-					alert("Este ejemplo esta diseñado para crear la relacion entre las 2 clases porfavor creela.");	
+					alert("Este ejemplo esta diseÃ±ado para crear la relacion entre las 2 clases porfavor creela.");	
 				}else{
 					drawline();
 					create = true;
@@ -188,7 +223,7 @@
 				if(!take){
 					take = true;
 				}else if(take=="B"){
-					alert("Este ejemplo esta diseñado para crear la relacion entre las 2 clases porfavor creela.");
+					alert("Este ejemplo esta diseï¿½ado para crear la relacion entre las 2 clases porfavor creela.");
 				}else{
 					drawline();
 					create=true;
@@ -196,7 +231,7 @@
 			});
 			//drawline();
 			function drawline(){
-				var line = $("<div style='background:blue; width:3px; height:90px; position:relative; top:130px; left:-300px;'></div>");
+				var line = $("<div style='background:blue; width:2px; height:90px; position:relative; top:-20px; left:105;'></div>");
 				$("#cn").append(line);
 			}
 		</script>
@@ -205,15 +240,15 @@
 				<div style="width:200px; height:50px; background:black; text-align:center; color:white; top:100px; position:relative; left:100px;" id="classm">Materia</div>
 			</div>
 			<div style="font-size:20px; vertical-align:top;">
-				<br><h1>¿Como añado metodos y atributos a una clase?</h1>
+				<br><h1>ï¿½Como aï¿½ado metodos y atributos a una clase?</h1>
 				<br><br>
-				Basta con dar click en el boton editar clase tan pronto lo presiones el paso siguiente es seleccionar la clase a la cual queremos añadirle metodos o  atributos.
+				Basta con dar click en el boton editar clase tan pronto lo presiones el paso siguiente es seleccionar la clase a la cual queremos aï¿½adirle metodos o  atributos.
 				<br><br>
 				<b>Nota:</b> Cuando pruebes la herramienta podras evidenciar que esta caractaeristica se da a tiempo real.
 				<br><br>
 				<b>Nota:</b> Para eliminar un metodo o atributo tambien lo podras realizar desde esta vista.
 				<br><br>
-				<b>Ahora para probarlo selecciona la clase del costado izquierdo y se te abrira la vista de editar clase y añade un metodo.</b>
+				<b>Ahora para probarlo selecciona la clase del costado izquierdo y se te abrira la vista de editar clase y aï¿½ade un metodo.</b>
 				
 				</div>
 		</div>
