@@ -230,7 +230,7 @@
 		      <div class="modal-body">
 		       	<h1>Metodos:</h1>
 		       	<br>
-		       	<div id="met" class="container" style="width:100%; height:70px; overflow:scroll;">No hay metodos</div>
+		       	<div id="met" class="container" style="width:100%; height:140px; overflow:scroll;">No hay metodos</div>
 		       	<br>
 		       	Metodo: <input type="text" style="display:inline-block; border-radius:3px;" id="dmetodo">
 		       	<button class="btn btn-primary" id="cmetodo">Crear metodo</button>
@@ -265,21 +265,21 @@
 					row.append(col);
 					col = $("<div class='col' style='display:inline-block;'></div>");
 					var but = $("<button class='btn btn-danger' id='"+metodo+"' style='display:inline-block;'>Eliminar</button>");
-					but.click(function(){
+					but.click(function(ev){
+						ev.stopPropagation();
 						var q = [];
 						for(var i=0;i<metodos.length;i++){
 							if(metodos[i]!=$(this).attr("id")){
 								q.push(metodos[i]);
 							}
 							metodos = q;
-							drawMetodos();
+							row.remove();
 						}
 					});
 					col.append(but);
 					row.append(col);
 					$("#met").append(row);
 					cont+=1;
-					console.log("itero for");
 				});
 			};
 		</script>
