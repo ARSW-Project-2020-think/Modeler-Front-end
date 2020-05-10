@@ -321,5 +321,37 @@
 				});
 			};
 		</script>
+		<div class="cont" style="width:100%; height: 100%; background: black; color:white;">
+			<div>
+				<br>
+				<div style="width:80%; height: 80%;">
+					<div style="background:burlywood; position:relative; text-align: center; width:100px; height: 100px; border-radius: 100%; left:50px; top:140px;">Tu</div>
+					<div style="background:burlywood; position:relative; text-align: center; width:100px; height: 100px; border-radius: 100%; left:250px; top:40px;">Otro</div>
+					<div style="background:blue; position:relative; text-align: center; width:70px; height: 30px; left:90px; top:-10px;" id="move">Proyecto</div>
+				</div>
+			</div>
+			<div style="font-size:20px; vertical-align:top;">
+				<br><h1>Orientado a proyectos</h1>
+				<br><br>Modeler es una herramienta orientada a proyectos asi que esta te permite compartir con tus amigos exclusivamente
+				proyectos, asi que cuando quieras añadir a un colaborador vas a requerir añadirlo a el proyecto, y este tendra derecho a modificar 
+				cualquier diagrama que este dentro del proyecto.
+				<br><br> Para añadir un colaborador a un proyecto tan solo basta con iniciar sesion la primera pantalla te muestra tus proyectos, buscas el proyecto a compartir y le das en el boton "Compartir".
+				<br>En vista que te abre muestra los colaboradores por nombre de usuario(username), en la parte inderior te aparece un input, tan solo requieres escribir el username y ya tu amigo es tu colaborador.
+				<br><br><b>Tu amigo podra encontrar tu proyecto en la opcion de compartidos</b>
+				</div>
+			</div>
+		</div>
+		<script type="text/javascript">
+			var move = 90;
+			window.setInterval(function(){
+				if(move<280){
+					move+=10;
+					$("#move").css("left",move+"px");
+				}else{
+					move = 100;
+					$("#move").css("left",move+"px");
+				}
+			},125);
+		</script>
 	</body>
 </html>
