@@ -71,7 +71,16 @@
 			},250);
 		</script>
 		<div style="width:100%; height:100%;" class="cont">
-			<div></div>
+			<div style="vertical-align:top;">
+				<br><br><br>
+				<div style="background:red; width:200px; height:50px; text-align:center; color:white;">UML</div>
+				<br><br>
+				<div style="background:blue; width:200px; height:50px; text-align:center; color:white;">Trabajo en equipo</div>
+				<br><br>
+				<div style="background:black; width:200px; height:50px; text-align:center; color:white;">Tiempo real</div>
+				<br><br>
+				<div style="background:green; width:200px; height:50px; text-align:center; color:white;">Desarrollo de software</div>
+			</div>
 			<div style="font-size:20px;">
 				<br>
 				<h1>Haz de tu proyecto la maxima expresion del trabajo en equipo.</h1>
@@ -80,6 +89,7 @@
 				<br><br>
 				Olvidate de tener que estar presencialmente para crear una solucion, crea proyectos desde donde quieras, con quien quieras y cuando quieras.
 				<br><br>
+				Esta herramienta nos ofrece la posibilidad de crear diagramas de clases y casos de uso.
 			</div>
 		</div>
 		<div style="width:100%; height:100%; background:black; color:white;" class="cont">
@@ -135,8 +145,57 @@
 				$(this).remove()
 			});
 		</script>
-		<div style="width:100%; height:100%; background:black;">
-		
+		<div style="width:100%; height:100%; background:black; color:white;" class="cont">
+		<div>
+			<br>
+			<div style="background:white; width:80%; height:80%; margin:0px; paading:0px;" id="cn">
+				<div style="z-index:20; background:black; color:white; width:200px; height:50px; text-align:center; position:relative; top:30px; left:10px;" id="claseA">ClaseA</div>
+				<div style="z-index:20; background:black; color:white; width:200px; height:50px; text-align:center; position:relative; top:120px; left:-190px;" id="claseB">ClaseB</div>
+			</div>
 		</div>
+		<div style="font-size:20px; vertical-align:top;"> 
+		<br><h1>Crea relaciones entre los elementos</h1>
+		<br><br>
+		Para crear relaciones entre los distintos elementos que podemos utilizar para crear nuestros diagramas, tan solo debemos precionar el boton "Nueva Relacion".
+		<br><br><center><button class='btn btn-primary'>Nueva Relacion</button></center>
+		<br><br>Tan pronto lo precionemos lo unico que faltaria para crear la relacion es dar click sobre los 2 elementos del diagrama.
+		<br><br><b>En la ventana de la izquierda para crear la relacion basta con tan solo tocar las 2 clases y listo.</b>
+		</div>
+		</div>
+		<script type="text/javascript">
+			var take = null;
+			var create = false;
+			$("#claseA").click(function(){
+				if(create){
+					return;
+				}
+				if(take==null){
+					take = "A";
+				}else if(take=="A"){
+					alert("Este ejemplo esta diseñado para crear la relacion entre las 2 clases porfavor creela.");	
+				}else{
+					drawline();
+					create = true;
+				}
+			});
+			$("#claseB").click(function(){
+				if(create){
+					return;
+				}
+				if(!take){
+					take = true;
+				}else if(take=="B"){
+					alert("Este ejemplo esta diseñado para crear la relacion entre las 2 clases porfavor creela.");
+				}else{
+					drawline();
+					create=true;
+				}
+			});
+			//drawline();
+			function drawline(){
+				var line = $("<div style='background:blue; width:3px; height:90px; position:relative; top:130px; left:-300px;'></div>");
+				$("#cn").append(line);	
+			}
+		</script>
 	</body>
 </html>
