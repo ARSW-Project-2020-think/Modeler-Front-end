@@ -1,6 +1,11 @@
 <html>
 	<head>
 		<title>Modeler | Informacion</title>
+		<meta charset="UTF-8">
+		
+		<link href="https://fonts.googleapis.com/css2?family=Carter+One&display=swap" rel="stylesheet">
+		<link href="https://fonts.googleapis.com/css2?family=Acme&display=swap" rel="stylesheet">
+		
 		<style>
 			*{
 			margin:0px;
@@ -17,7 +22,7 @@
 			}
 			.menu div{
 				width:49%;
-				disply:inline-block;
+				display:inline-block;
 				color:white;
 			}
 		</style>
@@ -32,7 +37,7 @@
 		</div>
 		<script type="text/javascript">
 		var circles = [];
-		var colores = ["#660FAA","#B252FD","#FD52F0","#EE408A","#4340EE","#0602F1"];
+		var colores = ["#660FAA","#B252FD","#FD52F0","#EE408A","#4340EE","#0602F1", "rgb(10, 66, 187)"];
 			function draw(){
 			var cont = $("#maincont");
 			cont.html("");
@@ -55,19 +60,19 @@
 					
 				}
 			}
-			var link = $("<a href='login.html' style='z-index:1000; width:200px; background:black; heigth:10px;' class='btn btn-secondary'>Iniciar secion</a>");
+			var link = $("<a href='login.html' style=\"z-index:1000; width:200px; background:black; heigth:10px; font-family: 'Acme', sans-serif; font-size: 20px\" class='btn btn-secondary'>Iniciar Sesión</a>");
 			link.css("position","absolute");
 			link.css("top",((intheigth/2)-5)+"px");
 			link.css("left",((intwidth/2)-210)+"px");
 			cont.append(link);
-			link = $("<a href='register.html' style='z-index:1000; background:black; width:200px; heigth:10px;' class='btn btn-secondary'>Registrarse</a>");
+			link = $("<a href='register.html' style=\"z-index:1000; background:black; width:200px; heigth:10px; font-family: 'Acme', sans-serif; font-size: 20px\" class='btn btn-secondary'>Registrarse</a>");
 			link.css("position","absolute");
 			link.css("top",((intheigth/2)-5)+"px");
 			link.css("left",((intwidth/2)+10)+"px");
-			var title = $("<h1 style='position:absolute; color:black; font-size:150px;'>Modeler</h1>");
+			var title = $("<h1 style=\"position:absolute; color:black; font-size:150px; font-family: 'Carter One', cursive;\">Modeler</h1>");
 			cont.append(title);
 			title.css("top",((intheigth/2)-200)+"px");
-			title.css("left",((intwidth/2)-280)+"px");
+			title.css("left",((intwidth/2)-300)+"px");
 			cont.append(link);
 			}
 			draw();
@@ -83,9 +88,9 @@
 			});
 		</script>
 		<div class="menu">
-			<div style="display:inline-block;">&nbsp&nbsp<a href="docs.html" style="color:white;">�Que es modeler y como funciona?</a></div>
-			<div style="display:inline-block; text-align: right;">
-			Creado por: &nbsp&nbsp Johann Paez - Jeisson Sanchez - Juan Camilo Rojas &nbsp&nbsp</div>
+			<div style="display:inline-block;">&nbsp&nbsp<a href="docs.html" style="color:white; font-family: 'Acme', sans-serif; font-size: 20px;">¿Qué es modeler y cómo funciona?</a></div>
+			<div style="display:inline-block; text-align: right; font-family: 'Acme', sans-serif; font-size: 20px;">
+			Creado por: &nbsp&nbsp Johann Páez - Jeisson Sanchez - Juan Rojas &nbsp&nbsp</div>
 		</div>
 	</body>
 </html>

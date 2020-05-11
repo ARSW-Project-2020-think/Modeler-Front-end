@@ -1,5 +1,8 @@
 <html>
 	<head><title>Documentacion</title>
+		<meta charset="UTF-8">
+		<link href="https://fonts.googleapis.com/css2?family=Carter+One&display=swap" rel="stylesheet">
+		<link href="https://fonts.googleapis.com/css2?family=Acme&display=swap" rel="stylesheet">
 	<style>
 		*{
 		margin:0px;
@@ -35,7 +38,7 @@
 			function init(){
 				var header = $("#header");
 				header.html("");
-				var title = $("<div>Modeler Docs</div>");
+				var title = $("<div style = \"font-family: 'Carter One', cursive; font-size: 100px\">Modeler Docs</div>");
 				header.append(title);
 				title.css("position","absolute");
 				title.css("z-index","5000");
@@ -54,15 +57,15 @@
 						colores.push("gray");
 					}
 				}
-				console.log(intHeigth);
-				title.css("top",((intHeigth/2)-50)+"px");
-				title.css("left",((intWidth/2)-150)+"px");
+				//console.log(intHeigth);
+				title.css("top",((intHeigth/2)-130)+"px");
+				title.css("left",((intWidth/2)-332)+"px");
 				header.append(title);
 			}
 			init();
 			window.setInterval(function(){
 				var r1 = Math.floor(Math.random() * rect.length);
-				console.log("entro interval");
+				//console.log("entro interval");
 				var elm1 = rect[r1];
 				//var elm2 = rect[r2];
 				if(colores[r1]=="gray"){
@@ -78,26 +81,26 @@
 		</script>
 		<div style="width:100%; height:100%;" class="cont">
 			<div style="vertical-align:top;">
-				<br><br><br>
-				<div style="background:red; width:200px; height:50px; text-align:center; color:white;">UML</div>
+				<br><br><br><br><br><br><br>
+				<div style="background:red; width:200px; height:50px; text-align:center; color:white; position: relative; left: 35%;">UML</div>
 				<br><br>
-				<div style="background:blue; width:200px; height:50px; text-align:center; color:white;">Trabajo en equipo</div>
+				<div style="background:blue; width:200px; height:50px; text-align:center; color:white; position: relative; left: 35%;">Trabajo en equipo</div>
+				<br><br> 
+				<div style="background:black; width:200px; height:50px; text-align:center; color:white; position: relative; left: 35%;">Tiempo real</div>
 				<br><br>
-				<div style="background:black; width:200px; height:50px; text-align:center; color:white;">Tiempo real</div>
-				<br><br>
-				<div style="background:green; width:200px; height:50px; text-align:center; color:white;">Desarrollo de software</div>
+				<div style="background:green; width:200px; height:50px; text-align:center; color:white; position: relative; left: 35%;">Desarrollo de software</div>
 			</div>
-			<div style="font-size:20px;">
+			<div style="font-size:20px; font-family: 'Acme', sans-serif; font-size: 25px;">
 				<br>
-				<h1>Haz de tu proyecto la maxima expresion del trabajo en equipo.</h1>
+				<h1 style="font-family: 'Carter One', cursive;">Haz de tu proyecto la máxima expresion del trabajo en equipo.</h1>
 				<br>
-				Modeler es una herramienta diseñada para realizar trabajo colaborativo asi que podras trabajar con todos tus compañeros al mismo tiempo y asi tus proyectos sean su mejor version.
+				Modeler es una herramienta diseñada para realizar trabajo colaborativo, así que podrás trabajar con todos tus compañeros al mismo tiempo para que tus proyectos sean su mejor versión.
 				<br><br>
-				Olvidate de tener que estar presencialmente para crear una solucion, crea proyectos desde donde quieras, con quien quieras y cuando quieras.
+				Olvídate de tener que estar presencialmente para crear una solución, crea proyectos desde donde quieras, con quien quieras y cuando quieras.
 				<br><br>
-				Esta herramienta nos ofrece la posibilidad de crear diagramas de clases y casos de uso.
+				Esta herramienta nos ofrece la posibilidad de crear diagramas de clases y de casos de uso con tus compañeros en tiempo real.
 				<br><br>
-				<b>Nota:</b> a lo largo del presente hablamos de elementos los cuales son, las clases, Actores y Ovalos que estan presentes dentro de cada diagrama.
+				<b>Nota:</b> A lo largo del presente hablamos de elementos los cuales son Clases, Actores y Óvalos que están presentes dentro de cada diagrama.
 			</div>
 		</div>
 		<div style="width:100%; height:100%; background:black; color:white;" class="cont">
@@ -105,20 +108,20 @@
 				<br>
 				<div style="width:80%; height:80%; background:white;" id="mode"> </div>
 			</div>
-			<div style="font-size:20px; vertical-align:top;">
+			<div style="vertical-align:top; font-size:20px; font-family: 'Acme', sans-serif; font-size: 25px; padding-left: 2%; padding-right: 2%;">
 				<br>
-				<h1>Crea tus clases, actores y casos donde quieres</h1>
+				<h1 style="font-family: 'Carter One', cursive;">Crea tus clases, actores y casos donde quieras.</h1>
 				<br>
-				Para crear un elemento solo basta dar click sobre el boton que diga crear seguido del nombre del elemento.
+				Para crear un elemento sólo basta con dar click sobre el botón que dice crear y seguido dar el nombre del elemento.
 				<br><br>
-				Por ejemplo crear clase
+				Por ejemplo crear clase:
 				<br><br>
 				<center><button class="btn btn-primary">Crear Clase</button></center>
 				<br>
-				Tan pronto le des click te aparecera un input para que ingreses el nombre de la clase y el paso siguiente es tan solo dar click en cualquier parte de la pantalla.
+				Tan pronto le des click te aparecerá un input para que ingreses el nombre del elemento y luego basta con dar click en cualquier parte de la pantalla.
 				<br>
 				<br>
-				<b>Para mirar como la app te crea una clase haz click sobre el cuadro blanco a la izquierda y ademas puedes arrastrarla.</b>
+				<b>Para mirar como la aplicación te crea una clase, haz click sobre el cuadro blanco a la izquierda y arrastra la clase donde quieras!</b>
 				<br><br>
 				
 			</div>
@@ -126,9 +129,9 @@
 		<script type="text/javascript">
 			var mod = $("#mode");
 			mod.click(function(e){
-				var clase = $("<div style='background:black; width:200px; height:50px; color:white; text-align:center;'>Example</div>");
+				var clase = $("<div style='background:black; width:200px; height:50px; color:white; text-align:center;'>Ejemplo de Clase</div>");
 				clase.css("position","absolute");
-				console.log(e.pageX+" "+e.pageY);
+				//console.log(e.pageX+" "+e.pageY);
 				clase.css("left",e.pageX+"px");
 				clase.click(function(ev){ev.stopPropagation();})
 				clase.css("top",e.pageY+"px");
@@ -140,15 +143,15 @@
 			<div style="width:50%; height:100%; vertical-align:middle; border:1px solid black; border-radius: 10px;">
 				<div style="background:black; color:white; width:200px; height:50px; text-align:center; top:80px; left:30px; position:relative;" id="dele">Eliminar</div>
 				<div style="background:black; color:white; width:200px; height:50px; text-align:center; top:140px; left:90px; position:relative;" id="dele2">Eliminar2</div>
-				<div style="background:black; color:white; width:200px; height:50px; text-align:center; top:-90px; left:90px; position:relative;" id="dele3">Eliminar3</div>
+				<div style="background:black; color:white; width:200px; height:50px; text-align:center; top:-90px; left:90px; position:relative;" id="dele3">Eliminar3</div>				
 			</div>
-			<div style="font-size:20px; vertical-align:middle;">
-			<br><h1>¿Si te equivocaste al crear un elemento?</h1>
+			<div style="vertical-align:top; font-family: 'Acme', sans-serif; font-size: 25px; padding-left: 2%; padding-right: 2%;">
+			<br><h1 style="font-family: 'Carter One', cursive;">¿Te equivocaste al crear un elemento?</h1>
 			<br><br>
-			Es tan facil como tan solo precionar el boton <b>"Eliminar elemento"</b> para el caso del diagrama de casos de uso o <b>"Borrar clase"</b> para diagrama de clases.
+			Es tan fácil como presionar el botón <b>"Eliminar elemento"</b> para el caso del diagrama de casos de uso o <b>"Borrar clase"</b> para el diagrama de clases.
 			<br><br><center><button class='btn btn-primary'>Eliminar Elemento</button></center>
-			<br><br> Despues de esto simplemente selecciona la clase o elemento que vas a eliminar.
-			<br><br><b>Ahora a la izquierda lo puedes probar tan solo toca la clase a eliminar</b>
+			<br><br> Después de esto, simplemente selecciona la clase o elemento que vas a eliminar.
+			<br><br><b>Ahora a la izquierda lo puedes probar, tan sólo toca la clase que quieres eliminar</b>
 			</div>
 		</div>
 		<script>
@@ -156,14 +159,14 @@
 			function localize(){
 				for(var i=0;i<li.length;i++){
 					if(li[i].attr("id")=="dele"){
-						li[i].css("top",(50*i+20)+"px");
-						li[i].css("left","10px");
+						li[i].css("top",(-50*i+150)+"px");
+						li[i].css("left","35%");
 					}else if(li[i].attr("id")=="dele2"){
-						li[i].css("top",(-50*i+120)+"px");
-						li[i].css("left","40px");
+						li[i].css("top",(-50*i+300)+"px");
+						li[i].css("left","35%");
 					}else{
-						li[i].css("top",(-50*i+120)+"px");
-						li[i].css("left","280px");
+						li[i].css("top",(-50*i+450)+"px");
+						li[i].css("left","35%");
 					}
 				}
 			}
@@ -189,25 +192,25 @@
 		<div>
 			<br>
 			<div style="background:white; width:80%; height:80%; margin:0px; padding:0px;" id="cn">
-				<div style="z-index:20; background:black; color:white; width:200px; height:50px; text-align:center; position:relative; top:30px; left:10px;" id="claseA">ClaseA</div>
-				<div style="z-index:20; background:black; color:white; width:200px; height:50px; text-align:center; position:relative; top:120px; left:10px;" id="claseB">ClaseB</div>
+				<div style="z-index:20; background:black; color:white; width:200px; height:50px; text-align:center; position:relative; top:150px; left:33%;" id="claseA">ClaseA</div>
+				<div style="z-index:20; background:black; color:white; width:200px; height:50px; text-align:center; position:relative; top:300px; left:33%;" id="claseB">ClaseB</div>
 			</div>
 		</div>
-		<div style="font-size:20px; vertical-align:top;"> 
-		<br><h1>Crea relaciones entre los elementos</h1>
-		<br><br>
-		Para crear relaciones entre los distintos elementos que podemos utilizar para crear nuestros diagramas, tan solo debemos precionar el boton "Nueva Relacion".
-		<br><br><center><button class='btn btn-primary'>Nueva Relacion</button></center>
-		<br>Tan pronto lo precionemos lo unico que faltaria para crear la relacion es dar click sobre los 2 elementos del diagrama.
-		<br><br><b>En la ventana de la izquierda para crear la relacion basta con tan solo tocar las 2 clases y listo.</b>
-		<br><br> Para eliminar seleccionamos el boton eliminar relacion y selecionamos los 2 elementos que se encuentran relacionados.
+		<div style="vertical-align:top; font-family: 'Acme', sans-serif; font-size: 25px; padding-left: 2%; padding-right: 2%;"> 
+		<br><h1 style="font-family: 'Carter One', cursive;">Crea relaciones entre elementos!</h1>
+		<br>
+		Para crear relaciones entre los distintos elementos que puedes utilizar para crear un diagrama, tan sólo debes precionar el boton "Nueva Relación".
+		<br><center><button class='btn btn-primary'>Nueva Relacion</button></center>
+		<br>Tan pronto lo presiones, lo único que faltaría para crear la relacion es dar click sobre los 2 elementos del diagrama.
+		<br><br><b>En la ventana de la izquierda para crear la relación, basta con tan sólo dar click sobre las 2 clases y listo.</b>
+		<br><br> Para <b>eliminar</b>, solo tienes que dar click en el botón eliminar relación y seleccionar los 2 elementos que se encuentran relacionados.
 		</div>
 		</div>
 		<script type="text/javascript">
 			var take = null;
 			var create = false;
 			$("#claseA").click(function(){
-				console.log("Toco");
+				//console.log("Toco");
 				if(create){
 					return;
 				}
@@ -235,25 +238,27 @@
 			});
 			//drawline();
 			function drawline(){
-				var line = $("<div style='background:blue; width:2px; height:90px; position:relative; top:-20px; left:105;'></div>");
+				var line = $("<div style='background:blue; width:2px; height:200px; position:relative; top:100px; left:50%;'></div>");
 				$("#cn").append(line);
 			}
 		</script>
 		<div class="cont" style="width:100%; height:100%;">
 			<div>
-				<div style="width:200px; height:50px; background:black; text-align:center; color:white; top:100px; position:relative; left:100px;" id="classm">Materia</div>
+				<div style="width:200px; height:50px; background:black; text-align:center; color:white; top:250px; position:relative; left:33%;" id="classm">Materia</div>
 			</div>
-			<div style="font-size:20px; vertical-align:top;">
-				<br><h1>¿Como añado metodos y atributos a una clase?</h1>
+			<div style="vertical-align:top; font-family: 'Acme', sans-serif; font-size: 25px; padding-left: 2%; padding-right: 2%;">
+				<br><h1 style="font-family: 'Carter One', cursive;">¿Como añadir métodos y atributos a una clase?</h1>
+				<br>
+				Basta con dar click en el botón editar clase, tan pronto lo presiones el paso siguiente es seleccionar la clase a la cual queremos añadirle métodos o  atributos.
 				<br><br>
-				Basta con dar click en el boton editar clase tan pronto lo presiones el paso siguiente es seleccionar la clase a la cual queremos añadirle metodos o  atributos.
-				<br><br>
-				<b>Nota:</b> Cuando pruebes la herramienta podras evidenciar que esta caractaeristica se da a tiempo real.
-				<br><br>
-				<b>Nota:</b> Para eliminar un metodo o atributo tambien lo podras realizar desde esta vista.
-				<br><br>
-				<b>Ahora para probarlo selecciona la clase del costado izquierdo y se te abrira la vista de editar clase y añade un metodo.</b>
-				
+				<b>Nota:</b>
+				<ul>
+					<li>Cuando pruebes la herramienta podrás evidenciar que esta característica se da en tiempo real.</li>
+					<li>Para eliminar un método o atributo también lo podras realizar desde esa vista.</li>
+				</ul> 
+				<br>
+				<b>Ahora para probarlo, selecciona la clase del costado izquierdo para abrir una vista en la que podrás editar la clase.</b><br>
+				Añade un método, pruebalo!
 				</div>
 		</div>
 		<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -286,7 +291,7 @@
 			});
 			$("#cmetodo").click(function(){
 				var txt = $("#dmetodo").val();
-				console.log(txt);
+				//console.log(txt);
 				metodos.push(txt);
 				drawMetodos();
 			});
@@ -330,14 +335,14 @@
 					<div style="background:blue; position:relative; text-align: center; width:70px; height: 30px; left:90px; top:-10px;" id="move">Proyecto</div>
 				</div>
 			</div>
-			<div style="font-size:20px; vertical-align:top;">
-				<br><h1>Orientado a proyectos</h1>
-				<br><br>Modeler es una herramienta orientada a proyectos asi que esta te permite compartir con tus amigos exclusivamente
-				proyectos, asi que cuando quieras añadir a un colaborador vas a requerir añadirlo a el proyecto, y este tendra derecho a modificar 
-				cualquier diagrama que este dentro del proyecto.
-				<br><br> Para añadir un colaborador a un proyecto tan solo basta con iniciar sesion la primera pantalla te muestra tus proyectos, buscas el proyecto a compartir y le das en el boton "Compartir".
-				<br>En vista que te abre muestra los colaboradores por nombre de usuario(username), en la parte inderior te aparece un input, tan solo requieres escribir el username y ya tu amigo es tu colaborador.
-				<br><br><b>Tu amigo podra encontrar tu proyecto en la opcion de compartidos</b>
+			<div style="vertical-align:top; font-family: 'Acme', sans-serif; font-size: 25px; padding-left: 2%; padding-right: 2%;">
+				<br><h1 style="font-family: 'Carter One', cursive;">Orientado a Proyectos</h1>
+				<br>Modeler es una herramienta orientada a proyectos, te permite compartir los proyectos exclusivamente con tus amigos, 
+				así que cuando quieras añadir a un colaborador, tendrás que añadirlo al proyecto y este tendrá derecho a modificar 
+				cualquier diagrama que esté dentro del mismo.
+				<br><br> Para añadir un colaborador a un proyecto, tan sólo basta con iniciar sesión y en la primera pantalla se muestran tus proyectos. Buscas el proyecto a compartir y le das en el boton "Compartir".
+				<br>En esa vista que se abre, se muestran los colaboradores por nombre de usuario (username). En la parte inferior te aparecerá un input, sólo tienes que escribir el username del nuevo colaborador y listo!
+				<br><br><b>Tu compañero de trabajo podrá encontrar el proyecto compartido en la opción de compartidos.</b>
 				</div>
 			</div>
 		</div>
