@@ -74,7 +74,7 @@
 			}
 		},250);
 	</script>
-	<div class="cont" id="seguridad-proyectos">
+	<div class="cont" id="1">
 		<div>
 			<iframe width="100%" height="100%" src="https://www.youtube.com/embed/w42EDCPwj9w" frameborder="0" 
 			allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" 
@@ -89,7 +89,7 @@
 			
 			</div>
 	</div>
-	<div class="cont" style="background:black; color:white;">
+	<div class="cont" style="background:black; color:white;" id="2">
 		<div style="vertical-align:top; padding-left:10px; padding-top:10px; padding-rigth:10px; font-family: 'Acme', sans-serif; font-size: 20px;">
 			<h1>Contraseñas seguras</h1>
 			<br><br>
@@ -101,7 +101,7 @@
 		</div>
 		<div><iframe width="100%" height="100%" src="https://www.youtube.com/embed/It3hzFnf134" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe> </div>
 	</div>
-	<div class="cont">
+	<div class="cont" id="3">
 		<div>
 			<iframe width="100%" height="100%" src="https://www.youtube.com/embed/lfta5NvzjEM" frameborder="0" 
 			allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
@@ -113,7 +113,7 @@
 			<br><br> La operacion de Modeler se encuentra sobre la infraestructura ofrecidad por Heroku y Azure.
 		</div>
 	</div>
-	<div class="cont" style="background:black; color:white;">
+	<div class="cont" style="background:black; color:white;" id="4">
 		<div style="vertical-align:top; padding-left:20px; padding-top:20px; padding-rigth:20px; font-family: 'Acme', sans-serif; font-size: 20px;">
 			<h1>Superemos retos y trabajemos juntos.</h1>
 			<br><br>Modeler tiene como objetivo promover el trabajo de diseño colaborativo de forma eficiente por lo que permite cuando hay entre 3 y 5 usuarios editando se obtenga una latencia inferior a 1 segundo
@@ -124,5 +124,43 @@
 			allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 		</div>
 	</div>
+	<div class="cont" id="5">
+		<div style="vertical-align:middle;">
+			
+		</div>
+		<div style="vertical-align:top; padding-left:20px; padding-top:20px; padding-rigth:20px; font-family: 'Acme', sans-serif; font-size: 20px;">
+		<h1>No vayas a borrar tus proyectos</h1>
+		<br><br><h3>Sabemos lo importante que es tu trabajo así que relájate.</h3>
+		<br><br>Modeler te muestra siempre cuando presionas el botón eliminar un modal de confirmación para que no vayas a eliminar por error alguno de tus proyectos o diagramas.
+		<br><br><b>Una vez eliminado un diagrama o proyecto, este no podrá ser recuperado.</b>
+		<br>
+		</div>
+	</div>
+	<div class="cont" style="background:black; color:white;" id="6">
+		<div style="vertical-align:top; padding-left:20px; padding-top:20px; padding-rigth:20px; font-family: 'Acme', sans-serif; font-size: 20px;">
+			<h1>Comparte todo lo que quieras</h1>
+			<br><br>Trabaja con tus amigos y descrubre las facilidades que te ofrece Modeler, de una manera rapida y secilla.
+			<br><br> <b>Crea y comparte.</b>
+			<br><br><br> Con maximo 4 clicks podras trabar con quien deseas.
+			<br><br><b>Inicia sesion y compruebalo.</b>
+			
+			<br><br> Tan solo ingresa a la vista proyectos, añadir colaborardor, escribe su nombre de usuario y presiona añadir y listo.
+		</div>
+		<div style="padding-top:10%; text-align:center;">
+			<div style="width:200px; height:200px; font-size:200; background:red; color:white;" id="cn">1</div>
+		</div>
+		<script>
+			var color = [null,"red","green","blue","orange"];
+			var cont = 1;
+			window.setInterval(function(){
+				cont+=1;
+				$("#cn").text(cont);
+				$("#cn").css("background",color[cont]);
+				if(cont==4){
+					cont =0;
+				}
+				
+			},500);
+		</script>
 	</body>
 </html>
