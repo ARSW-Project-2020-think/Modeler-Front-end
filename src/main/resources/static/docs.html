@@ -11,7 +11,7 @@
 		.header{
 			width:100%;
 			height:100%;
-			background:black;
+			background:#3B3B3B;
 			color:white;
 		}
 		.cont div{
@@ -45,16 +45,18 @@
 				var intHeigth = parseInt(header.css("height").substring(0,header.css("height").length-2));
 				var intWidth = parseInt(header.css("width").substring(0,header.css("width").length-2));
 				rect = []
-				for(var i=0; i<intHeigth-20;i+=40){
-					for(var j=0;j<intWidth-20;j+=40){
-						var di = $("<div style='width:40px; height:40px;'></div>");
-						di.css("position","absolute");
-						di.css("top",i+"px");
-						di.css("left",j+"px");
-						di.css("background","#3B3B3B");
-						header.append(di);
-						rect.push(di);
-						colores.push("gray");
+				for(var i=0; i<intHeigth-50;i+=40){
+					for(var j=0;j<intWidth-50;j+=40){
+						if(i+40<intHeigth && j+40<intWidth){
+							var di = $("<div style='width:40px; height:40px;'></div>");
+							di.css("position","absolute");
+							di.css("top",i+"px");
+							di.css("left",j+"px");
+							di.css("background","#3B3B3B");
+							header.append(di);
+							rect.push(di);
+							colores.push("gray");
+					}
 					}
 				}
 				//console.log(intHeigth);
@@ -63,6 +65,9 @@
 				header.append(title);
 			}
 			init();
+			$( window ).resize(function(){
+				init();
+			});
 			window.setInterval(function(){
 				var r1 = Math.floor(Math.random() * rect.length);
 				//console.log("entro interval");
@@ -90,7 +95,7 @@
 				<br><br>
 				<div style="background:green; width:200px; height:50px; text-align:center; color:white; position: relative; left: 35%;">Desarrollo de software</div>
 			</div>
-			<div style="font-size:20px; font-family: 'Acme', sans-serif; font-size: 25px;">
+			<div style="font-size:20px; font-family: 'Acme', sans-serif; font-size: 20px;">
 				<br>
 				<h1 style="font-family: 'Carter One', cursive;">Haz de tu proyecto la máxima expresion del trabajo en equipo.</h1>
 				<br>
@@ -108,7 +113,7 @@
 				<br>
 				<div style="width:80%; height:80%; background:white;" id="mode"> </div>
 			</div>
-			<div style="vertical-align:top; font-size:20px; font-family: 'Acme', sans-serif; font-size: 25px; padding-left: 2%; padding-right: 2%;">
+			<div style="vertical-align:top; font-size:20px; font-family: 'Acme', sans-serif; font-size: 20px; padding-left: 2%; padding-right: 2%;">
 				<br>
 				<h1 style="font-family: 'Carter One', cursive;">Crea tus clases, actores y casos donde quieras.</h1>
 				<br>
@@ -145,7 +150,7 @@
 				<div style="background:black; color:white; width:200px; height:50px; text-align:center; top:140px; left:90px; position:relative;" id="dele2">Eliminar2</div>
 				<div style="background:black; color:white; width:200px; height:50px; text-align:center; top:-90px; left:90px; position:relative;" id="dele3">Eliminar3</div>				
 			</div>
-			<div style="vertical-align:top; font-family: 'Acme', sans-serif; font-size: 25px; padding-left: 2%; padding-right: 2%;">
+			<div style="vertical-align:top; font-family: 'Acme', sans-serif; font-size: 20px; padding-left: 2%; padding-right: 2%;">
 			<br><h1 style="font-family: 'Carter One', cursive;">¿Te equivocaste al crear un elemento?</h1>
 			<br><br>
 			Es tan fácil como presionar el botón <b>"Eliminar elemento"</b> para el caso del diagrama de casos de uso o <b>"Borrar clase"</b> para el diagrama de clases.
@@ -196,7 +201,7 @@
 				<div style="z-index:20; background:black; color:white; width:200px; height:50px; text-align:center; position:relative; top:300px; left:33%;" id="claseB">ClaseB</div>
 			</div>
 		</div>
-		<div style="vertical-align:top; font-family: 'Acme', sans-serif; font-size: 25px; padding-left: 2%; padding-right: 2%;"> 
+		<div style="vertical-align:top; font-family: 'Acme', sans-serif; font-size: 20px; padding-left: 2%; padding-right: 2%;"> 
 		<br><h1 style="font-family: 'Carter One', cursive;">Crea relaciones entre elementos!</h1>
 		<br>
 		Para crear relaciones entre los distintos elementos que puedes utilizar para crear un diagrama, tan sólo debes precionar el boton "Nueva Relación".
@@ -246,7 +251,7 @@
 			<div>
 				<div style="width:200px; height:50px; background:black; text-align:center; color:white; top:250px; position:relative; left:33%;" id="classm">Materia</div>
 			</div>
-			<div style="vertical-align:top; font-family: 'Acme', sans-serif; font-size: 25px; padding-left: 2%; padding-right: 2%;">
+			<div style="vertical-align:top; font-family: 'Acme', sans-serif; font-size: 20px; padding-left: 2%; padding-right: 2%;">
 				<br><h1 style="font-family: 'Carter One', cursive;">¿Como añadir métodos y atributos a una clase?</h1>
 				<br>
 				Basta con dar click en el botón editar clase, tan pronto lo presiones el paso siguiente es seleccionar la clase a la cual queremos añadirle métodos o  atributos.
@@ -335,7 +340,7 @@
 					<div style="background:blue; position:relative; text-align: center; width:70px; height: 30px; left:90px; top:-10px;" id="move">Proyecto</div>
 				</div>
 			</div>
-			<div style="vertical-align:top; font-family: 'Acme', sans-serif; font-size: 25px; padding-left: 2%; padding-right: 2%;">
+			<div style="vertical-align:top; font-family: 'Acme', sans-serif; font-size: 20px; padding-left: 2%; padding-right: 2%;">
 				<br><h1 style="font-family: 'Carter One', cursive;">Orientado a Proyectos</h1>
 				<br>Modeler es una herramienta orientada a proyectos, te permite compartir los proyectos exclusivamente con tus amigos, 
 				así que cuando quieras añadir a un colaborador, tendrás que añadirlo al proyecto y este tendrá derecho a modificar 
