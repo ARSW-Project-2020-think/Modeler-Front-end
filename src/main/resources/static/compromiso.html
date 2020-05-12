@@ -1,0 +1,129 @@
+<html>
+	<head><title>Modeler | Compromisos</title>
+		<meta charset="UTF-8">
+		<link href="https://fonts.googleapis.com/css2?family=Carter+One&display=swap" rel="stylesheet">
+		<link href="https://fonts.googleapis.com/css2?family=Acme&display=swap" rel="stylesheet">
+		<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+		<style type="text/css">
+			*{
+			margin:0px;
+			padding:0px;
+			}
+			.cont{
+			width:100%;
+			height:100%;
+			}
+			.cont div{
+				width:49%;
+				height:100%;
+				display:inline-block;
+			}
+		</style>
+	</head>
+	<body>
+		<div class="cont" style="background:#3B3B3B; color:white;" id="header"></div>
+		<script type="text/javascript">
+		var rect = []
+		var colores = [];
+		function init(){
+			var header = $("#header");
+			header.html("");
+			var title = $("<div style = \"font-family: 'Carter One', cursive; text-align:center; font-size: 100px\">Modeler Compromisos</div>");
+			header.append(title);
+			title.css("position","absolute");
+			title.css("z-index","5000");
+			var intHeigth = parseInt(header.css("height").substring(0,header.css("height").length-2));
+			var intWidth = parseInt(header.css("width").substring(0,header.css("width").length-2));
+			rect = []
+			for(var i=0; i<intHeigth-50;i+=40){
+				for(var j=0;j<intWidth-50;j+=40){
+					if(i+40<intHeigth && j+40<intWidth){
+						var di = $("<div style='width:40px; height:40px;'></div>");
+						di.css("position","absolute");
+						di.css("top",i+"px");
+						di.css("left",j+"px");
+						di.css("background","#3B3B3B");
+						header.append(di);
+						rect.push(di);
+						colores.push("gray");
+				}
+				}
+			}
+			//console.log(intHeigth);
+			title.css("top",((intHeigth/2)-170)+"px");
+			title.css("left",((intWidth/2)-350)+"px");
+			header.append(title);
+		}
+		init();
+		$( window ).resize(function(){
+			init();
+		});
+		window.setInterval(function(){
+			var r1 = Math.floor(Math.random() * rect.length);
+			//console.log("entro interval");
+			var elm1 = rect[r1];
+			//var elm2 = rect[r2];
+			if(colores[r1]=="gray"){
+				//console.log("gray");
+				elm1.css("background","black");
+				colores[r1] = "black";
+			}else{
+				//console.log("2 gray");
+				elm1.css("background","#3B3B3B");
+				colores[r1] = "gray";
+			}
+		},250);
+	</script>
+	<div class="cont" id="seguridad-proyectos">
+		<div>
+			<iframe width="100%" height="100%" src="https://www.youtube.com/embed/w42EDCPwj9w" frameborder="0" 
+			allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" 
+			allowfullscreen></iframe>
+		</div>
+		<div style="vertical-align:top; padding-left:10px; padding-top:10px; padding-rigth:10px; font-family: 'Acme', sans-serif; font-size: 20px;">
+			<h1 style="font-family: 'Carter One', cursive;">Tus proyectos son exclusivamente tuyos</h1>
+			<br>
+			Los unicos con acceso sobre los diagramas son tu y tus colaboradores, ten cuidado a quien invitas a formar parte de tu equipo.
+			<br><br>
+			Para Modeler es muy importante tu seguridad.
+			
+			</div>
+	</div>
+	<div class="cont" style="background:black; color:white;">
+		<div style="vertical-align:top; padding-left:10px; padding-top:10px; padding-rigth:10px; font-family: 'Acme', sans-serif; font-size: 20px;">
+			<h1>Contraseñas seguras</h1>
+			<br><br>
+			Para Modeler es muy importante que tus contraseñas sean seguras haci que ten en cuenta esto antes de registrarte.
+			<br><br>
+			Modeler tiene validaciones internas para validar que no sea posible que te registres con contraseñas inseguras.
+			<br><br>
+			<b>Contraseña segura:</b> Las contraseñas seguras son de longitud 8 o superiores, con mayusculas, minusculas y caracteres numericos.
+		</div>
+		<div><iframe width="100%" height="100%" src="https://www.youtube.com/embed/It3hzFnf134" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe> </div>
+	</div>
+	<div class="cont">
+		<div>
+			<iframe width="100%" height="100%" src="https://www.youtube.com/embed/lfta5NvzjEM" frameborder="0" 
+			allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+		</div>
+		<div style="vertical-align:top; padding-left:10px; padding-top:10px; padding-rigth:10px; font-family: 'Acme', sans-serif; font-size: 20px;">
+			<h1>Modeler nunca te faltara</h1>
+			<br><br>Modeler esta prepara en caso de fallos.
+			<br><br> Modeler puede estar en linea en un labso de 15 a 20 minutos asi que no te preocupes.
+			<br><br> Modeler se encuentra sobra la infraestructura de azure y heroku.
+		</div>
+	</div>
+	<div class="cont" style="background:black; color:white;">
+		<div style="vertical-align:top; padding-left:20px; padding-top:20px; padding-rigth:20px; font-family: 'Acme', sans-serif; font-size: 20px;">
+			<h1>Superemos retos y trabajemos juntos.</h1>
+			<br><br>Modeler esta listo para dara guerra, Modeler garantiza que para 3 a 5 usuarios te va a dar una latencia inferior a 1 segundo.
+			<br><br>A menos usuarios moviendo elementos a lo largo del diagrama, menos peticiones realizaras a nuestros servidores y un mejor funcionamiento tendras.
+			
+		</div>
+		<div>
+			<iframe width="100%" height="100%" src="https://www.youtube.com/embed/OLZdn3rsX3c" frameborder="0" 
+			allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+		</div>
+	</div>
+	</body>
+</html>
