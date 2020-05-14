@@ -287,17 +287,12 @@ var app = (function () {
         	apiclient.getModels(usuario,proyecto,version,sessionStorage.getItem("token"),showModels);
         }
         ,registrarProyecto(nombre){
-        	var publico = $("input[id='publico']:checked").val();
-        	console.log(nombre,publico);
+        	//console.log(nombre,publico);
         	if(nombre==null || nombre==""){
         		alert("El nombre del proyecto no puede ser vacio!");
         		return;
         	}
-        	if(publico=="on"){
-        		apiclient.registrarPryecto(sessionStorage.getItem("token"),sessionStorage.getItem("username"),nombre,true,redirProyecto);
-        	}else{
-        		apiclient.registrarPryecto(sessionStorage.getItem("token"),sessionStorage.getItem("username"),nombre,false,redirProyecto);
-        	}
+        	apiclient.registrarPryecto(sessionStorage.getItem("token"),sessionStorage.getItem("username"),nombre,false,redirProyecto);
         }, registrarModelo:function(usuario,proyecto,version,nombre,tipo){
 			if(nombre==null || nombre==""){
         		alert("El nombre del diagrama no puede ser vacio!");
