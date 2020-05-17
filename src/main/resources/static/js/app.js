@@ -132,7 +132,7 @@ var app = (function () {
         		$('#mymodal').modal("show");
         		$("#mscont").text("Desea eliminar el proyecto "+proyecto.nombre);
         		$("#confButton").click(function(){
-        			var user = sessionStorage.getItem("username");
+					var user = sessionStorage.getItem("username");
         			app.deleteProyecto(user,proyecto);
         		});
     		});
@@ -206,7 +206,7 @@ var app = (function () {
 				$('#mymodal').modal("show");
 				$("#mscont").text("¿Está seguro que desea eliminar el diagrama "+modelo.nombre + "?");
 				$("#confButton").click(function(){
-					var user = sessionStorage.getItem("username");
+					var user = sessionStorage.getItem("username");					
 					app.deleteModelo(user, modelo);
 				});
 			});

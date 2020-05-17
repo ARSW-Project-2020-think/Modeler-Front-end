@@ -47,6 +47,11 @@
 			location.href = "compartir.html?proyecto="+proyecto+"";			
 		}
 	</script>
+	<script>
+		function close() {			
+			$("#confButton").unbind();
+		}
+	</script>
 </head>
 <body class="container-contact100" onload="modelos()" style="margin:0px; padding:0px;background: -webkit-linear-gradient(left, rgba(0,168,255,0.5), rgba(185,0,255,0.5));">
 	<div class="page-wrapper chiller-theme toggled">
@@ -130,14 +135,14 @@
 					<div class="modal-header">
 						<h5 class="modal-title" id="exampleModalLabel">Eliminar</h5>
 						<button type="button" class="close" data-dismiss="modal" aria-label="Close">
-						<span aria-hidden="true">&times;</span>
+						<span aria-hidden="true" onclick = "close()">&times;</span>
 						</button>
 					</div>
 					<div class="modal-body" id="mscont">
 					</div>
 					<div class="modal-footer">
 						<button type="button" class="btn btn-primary" id="confButton" data-dismiss="modal">Si</button>
-						<button type="button" class="btn btn-secondary" data-dismiss="modal">No</button>
+						<button type="button" class="btn btn-secondary" onclick = "close()" data-dismiss="modal">No</button>
 					</div>
 					</div>
 				</div>
