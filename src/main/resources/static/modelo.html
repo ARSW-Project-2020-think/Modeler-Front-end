@@ -162,6 +162,16 @@
 		  </div>
 		</div>
 		<script type="text/javascript">
+					$("#closeClase").click(function(){
+						console.log("cerro");
+						$("#nmetodoIn").unbind();
+						$("#natributoIn").unbind();
+					});
+					$("#bclose").click(function(){
+						console.log("cerro");
+						$("#nmetodoIn").unbind();
+						$("#natributoIn").unbind();
+					});
 					$("#idClase").on('input',function(){
 						console.log("Entro");
 						$(this).val($(this).val().replace(" ",""));
